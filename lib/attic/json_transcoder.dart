@@ -6,17 +6,17 @@ import 'package:hemicycle/attic/individual_votes.dart';
 
 import 'json_vote_objecter.dart';
 
-class json_transcoder {
+class JsonTranscoder {
   List<IndividualVotes> votesList = [];
 
-  List<IndividualVotes> getJsonIndividualVotes() {
-    getJsonScrutinAsync();
+  List<IndividualVotes> getJsonIndividualVotes({String? path}) {
+    getJsonScrutinAsync(path: path);
     return votesList;
   }
 
-  void getJsonScrutinAsync() async {
-    final dynamic response =
-        await rootBundle.loadString("assets/example_legislature15.json");
+  void getJsonScrutinAsync({String? path}) async {
+    final dynamic response = await rootBundle
+        .loadString(path ?? "assets/example_legislature15.json");
     if (response != null) {
       print(
           "—————national_assembly_france_hemicycle————— getJsonScrutin SUCCESS : " +
