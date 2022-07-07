@@ -24,16 +24,17 @@ class OpenAssembleeJsonTranscoder {
 
       print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
-      Map<String, dynamic> _theJsonList =
-          new Map<String, dynamic>.from(jsonDecode(response));
+      Iterable _theJsonList = jsonDecode(response) as List;
 
       print(" —————national_assembly_france_hemicycle————— ••••• _theJson");
       print(_theJsonList);
       print(" —————national_assembly_france_hemicycle————— ••••• STEP 2");
 
-      ScrutinFromJson _newObjects =
-          ScrutinFromJson.fromFrenchNationalAssemblyJson(_theJsonList);
+      List<ScrutinFromJson> _newObjectsList = List<ScrutinFromJson>.from(
+          _theJsonList.map((model) =>
+              ScrutinFromJson.fromFrenchNationalAssemblyJson(model)));
 
+      ScrutinFromJson _newObjects = _newObjectsList[0];
 /*
       List<scrutinFromJson> _newObjects = _theJsonList
           .map((theJsonMap) =>
