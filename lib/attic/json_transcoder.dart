@@ -23,15 +23,15 @@ class OpenAssembleeJsonTranscoder {
 
       print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
-      Map<String, dynamic> mapBis = json.decode(response);
-      List<dynamic> dataBis = mapBis["scrutin"][0];
-      print(dataBis);
+      Map<String, dynamic> map = json.decode(response);
+      Map<String, dynamic> mapBis = map["scrutin"];
+      print(mapBis);
       print('---');
-      print(dataBis[0]);
+      print(mapBis["uid"]);
       print('---');
-      print(dataBis[0]['sort']);
+      print(mapBis['sort']);
       print('---');
-      print(dataBis[0]['groupe'][0]['organeRef']);
+      print(mapBis['groupe'][0]['organeRef']);
 
 /*
       Iterable _theJsonList = jsonDecode(response) as List;
