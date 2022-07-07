@@ -23,6 +23,15 @@ class OpenAssembleeJsonTranscoder {
 
       print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
+      Map<String, dynamic> map = json.decode(response.body);
+      List<dynamic> data = map["scrutin"];
+      print(data[0]);
+
+      Map<String, dynamic> mapBis = json.decode(response);
+      List<dynamic> dataBis = mapBis["scrutin"][0];
+      print(dataBis);
+
+/*
       Iterable _theJsonList = jsonDecode(response) as List;
 
       print(" —————national_assembly_france_hemicycle————— ••••• _theJson");
@@ -34,6 +43,7 @@ class OpenAssembleeJsonTranscoder {
               ScrutinFromJson.fromFrenchNationalAssemblyJson(model)));
 
       ScrutinFromJson _newObjects = _newObjectsList[0];
+
 /*
       List<scrutinFromJson> _newObjects = _theJsonList
           .map((theJsonMap) =>
@@ -80,7 +90,7 @@ class OpenAssembleeJsonTranscoder {
           }
         }
       }
-
+*/
       print(
           "—————national_assembly_france_hemicycle————— ••••• getJsonScrutin OVER");
     } else {
