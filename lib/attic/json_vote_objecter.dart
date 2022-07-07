@@ -163,15 +163,16 @@ class ScrutinFromJson {
     this.votedAbstention = int.tryParse(_decompte['abstentions']) ?? 0;
     this.didNotVote = int.tryParse(_decompte['nonVotants']) ?? 0;
 
-/*
-    List<dynamic> _roughJson =
-        json['ventilationVotes']['organe']['groupes']['groupe'];
+    Map<String, dynamic> _ventilationVotes = json["ventilationVotes"];
+    Map<String, dynamic> _organe = _ventilationVotes["organe"];
+    Map<String, dynamic> _groupes = _organe["groupes"];
+
+    List<dynamic> _roughJson = _groupes['groupe'];
     List<GroupVotesFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
       _toPass.add(
           GroupVotesFromJson.fromFrenchNationalAssemblyJson(_roughJson[i]));
     }
     this.groupVotesDetails = _toPass;
-*/
   }
 }
