@@ -137,29 +137,25 @@ class ScrutinFromJson {
   }
 
   ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
-    this.uuid = json['scrutin']['uid'];
-    this.organeRef = json['scrutin']['organeRef'];
-    this.dateScrutin = dateFormatter(json['scrutin']['dateScrutin'],
+    this.uuid = json['uid'];
+    this.organeRef = json['organeRef'];
+    this.dateScrutin = dateFormatter(json['dateScrutin'],
         dateSeparator: "-", format: "YMD", noHour: true);
-    this.codeVote = json['scrutin']['typeVote']['codeTypeVote'];
-    this.libelleVote = json['scrutin']['typeVote']['libelleTypeVote'];
-    this.majoriteVote = json['scrutin']['typeVote']['typeMajorite'];
-    this.resultatVote = json['scrutin']['sort']['code'];
-    this.titre = json['scrutin']['titre'];
-    this.demandeur = json['scrutin']['demandeur']['texte'];
-    this.votedFor =
-        int.tryParse(json['scrutin']['syntheseVote']['decompte']['pour']) ?? 0;
+    this.codeVote = json['typeVote']['codeTypeVote'];
+    this.libelleVote = json['typeVote']['libelleTypeVote'];
+    this.majoriteVote = json['typeVote']['typeMajorite'];
+    this.resultatVote = json['sort']['code'];
+    this.titre = json['titre'];
+    this.demandeur = json['demandeur']['texte'];
+    this.votedFor = int.tryParse(json['syntheseVote']['decompte']['pour']) ?? 0;
     this.votedAgainst =
-        int.tryParse(json['scrutin']['syntheseVote']['decompte']['contre']) ??
-            0;
-    this.votedAbstention = int.tryParse(
-            json['scrutin']['syntheseVote']['decompte']['abstentions']) ??
-        0;
-    this.didNotVote = int.tryParse(
-            json['scrutin']['syntheseVote']['decompte']['nonVotants']) ??
-        0;
+        int.tryParse(json['syntheseVote']['decompte']['contre']) ?? 0;
+    this.votedAbstention =
+        int.tryParse(json['syntheseVote']['decompte']['abstentions']) ?? 0;
+    this.didNotVote =
+        int.tryParse(json['syntheseVote']['decompte']['nonVotants']) ?? 0;
     List<dynamic> _roughJson =
-        json['scrutin']['ventilationVotes']['organe']['groupes']['groupe'];
+        json['ventilationVotes']['organe']['groupes']['groupe'];
     List<GroupVotesFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
       _toPass.add(
