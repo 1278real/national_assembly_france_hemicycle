@@ -24,7 +24,7 @@ class OpenAssembleeJsonTranscoder {
 
       print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
-      Map<String, dynamic> _theJson = jsonDecode(response);
+      Map<String, dynamic> _theJson = jsonDecode("[" + response + "]");
       // final List _theJsonList = jsonDecode(response.toString());
       print(" —————national_assembly_france_hemicycle————— ••••• _theJson");
       print(_theJson);
@@ -44,17 +44,22 @@ class OpenAssembleeJsonTranscoder {
       inspect(_newObjects);
       print("—————national_assembly_france_hemicycle————— ••••• STEP 3");
 
-      if (_newObjects.votesDetails != null) {
-        if (_newObjects.votesDetails!.length > 0) {
+      if (_newObjects.groupVotesDetails != null) {
+        if (_newObjects.groupVotesDetails!.length > 0) {
           int indexIncrement = 0;
-          for (var i = 0; i < _newObjects.votesDetails!.length; i++) {
-            if (_newObjects.votesDetails![i].votesDetails != null) {
-              if (_newObjects.votesDetails![i].votesDetails!.length > 0) {
+          for (var i = 0; i < _newObjects.groupVotesDetails!.length; i++) {
+            if (_newObjects.groupVotesDetails![i].individualVotesDetails !=
+                null) {
+              if (_newObjects
+                      .groupVotesDetails![i].individualVotesDetails!.length >
+                  0) {
                 for (var j = 0;
-                    j < _newObjects.votesDetails![i].votesDetails!.length;
+                    j <
+                        _newObjects.groupVotesDetails![i]
+                            .individualVotesDetails!.length;
                     j++) {
-                  IndividualVoteFromJson element =
-                      _newObjects.votesDetails![i].votesDetails![j];
+                  IndividualVoteFromJson element = _newObjects
+                      .groupVotesDetails![i].individualVotesDetails![j];
                   votesList.add(IndividualVotes(indexIncrement,
                       voteResult: element.votedFor ?? false
                           ? true
@@ -65,7 +70,8 @@ class OpenAssembleeJsonTranscoder {
                                   : element.didNotVote ?? false
                                       ? null
                                       : null,
-                      groupPairing: _newObjects.votesDetails![i].organeRef));
+                      groupPairing:
+                          _newObjects.groupVotesDetails![i].organeRef));
                   indexIncrement += 1;
                 }
               }

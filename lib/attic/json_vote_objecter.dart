@@ -54,7 +54,7 @@ class GroupVotesFromJson {
   int? votedAgainst;
   int? votedAbstention;
   int? didNotVote;
-  List<IndividualVoteFromJson>? votesDetails;
+  List<IndividualVoteFromJson>? individualVotesDetails;
 
   GroupVotesFromJson(
       this.organeRef,
@@ -63,7 +63,7 @@ class GroupVotesFromJson {
       this.votedAgainst,
       this.votedAbstention,
       this.didNotVote,
-      this.votesDetails);
+      this.individualVotesDetails);
 
   int get didNotAttend {
     return (nbMembers ?? 0) -
@@ -96,7 +96,7 @@ class GroupVotesFromJson {
       }
 */
     }
-    this.votesDetails = _toPass;
+    this.individualVotesDetails = _toPass;
   }
 }
 
@@ -114,7 +114,7 @@ class ScrutinFromJson {
   int? votedAgainst;
   int? votedAbstention;
   int? didNotVote;
-  List<GroupVotesFromJson>? votesDetails;
+  List<GroupVotesFromJson>? groupVotesDetails;
 
   ScrutinFromJson(
       this.uuid,
@@ -130,7 +130,7 @@ class ScrutinFromJson {
       this.votedAgainst,
       this.votedAbstention,
       this.didNotVote,
-      this.votesDetails);
+      this.groupVotesDetails);
 
   int get nbVoters {
     return (votedFor ?? 0) + (votedAgainst ?? 0) + (votedAbstention ?? 0);
@@ -165,6 +165,6 @@ class ScrutinFromJson {
       _toPass.add(
           GroupVotesFromJson.fromFrenchNationalAssemblyJson(_roughJson[i]));
     }
-    this.votesDetails = _toPass;
+    this.groupVotesDetails = _toPass;
   }
 }
