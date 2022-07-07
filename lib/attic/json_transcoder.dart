@@ -6,15 +6,15 @@ import 'package:hemicycle/attic/individual_votes.dart';
 
 import 'json_vote_objecter.dart';
 
-class JsonTranscoder {
+class OpenAssembleeJsonTranscoder {
   List<IndividualVotes> votesList = [];
 
   List<IndividualVotes> getJsonIndividualVotes({String? path}) {
-    getJsonScrutinAsync(path: path);
+    _getJsonScrutinAsync(path: path);
     return votesList;
   }
 
-  void getJsonScrutinAsync({String? path}) async {
+  void _getJsonScrutinAsync({String? path}) async {
     final dynamic response = await rootBundle
         .loadString(path ?? "assets/example_legislature15.json");
     if (response != null) {
