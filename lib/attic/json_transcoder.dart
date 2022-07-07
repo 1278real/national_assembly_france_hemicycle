@@ -25,18 +25,19 @@ class OpenAssembleeJsonTranscoder {
 
       Map<String, dynamic> _map = json.decode(response);
       Map<String, dynamic> _mapBis = _map["scrutin"];
-/*
+
+      print(" —————national_assembly_france_hemicycle————— ••••• _mapBis");
+
       print(_mapBis);
       print('---');
       print(_mapBis["uid"]);
+/*
       print('---');
       print(_mapBis['sort']);
       print('---');
       print(_mapBis['groupe'][0]['organeRef']);
 */
 
-      print(" —————national_assembly_france_hemicycle————— ••••• mapBis");
-      print(_mapBis);
       print(" —————national_assembly_france_hemicycle————— ••••• STEP 2");
 
       ScrutinFromJson _newObjects =
