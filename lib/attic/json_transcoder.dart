@@ -23,35 +23,24 @@ class OpenAssembleeJsonTranscoder {
 
       print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
-      Map<String, dynamic> map = json.decode(response);
-      Map<String, dynamic> mapBis = map["scrutin"];
-      print(mapBis);
-      print('---');
-      print(mapBis["uid"]);
-      print('---');
-      print(mapBis['sort']);
-      print('---');
-      print(mapBis['groupe'][0]['organeRef']);
-
+      Map<String, dynamic> _map = json.decode(response);
+      Map<String, dynamic> _mapBis = _map["scrutin"];
 /*
-      Iterable _theJsonList = jsonDecode(response) as List;
+      print(_mapBis);
+      print('---');
+      print(_mapBis["uid"]);
+      print('---');
+      print(_mapBis['sort']);
+      print('---');
+      print(_mapBis['groupe'][0]['organeRef']);
+*/
 
-      print(" —————national_assembly_france_hemicycle————— ••••• _theJson");
-      print(_theJsonList);
+      print(" —————national_assembly_france_hemicycle————— ••••• mapBis");
+      print(_mapBis);
       print(" —————national_assembly_france_hemicycle————— ••••• STEP 2");
 
-      List<ScrutinFromJson> _newObjectsList = List<ScrutinFromJson>.from(
-          _theJsonList.map((model) =>
-              ScrutinFromJson.fromFrenchNationalAssemblyJson(model)));
-
-      ScrutinFromJson _newObjects = _newObjectsList[0];
-
-/*
-      List<scrutinFromJson> _newObjects = _theJsonList
-          .map((theJsonMap) =>
-              scrutinFromJson.fromFrenchNationalAssemblyJson(theJsonMap))
-          .toList();
-*/
+      ScrutinFromJson _newObjects =
+          ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapBis);
 
       print("—————national_assembly_france_hemicycle————— ••••• _newObjects");
       inspect(_newObjects);
@@ -92,7 +81,7 @@ class OpenAssembleeJsonTranscoder {
           }
         }
       }
-*/
+
       print(
           "—————national_assembly_france_hemicycle————— ••••• getJsonScrutin OVER");
     } else {
