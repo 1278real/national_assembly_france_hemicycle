@@ -1,6 +1,6 @@
 name: national_assembly_france_hemicycle
 description: Draw a French National Assembly. Depends on hemicycle Flutter package.
-version: 0.0.19
+version: 0.0.20
 homepage:
 repository: https://github.com/1278real/national_assembly_france_hemicycle
 

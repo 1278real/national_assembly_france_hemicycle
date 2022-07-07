@@ -15,8 +15,8 @@ class OpenAssembleeJsonTranscoder {
   }
 
   void _getJsonScrutinAsync({String? path}) async {
-    final dynamic response =
-        await rootBundle.loadString(path ?? "assets/VTANR5L15V4417.json");
+    final dynamic response = await rootBundle.loadString(path ??
+        "package:national_assembly_france_hemicycle/assets/example_json/VTANR5L15V4417.json");
     if (response != null) {
       print(
           "—————national_assembly_france_hemicycle————— getJsonScrutin SUCCESS : " +
