@@ -75,6 +75,7 @@ class GroupVotesFromJson {
 
   GroupVotesFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
     this.organeRef = json['organeRef'];
+/*
     this.nbMembers = int.tryParse(json['nombreMembresGroupe']) ?? 0;
     this.votedFor = int.tryParse(json['vote']['decompteVoix']['pour']) ?? 0;
     this.votedAgainst =
@@ -87,7 +88,7 @@ class GroupVotesFromJson {
     List<IndividualVoteFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
       print("##### > " + _roughJson[i].toString());
-      /*
+/*
       if (_roughJson[i].length > 0) {
         for (var j = 0; j < _roughJson[i].length; j++) {
           _toPass.add(individualVoteFromJson
@@ -97,6 +98,7 @@ class GroupVotesFromJson {
 */
     }
     this.individualVotesDetails = _toPass;
+*/
   }
 }
 
@@ -170,8 +172,9 @@ class ScrutinFromJson {
     List<dynamic> _roughJson = _groupes['groupe'];
     List<GroupVotesFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
-      _toPass.add(
-          GroupVotesFromJson.fromFrenchNationalAssemblyJson(_roughJson[i]));
+      Map<String, dynamic> _toConvert = _roughJson[i];
+      _toPass
+          .add(GroupVotesFromJson.fromFrenchNationalAssemblyJson(_toConvert));
     }
     this.groupVotesDetails = _toPass;
   }
