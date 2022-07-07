@@ -1,6 +1,6 @@
 import 'helpers.dart';
 
-class individualVoteFromJson {
+class IndividualVoteFromJson {
   String? acteurRef;
   String? mandatRef;
   bool? parDelegation;
@@ -9,7 +9,7 @@ class individualVoteFromJson {
   bool? didNotVote;
   bool? votedAbstention;
 
-  individualVoteFromJson(this.acteurRef, this.mandatRef, this.parDelegation,
+  IndividualVoteFromJson(this.acteurRef, this.mandatRef, this.parDelegation,
       this.votedFor, this.votedAgainst, this.didNotVote, this.votedAbstention);
 
   bool get didNotAttend {
@@ -19,7 +19,7 @@ class individualVoteFromJson {
         !(didNotVote ?? false));
   }
 
-  individualVoteFromJson.fromFrenchNationalAssemblyJson(
+  IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
       Map<String, dynamic> json, String voteReceived) {
     this.acteurRef = json['acteurRef'];
     this.mandatRef = json['mandatRef'];
@@ -47,16 +47,16 @@ class individualVoteFromJson {
   }
 }
 
-class groupVotesFromJson {
+class GroupVotesFromJson {
   String? organeRef;
   int? nbMembers;
   int? votedFor;
   int? votedAgainst;
   int? votedAbstention;
   int? didNotVote;
-  List<individualVoteFromJson>? votesDetails;
+  List<IndividualVoteFromJson>? votesDetails;
 
-  groupVotesFromJson(
+  GroupVotesFromJson(
       this.organeRef,
       this.nbMembers,
       this.votedFor,
@@ -73,7 +73,7 @@ class groupVotesFromJson {
         (didNotVote ?? 0);
   }
 
-  groupVotesFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+  GroupVotesFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
     this.organeRef = json['organeRef'];
     this.nbMembers = int.tryParse(json['nombreMembresGroupe']) ?? 0;
     this.votedFor = int.tryParse(json['vote']['decompteVoix']['pour']) ?? 0;
@@ -84,7 +84,7 @@ class groupVotesFromJson {
     this.didNotVote =
         int.tryParse(json['vote']['decompteVoix']['nonVotants']) ?? 0;
     List<dynamic> _roughJson = json['vote']['decompteNominatif'];
-    List<individualVoteFromJson> _toPass = [];
+    List<IndividualVoteFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
       print("##### > " + _roughJson[i].toString());
       /*
@@ -100,7 +100,7 @@ class groupVotesFromJson {
   }
 }
 
-class scrutinFromJson {
+class ScrutinFromJson {
   String? uuid;
   String? organeRef;
   DateTime? dateScrutin;
@@ -114,9 +114,9 @@ class scrutinFromJson {
   int? votedAgainst;
   int? votedAbstention;
   int? didNotVote;
-  List<groupVotesFromJson>? votesDetails;
+  List<GroupVotesFromJson>? votesDetails;
 
-  scrutinFromJson(
+  ScrutinFromJson(
       this.uuid,
       this.organeRef,
       this.dateScrutin,
@@ -136,7 +136,7 @@ class scrutinFromJson {
     return (votedFor ?? 0) + (votedAgainst ?? 0) + (votedAbstention ?? 0);
   }
 
-  scrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+  ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
     this.uuid = json['scrutin']['uid'];
     this.organeRef = json['scrutin']['organeRef'];
     this.dateScrutin = dateFormatter(json['scrutin']['dateScrutin'],
@@ -160,10 +160,10 @@ class scrutinFromJson {
         0;
     List<dynamic> _roughJson =
         json['scrutin']['ventilationVotes']['organe']['groupes']['groupe'];
-    List<groupVotesFromJson> _toPass = [];
+    List<GroupVotesFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
       _toPass.add(
-          groupVotesFromJson.fromFrenchNationalAssemblyJson(_roughJson[i]));
+          GroupVotesFromJson.fromFrenchNationalAssemblyJson(_roughJson[i]));
     }
     this.votesDetails = _toPass;
   }

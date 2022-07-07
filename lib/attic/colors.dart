@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
 
-extension ColorExtension on String {
-  toColor() {
-    var hexColor = this.replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
-    }
-    if (hexColor.length == 8) {
-      return Color(int.parse("0x$hexColor"));
-    }
-  }
-}
-
 Map<int, Color> color = {
   50: Color.fromRGBO(0, 0, 0, .1),
   100: Color.fromRGBO(0, 0, 0, .2),
@@ -25,17 +13,17 @@ Map<int, Color> color = {
   900: Color.fromRGBO(0, 0, 0, 1),
 };
 
-/// RED color for standard warning
-MaterialColor customRouge = MaterialColor(0xFF990000, color);
+/// GREEN color for NUPES component
+MaterialColor nupesVert = MaterialColor(0xFF5AB47C, color);
 
-/// GREEN color for vote FOR
-MaterialColor customVoteFor = MaterialColor(0xFF099509, color);
+/// YELLOW color for NUPES component
+MaterialColor nupesJaune = MaterialColor(0xFFF9EF4F, color);
 
-/// RED color for vote AGAINST
-MaterialColor customVoteAgainst = MaterialColor(0xFFA00D0B, color);
+/// RED color for NUPES component
+MaterialColor nupesRouge = MaterialColor(0xFFDC574F, color);
 
-/// MIDDLE GREY color for vote ABSTENTION
-MaterialColor customVoteAbstention = MaterialColor(0xFF616161, color);
+/// PINK color for NUPES component
+MaterialColor nupesRose = MaterialColor(0xFFD45699, color);
 
-/// LIGHT GREY color for NO vote
-MaterialColor customNoVote = MaterialColor(0xFFD2D2D2, color);
+/// PURPLE color for NUPES component
+MaterialColor nupesViolet = MaterialColor(0xFF4A2E8B, color);

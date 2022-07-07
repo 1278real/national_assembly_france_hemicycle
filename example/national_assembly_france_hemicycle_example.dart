@@ -4,8 +4,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hemicycle/attic/colors.dart';
 
-import '../lib/hemicycle.dart';
+import 'package:hemicycle/hemicycle.dart';
+
+import '../lib/national_assembly_france_hemicycle.dart';
 import '../lib/attic/colors.dart';
 
 void main() => runApp(HemicycleExample());
@@ -31,9 +34,9 @@ class _HemicycleExampleState extends State<HemicycleExample> {
     resteTest = 577 - numberTest - 1;
 
     List<GroupSectors> hemicycleTest = [
-      GroupSectors(numberTest, customVoteFor, description: "BEFORE"),
-      GroupSectors(1, customVoteAgainst, description: "NEW"),
-      GroupSectors(resteTest, customVoteAbstention, description: "AFTER")
+      GroupSectors(numberTest, hemicyleVoteFor, description: "BEFORE"),
+      GroupSectors(1, hemicyleVoteAgainst, description: "NEW"),
+      GroupSectors(resteTest, hemicyleVoteAbstention, description: "AFTER")
     ];
 
     List<IndividualVotes> votesTest = [

@@ -11,8 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-The purpose of this Flutter package is to draw a full-width (embed in Container to resize) representation of a semi-circle assembly...
-The number of dots is up to you, by default 577 as for the French National Assembly.
+The purpose of this Flutter package dependds on hemicycle Flutter package but is specific to French National Assembly.
 
 | ![Image](https://github.com/1278real/hemicycle/blob/d23811596e9ee36c5a728390da145ac60a14273c/assets/groupes.png) | ![Image](https://github.com/1278real/hemicycle/blob/177de3d0ba7e0a8d5e76e0ec73f112b5ab44ee9c/assets/legislatives.png) |
 | :------------: | :------------: |
