@@ -40,14 +40,14 @@ class OpenAssembleeJsonTranscoder {
       ScrutinFromJson _newObjects =
           ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapBis);
 
-      print("—————national_assembly_france_hemicycle————— ••••• _newObjects");
-      inspect(_newObjects);
-      print("—————national_assembly_france_hemicycle————— ••••• STEP 3");
+      // print("—————national_assembly_france_hemicycle————— ••••• _newObjects");
+      // inspect(_newObjects);
+      // print("—————national_assembly_france_hemicycle————— ••••• STEP 3");
 
       if (_newObjects.groupVotesDetails != null) {
-        print("—————national_assembly_france_hemicycle————— ••••• STEP 4");
+        // print("—————national_assembly_france_hemicycle————— ••••• STEP 4");
         if (_newObjects.groupVotesDetails!.length > 0) {
-          print("—————national_assembly_france_hemicycle————— ••••• STEP 5");
+          // print("—————national_assembly_france_hemicycle————— ••••• STEP 5");
           int indexIncrement = 0;
           for (var i = 0; i < _newObjects.groupVotesDetails!.length; i++) {
             if (_newObjects.groupVotesDetails![i].individualVotesDetails !=
