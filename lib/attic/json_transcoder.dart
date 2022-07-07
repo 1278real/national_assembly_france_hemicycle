@@ -7,26 +7,24 @@ import 'package:hemicycle/attic/individual_votes.dart';
 import 'json_vote_objecter.dart';
 
 class OpenAssembleeJsonTranscoder {
-  List<IndividualVotes> votesList = [];
+  Future<List<IndividualVotes>> _getJsonScrutinAsync(String path) async {
+    List<IndividualVotes> votesList = [];
 
-  List<IndividualVotes> getJsonIndividualVotes(String path) {
-    _getJsonScrutinAsync(path);
-    return votesList;
-  }
-
-  void _getJsonScrutinAsync(String path) async {
     final dynamic response = await rootBundle.loadString(path);
     if (response != null) {
+/*
       print(
           "—————national_assembly_france_hemicycle————— getJsonScrutin SUCCESS : " +
               response.length.toString());
+*/
 
-      print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
+      // print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
       Map<String, dynamic> _map = json.decode(response);
       Map<String, dynamic> _mapBis = _map["scrutin"];
 
-      print(" —————national_assembly_france_hemicycle————— ••••• _mapBis");
+      // print(" —————national_assembly_france_hemicycle————— ••••• _mapBis");
+
 /*
       print(_mapBis);
       print('---');
@@ -37,7 +35,7 @@ class OpenAssembleeJsonTranscoder {
       print(_mapBis['groupe'][0]['organeRef']);
 */
 
-      print(" —————national_assembly_france_hemicycle————— ••••• STEP 2");
+      // print(" —————national_assembly_france_hemicycle————— ••••• STEP 2");
 
       ScrutinFromJson _newObjects =
           ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapBis);
@@ -47,14 +45,21 @@ class OpenAssembleeJsonTranscoder {
       print("—————national_assembly_france_hemicycle————— ••••• STEP 3");
 
       if (_newObjects.groupVotesDetails != null) {
+        print("—————national_assembly_france_hemicycle————— ••••• STEP 4");
         if (_newObjects.groupVotesDetails!.length > 0) {
+          print("—————national_assembly_france_hemicycle————— ••••• STEP 5");
           int indexIncrement = 0;
           for (var i = 0; i < _newObjects.groupVotesDetails!.length; i++) {
             if (_newObjects.groupVotesDetails![i].individualVotesDetails !=
                 null) {
+              print(
+                  "—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " +
+                      i.toString());
               if (_newObjects
                       .groupVotesDetails![i].individualVotesDetails!.length >
                   0) {
+                print(
+                    "—————national_assembly_france_hemicycle————— ••••• STEP 7");
                 for (var j = 0;
                     j <
                         _newObjects.groupVotesDetails![i]
@@ -84,8 +89,7 @@ class OpenAssembleeJsonTranscoder {
 
       print(
           "—————national_assembly_france_hemicycle————— ••••• getJsonScrutin OVER");
-    } else {
-      votesList = [];
     }
+    return votesList;
   }
 }
