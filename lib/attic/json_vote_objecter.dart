@@ -91,9 +91,9 @@ class GroupVotesFromJson {
     if (_decompteNominatif['pours'] != null) {
       print("----- POURS not null");
       Map<String, dynamic> _pours = _decompteNominatif['pours'];
-/*
       List<dynamic> _votants = _pours['votants'];
-      for (var i = 0; i < _votants.length; i++) {
+
+/*      for (var i = 0; i < _votants.length; i++) {
         Map<String, dynamic> _votant = _votants[i];
 
         _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
