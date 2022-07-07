@@ -35,9 +35,9 @@ class IndividualVoteFromJson {
       votedAgainst = false;
     }
     if (voteReceived == "abstentions") {
-      votedAgainst = true;
+      votedAbstention = true;
     } else {
-      votedAgainst = false;
+      votedAbstention = false;
     }
     if (voteReceived == "nonVotants") {
       didNotVote = true;
@@ -90,9 +90,9 @@ class GroupVotesFromJson {
     Map<String, dynamic> _decompteNominatif = _vote["decompteNominatif"];
     if (_decompteNominatif['pours'] != null) {
       print("----- POURS not null");
-      Map<String, dynamic> _pours = _decompteNominatif['pours'];
+      Map<String, dynamic> _voteResult = _decompteNominatif['pours'];
       if (this.votedFor != null && this.votedFor! > 1) {
-        List<dynamic> _votants = _pours['votant'];
+        List<dynamic> _votants = _voteResult['votant'];
 
         for (var i = 0; i < _votants.length; i++) {
           Map<String, dynamic> _votant = _votants[i];
@@ -101,19 +101,64 @@ class GroupVotesFromJson {
               _votant, "pours"));
         }
       } else if (this.votedFor != null) {
-        Map<String, dynamic> _votant = _pours['votant'];
+        Map<String, dynamic> _votant = _voteResult['votant'];
         _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
             _votant, "pours"));
       }
     }
     if (_decompteNominatif['contres'] != null) {
       print("----- CONTRES not null");
+      Map<String, dynamic> _voteResult = _decompteNominatif['contres'];
+      if (this.votedAgainst != null && this.votedAgainst! > 1) {
+        List<dynamic> _votants = _voteResult['votant'];
+
+        for (var i = 0; i < _votants.length; i++) {
+          Map<String, dynamic> _votant = _votants[i];
+
+          _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
+              _votant, "contres"));
+        }
+      } else if (this.votedAgainst != null) {
+        Map<String, dynamic> _votant = _voteResult['votant'];
+        _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
+            _votant, "contres"));
+      }
     }
     if (_decompteNominatif['abstentions'] != null) {
       print("----- ABSTENTION not null");
+      Map<String, dynamic> _voteResult = _decompteNominatif['abstentions'];
+      if (this.votedAbstention != null && this.votedAbstention! > 1) {
+        List<dynamic> _votants = _voteResult['votant'];
+
+        for (var i = 0; i < _votants.length; i++) {
+          Map<String, dynamic> _votant = _votants[i];
+
+          _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
+              _votant, "abstentions"));
+        }
+      } else if (this.votedAbstention != null) {
+        Map<String, dynamic> _votant = _voteResult['votant'];
+        _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
+            _votant, "abstentions"));
+      }
     }
     if (_decompteNominatif['nonVotants'] != null) {
       print("----- NV not null");
+      Map<String, dynamic> _voteResult = _decompteNominatif['nonVotants'];
+      if (this.didNotVote != null && this.didNotVote! > 1) {
+        List<dynamic> _votants = _voteResult['votant'];
+
+        for (var i = 0; i < _votants.length; i++) {
+          Map<String, dynamic> _votant = _votants[i];
+
+          _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
+              _votant, "nonVotants"));
+        }
+      } else if (this.didNotVote != null) {
+        Map<String, dynamic> _votant = _voteResult['votant'];
+        _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
+            _votant, "nonVotants"));
+      }
     }
 
     this.individualVotesDetails = _toPass;
