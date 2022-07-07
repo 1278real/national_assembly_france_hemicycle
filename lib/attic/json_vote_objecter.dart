@@ -141,6 +141,7 @@ class ScrutinFromJson {
     this.organeRef = json['organeRef'];
     this.dateScrutin = dateFormatter(json['dateScrutin'],
         dateSeparator: "-", format: "YMD", noHour: true);
+/*
     this.codeVote = json['typeVote']['codeTypeVote'];
     this.libelleVote = json['typeVote']['libelleTypeVote'];
     this.majoriteVote = json['typeVote']['typeMajorite'];
@@ -162,5 +163,6 @@ class ScrutinFromJson {
           GroupVotesFromJson.fromFrenchNationalAssemblyJson(_roughJson[i]));
     }
     this.groupVotesDetails = _toPass;
+*/
   }
 }
