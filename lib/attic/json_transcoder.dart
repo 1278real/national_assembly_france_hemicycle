@@ -9,14 +9,13 @@ import 'json_vote_objecter.dart';
 class OpenAssembleeJsonTranscoder {
   List<IndividualVotes> votesList = [];
 
-  List<IndividualVotes> getJsonIndividualVotes({String? path}) {
-    _getJsonScrutinAsync(path: path);
+  List<IndividualVotes> getJsonIndividualVotes(String path) {
+    _getJsonScrutinAsync(path);
     return votesList;
   }
 
-  void _getJsonScrutinAsync({String? path}) async {
-    final dynamic response = await rootBundle
-        .loadString(path ?? "../example_json/VTANR5L15V4417.json");
+  void _getJsonScrutinAsync(String path) async {
+    final dynamic response = await rootBundle.loadString(path);
     if (response != null) {
       print(
           "—————national_assembly_france_hemicycle————— getJsonScrutin SUCCESS : " +
