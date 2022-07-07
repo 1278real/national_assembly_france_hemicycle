@@ -24,7 +24,9 @@ class OpenAssembleeJsonTranscoder {
 
       print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
-      Map<String, dynamic> _theJsonList = jsonDecode(response);
+      Map<String, dynamic> invalidMap = jsonDecode(response);
+      final _theJsonList =
+          json.decode(json.encode(invalidMap)) as Map<String, dynamic>;
       print(" —————national_assembly_france_hemicycle————— ••••• _theJson");
       print(_theJsonList);
       print(" —————national_assembly_france_hemicycle————— ••••• STEP 2");
