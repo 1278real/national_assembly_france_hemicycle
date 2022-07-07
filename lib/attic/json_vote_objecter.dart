@@ -141,20 +141,31 @@ class ScrutinFromJson {
     this.organeRef = json['organeRef'];
     this.dateScrutin = dateFormatter(json['dateScrutin'],
         dateSeparator: "-", format: "YMD", noHour: true);
-/*
-    this.codeVote = json['typeVote']['codeTypeVote'];
-    this.libelleVote = json['typeVote']['libelleTypeVote'];
-    this.majoriteVote = json['typeVote']['typeMajorite'];
-    this.resultatVote = json['sort']['code'];
+
+    Map<String, dynamic> _typeVote = json["typeVote"];
+    this.codeVote = _typeVote['codeTypeVote'];
+    this.libelleVote = _typeVote['libelleTypeVote'];
+    this.majoriteVote = _typeVote['typeMajorite'];
+
+    Map<String, dynamic> _sort = json["sort"];
+    this.resultatVote = _sort['code'];
+
     this.titre = json['titre'];
-    this.demandeur = json['demandeur']['texte'];
-    this.votedFor = int.tryParse(json['syntheseVote']['decompte']['pour']) ?? 0;
+
+    Map<String, dynamic> _demandeur = json["demandeur"];
+    this.demandeur = _demandeur['texte'];
+/*
+    Map<String, dynamic> _syntheseVote = json["syntheseVote"];
+
+
+    this.votedFor = int.tryParse(_syntheseVote['decompte']['pour']) ?? 0;
     this.votedAgainst =
-        int.tryParse(json['syntheseVote']['decompte']['contre']) ?? 0;
+        int.tryParse(_syntheseVote['decompte']['contre']) ?? 0;
     this.votedAbstention =
-        int.tryParse(json['syntheseVote']['decompte']['abstentions']) ?? 0;
+        int.tryParse(_syntheseVote['decompte']['abstentions']) ?? 0;
     this.didNotVote =
-        int.tryParse(json['syntheseVote']['decompte']['nonVotants']) ?? 0;
+        int.tryParse(_syntheseVote['decompte']['nonVotants']) ?? 0;
+
     List<dynamic> _roughJson =
         json['ventilationVotes']['organe']['groupes']['groupe'];
     List<GroupVotesFromJson> _toPass = [];

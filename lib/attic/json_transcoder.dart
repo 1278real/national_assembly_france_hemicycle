@@ -27,11 +27,10 @@ class OpenAssembleeJsonTranscoder {
       Map<String, dynamic> _mapBis = _map["scrutin"];
 
       print(" —————national_assembly_france_hemicycle————— ••••• _mapBis");
-
+/*
       print(_mapBis);
       print('---');
       print(_mapBis["uid"]);
-/*
       print('---');
       print(_mapBis['sort']);
       print('---');
