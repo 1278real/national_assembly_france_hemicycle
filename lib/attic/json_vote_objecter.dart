@@ -154,18 +154,16 @@ class ScrutinFromJson {
 
     Map<String, dynamic> _demandeur = json["demandeur"];
     this.demandeur = _demandeur['texte'];
-/*
+
     Map<String, dynamic> _syntheseVote = json["syntheseVote"];
+    Map<String, dynamic> _decompte = _syntheseVote["decompte"];
 
+    this.votedFor = int.tryParse(_decompte['pour']) ?? 0;
+    this.votedAgainst = int.tryParse(_decompte['contre']) ?? 0;
+    this.votedAbstention = int.tryParse(_decompte['abstentions']) ?? 0;
+    this.didNotVote = int.tryParse(_decompte['nonVotants']) ?? 0;
 
-    this.votedFor = int.tryParse(_syntheseVote['decompte']['pour']) ?? 0;
-    this.votedAgainst =
-        int.tryParse(_syntheseVote['decompte']['contre']) ?? 0;
-    this.votedAbstention =
-        int.tryParse(_syntheseVote['decompte']['abstentions']) ?? 0;
-    this.didNotVote =
-        int.tryParse(_syntheseVote['decompte']['nonVotants']) ?? 0;
-
+/*
     List<dynamic> _roughJson =
         json['ventilationVotes']['organe']['groupes']['groupe'];
     List<GroupVotesFromJson> _toPass = [];
