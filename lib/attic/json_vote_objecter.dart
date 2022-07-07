@@ -85,9 +85,18 @@ class GroupVotesFromJson {
     this.votedAbstention = int.tryParse(_decompteVoix['abstentions']) ?? 0;
     this.didNotVote = int.tryParse(_decompteVoix['nonVotants']) ?? 0;
 
+    List<IndividualVoteFromJson> _toPass = [];
+
     Map<String, dynamic> _decompteNominatif = _vote["decompteNominatif"];
     if (_decompteNominatif['pours'] != null) {
       print("----- POURS not null");
+      Map<String, dynamic> _pours = _decompteNominatif['pours'];
+      for (var i = 0; i < _pours['votants'].length; i++) {
+        Map<String, dynamic> _votant = _pours['votants'][i];
+
+        _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
+            _votant, "pours"));
+      }
     }
     if (_decompteNominatif['contres'] != null) {
       print("----- CONTRES not null");
@@ -98,21 +107,8 @@ class GroupVotesFromJson {
     if (_decompteNominatif['nonVotants'] != null) {
       print("----- NV not null");
     }
-/*
-    List<IndividualVoteFromJson> _toPass = [];
-    for (var i = 0; i < _roughJson.length; i++) {
-      print("##### > " + _roughJson[i].toString());
-/*
-      if (_roughJson[i].length > 0) {
-        for (var j = 0; j < _roughJson[i].length; j++) {
-          _toPass.add(individualVoteFromJson
-              .fromFrenchNationalAssemblyJson(_roughJson[i][j]));
-        }
-      }
-*/
-    }
+
     this.individualVotesDetails = _toPass;
-*/
   }
 }
 
