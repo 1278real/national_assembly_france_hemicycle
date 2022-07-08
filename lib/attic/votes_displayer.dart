@@ -76,6 +76,7 @@ class OpenAssembleeVoteDisplayer {
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
+                      Padding(padding: EdgeInsets.all(2)),
                       Text(
                         (scrutin?.resultatVote ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
@@ -114,6 +115,11 @@ class OpenAssembleeVoteDisplayer {
                               ),
                             ],
                           ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
                           Row(
                             children: [
                               Container(
@@ -144,6 +150,7 @@ class OpenAssembleeVoteDisplayer {
                           ),
                         ],
                       ),
+                      Padding(padding: EdgeInsets.all(2)),
                       Text(
                         (dateStringFormatter(scrutin?.dateScrutin)),
                         textAlign: TextAlign.center,
