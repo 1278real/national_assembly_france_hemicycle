@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hemicycle/attic/colors.dart';
-import 'package:hemicycle/attic/drawHemicycle.dart';
 import 'package:hemicycle/attic/helpers.dart';
 import 'package:hemicycle/hemicycle.dart';
 import 'package:national_assembly_france_hemicycle/attic/helpers.dart';
@@ -12,6 +11,7 @@ class OpenAssembleeVoteDisplayer {
   List<IndividualVotes> votesAssemblyTest = [];
   ScrutinFromJson? scrutin;
 
+  /// used by [drawVoteHemicycle] FutureBuilder
   Future<bool> getVotes(String localPath) async {
     scrutin = await OpenAssembleeJsonTranscoder().getJsonScrutin(localPath);
     if (scrutin != null) {
@@ -27,7 +27,7 @@ class OpenAssembleeVoteDisplayer {
   /// • [localPath] is the path to the JSON file that needs to be displayed.
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
-  Widget DrawVoteHemicycle(String localPath, {bool useGroupSector = false}) {
+  Widget drawVoteHemicycle(String localPath, {bool useGroupSector = false}) {
     return FutureBuilder(
       future: getVotes(localPath),
       builder: (BuildContext context, AsyncSnapshot snapshot) {

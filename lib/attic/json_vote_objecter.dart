@@ -30,9 +30,11 @@ class IndividualVoteFromJson {
   bool? didNotVote;
   bool? votedAbstention;
 
+  /// [IndividualVoteFromJson] is the person voting
   IndividualVoteFromJson(this.acteurRef, this.mandatRef, this.parDelegation,
       this.votedFor, this.votedAgainst, this.didNotVote, this.votedAbstention);
 
+  /// In case he was not even present for vote
   bool get didNotAttend {
     return (!(votedFor ?? false) &&
         !(votedAgainst ?? false) &&
@@ -40,6 +42,7 @@ class IndividualVoteFromJson {
         !(didNotVote ?? false));
   }
 
+  /// Mapping from JSON
   IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
       Map<String, dynamic> json, String voteReceived) {
     this.acteurRef = json['acteurRef'];
@@ -77,6 +80,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   int? didNotVote;
   List<IndividualVoteFromJson>? individualVotesDetails;
 
+  /// [GroupVotesFromJson] is the group of persons
   GroupVotesFromJson(
       this.organeRef,
       this.nbMembers,
@@ -86,6 +90,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
       this.didNotVote,
       this.individualVotesDetails);
 
+  /// Calculate the numebr of group members that were not even present for vote
   int get didNotAttend {
     return (nbMembers ?? 0) -
         (votedFor ?? 0) -
@@ -94,6 +99,9 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
         (didNotVote ?? 0);
   }
 
+  /// Transcode the Group organeRef to a Political known group
+  ///
+  /// uses the [GroupTranscode] class
   GroupTranscode? get _groupTranscoded {
     for (var i = 0; i < groupsLegis15.length; i++) {
       if (groupsLegis15[i].organeRef == this.organeRef) {
@@ -105,8 +113,10 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
         return groupsLegis16[i];
       }
     }
+    return null;
   }
 
+  /// Used ofr left-to-right display
   int get groupIndex {
     if (_groupTranscoded != null) {
       return _groupTranscoded!.index;
@@ -114,6 +124,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     return 0;
   }
 
+  /// Political Color to display
   Color get groupColor {
     if (_groupTranscoded != null) {
       return _groupTranscoded!.groupeColor;
@@ -121,6 +132,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     return Color.fromARGB(255, 200, 200, 200);
   }
 
+  /// Name to display
   String get groupName {
     if (_groupTranscoded != null) {
       return _groupTranscoded!.name;
@@ -128,6 +140,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     return "-";
   }
 
+  /// Mapping from JSON
   GroupVotesFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
     this.organeRef = json['organeRef'];
     this.nbMembers = int.tryParse(json['nombreMembresGroupe']) ?? 0;
@@ -242,6 +255,7 @@ class ScrutinFromJson {
   int? didNotVote;
   List<GroupVotesFromJson>? groupVotesDetails;
 
+  /// [ScrutinFromJson] is the vote in the whole assembly
   ScrutinFromJson(
       this.uuid,
       this.organeRef,
@@ -258,10 +272,12 @@ class ScrutinFromJson {
       this.didNotVote,
       this.groupVotesDetails);
 
+  /// calculate the numebr of actual voters
   int get nbVoters {
     return (votedFor ?? 0) + (votedAgainst ?? 0) + (votedAbstention ?? 0);
   }
 
+  /// Mapping from JSON
   ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
     this.uuid = json['uid'];
     this.organeRef = json['organeRef'];

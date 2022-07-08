@@ -11,11 +11,11 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-The purpose of this Flutter package dependds on hemicycle Flutter package but is specific to French National Assembly.
+The purpose of this Flutter package depends on hemicycle Flutter package but is specific to French National Assembly.
 
 | ![Image](https://github.com/1278real/national_assembly_france_hemicycle/blob/6faf1357cce533d1772b1fc7fcc94b7909b8d438/assets/example1b.png) | ![Image](https://github.com/1278real/national_assembly_france_hemicycle/blob/6faf1357cce533d1772b1fc7fcc94b7909b8d438/assets/example2b.png) |
 | :------------: | :------------: |
-| **DrawHemicycle** With surrounding Group colors | **DrawHemicycle** Without surrounding Group colors |
+| **With surrounding** Group colors | **Without surrounding** Group colors |
 
 ## Features
 
@@ -23,17 +23,17 @@ You can give a local Path from your app to the JSON raw from open data (soon : U
 
 ## Usage
 
-Just type ```OpenAssembleeVoteDisplayer().DrawVoteHemicycle``` and submit local JSON as a Path.
+Just type ```OpenAssembleeVoteDisplayer().drawVoteHemicycle``` and submit local JSON as a Path.
 
 ```dart
-    OpenAssembleeVoteDisplayer().DrawVoteHemicycle(
+    OpenAssembleeVoteDisplayer().drawVoteHemicycle(
         "assets/example_json/VTANR5L15V4417.json"),
 
-    OpenAssembleeVoteDisplayer().DrawVoteHemicycle(
+    OpenAssembleeVoteDisplayer().drawVoteHemicycle(
         "assets/example_json/VTANR5L15V4418.json",
         useGroupSector: true),
-        
-    OpenAssembleeVoteDisplayer().DrawVoteHemicycle(
+
+    OpenAssembleeVoteDisplayer().drawVoteHemicycle(
         "assets/example_json/VTANR5L15V4419.json",
         useGroupSector: false),
 ```

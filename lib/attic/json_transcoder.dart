@@ -6,6 +6,7 @@ import 'package:hemicycle/attic/individual_votes.dart';
 import 'json_vote_objecter.dart';
 
 class OpenAssembleeJsonTranscoder {
+  /// Get local JSON and map to [ScrutinFromJson]
   Future<ScrutinFromJson?> getJsonScrutin(String localPath) async {
     final dynamic response = await rootBundle.loadString(localPath);
     if (response != null) {
@@ -38,9 +39,12 @@ class OpenAssembleeJsonTranscoder {
           ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapBis);
 
       return _newObjects;
+    } else {
+      return null;
     }
   }
 
+  /// Inside the [ScrutinFromJson], reorder the Groups and INdividual Votes for Assembly display
   Future<List<IndividualVotes>> getJsonIndividualVotes(
       ScrutinFromJson scrutin) async {
     List<IndividualVotes> votesList = [];

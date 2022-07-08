@@ -10,6 +10,7 @@ class GroupTranscode {
   GroupTranscode(this.index, this.organeRef, this.name, this.groupeColor);
 }
 
+/// Legislature XV : 2017-2022
 List<GroupTranscode> groupsLegis15 = [
   GroupTranscode(5, "PO730964", "LaREM", renaissanceOrange),
   GroupTranscode(8, "PO730934", "LR", republicainsBleu),
@@ -23,6 +24,7 @@ List<GroupTranscode> groupsLegis15 = [
   GroupTranscode(2, "PO730940", "GDR", nupesRouge),
 ];
 
+/// Legislature XVI : 2022-...
 List<GroupTranscode> groupsLegis16 = [
   GroupTranscode(6, "...", "REN", renaissanceOrange),
   GroupTranscode(10, "...", "RN", rnBleu),
