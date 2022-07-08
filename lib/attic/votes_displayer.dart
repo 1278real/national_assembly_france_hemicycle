@@ -59,8 +59,11 @@ class OpenAssembleeVoteDisplayer {
                     individualVotes: votesAssemblyTest,
                     groupSectors: _localGroups,
                     withTitle: true,
-                    title: (scrutin?.titre ??
-                        ("Vote " + (scrutin?.codeVote ?? "-"))),
+                    title: ((scrutin?.titre ??
+                            ("Vote " + (scrutin?.codeVote ?? "-")))
+                        .firstInCaps
+                        .trim()
+                        .deleteEndinPoint),
                     useGroupSector: useGroupSector,
                   ),
                 ),
