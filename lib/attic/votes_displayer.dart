@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hemicycle/attic/colors.dart';
 import 'package:hemicycle/attic/drawHemicycle.dart';
 import 'package:hemicycle/attic/helpers.dart';
 import 'package:hemicycle/hemicycle.dart';
@@ -71,12 +72,80 @@ class OpenAssembleeVoteDisplayer {
                         style: TextStyle(fontWeight: FontWeight.w900),
                       ),
                       Text(
-                        (dateStringFormatter(scrutin?.dateScrutin)),
+                        (scrutin?.demandeur ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        (scrutin?.demandeur ?? "-").firstInCaps,
+                        (scrutin?.resultatVote ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                  width: 10,
+                                  height: 10,
+                                  color: hemicyleVoteFor),
+                              Padding(padding: EdgeInsets.all(2)),
+                              Text(
+                                (scrutin?.votedFor.toString() ?? "") +
+                                    " POUR".firstInCaps,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.w900),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  width: 10,
+                                  height: 10,
+                                  color: hemicyleVoteAgainst),
+                              Padding(padding: EdgeInsets.all(2)),
+                              Text(
+                                (scrutin?.votedAgainst.toString() ?? "") +
+                                    " CONTRE".firstInCaps,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.w900),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  width: 10,
+                                  height: 10,
+                                  color: hemicyleVoteAbstention),
+                              Padding(padding: EdgeInsets.all(2)),
+                              Text(
+                                (scrutin?.votedAbstention.toString() ?? "") +
+                                    " ABSTENTION".firstInCaps,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.w900),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  width: 10, height: 10, color: hemicyleNoVote),
+                              Padding(padding: EdgeInsets.all(2)),
+                              Text(
+                                (scrutin?.didNotVote.toString() ?? "") +
+                                    " NON VOTANTS".firstInCaps,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.w900),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Text(
+                        (dateStringFormatter(scrutin?.dateScrutin)),
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
