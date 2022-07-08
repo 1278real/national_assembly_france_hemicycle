@@ -57,6 +57,8 @@ class OpenAssembleeVoteDisplayer {
                             48)
                         .round(),
                     individualVotes: votesAssemblyTest,
+                    withTitle: true,
+                    title: scrutin?.organeRef,
                   ),
                 ),
                 Padding(
@@ -82,7 +84,14 @@ class OpenAssembleeVoteDisplayer {
                       Text(
                         (scrutin?.resultatVote ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w900),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 12),
+                      ),
+                      Text(
+                        (scrutin?.majoriteVote ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 12),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -169,7 +178,7 @@ class OpenAssembleeVoteDisplayer {
                         (dateStringFormatter(scrutin?.dateScrutin)),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 12),
+                            fontWeight: FontWeight.w600, fontSize: 11),
                       ),
                     ],
                   ),
