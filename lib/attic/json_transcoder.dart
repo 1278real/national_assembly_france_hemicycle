@@ -7,8 +7,8 @@ import 'package:hemicycle/attic/individual_votes.dart';
 import 'json_vote_objecter.dart';
 
 class OpenAssembleeJsonTranscoder {
-  Future<ScrutinFromJson?> getJsonScrutin(String path) async {
-    final dynamic response = await rootBundle.loadString(path);
+  Future<ScrutinFromJson?> getJsonScrutin(String localPath) async {
+    final dynamic response = await rootBundle.loadString(localPath);
     if (response != null) {
 /*
       print(

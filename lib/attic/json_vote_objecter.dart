@@ -1,5 +1,23 @@
 import 'helpers.dart';
 
+/// TRANSFORM THE JSON FILE FROM OPEN DATA ASSEMBLEE NATIONALE TO :
+///
+/// [ScrutinFromJson] OBJECT that includes :
+///   • ref to scrutin (uuid, organe, date)
+///   • type of vote (code, title, majority)
+///   • result of vote as announced
+///   • title of the vote and its supplier
+///   • an array of [GroupVotesFromJson]
+///       ↳ each [GroupVotesFromJson] OBJECT includes :
+///           • ref to group
+///           • number of members
+///           • votes in integer (for, against, abstention, did not vote but attended, did not attend)
+///           • an array of [IndividualVoteFromJson]
+///               ↳ each [IndividualVoteFromJson] OBJECT includes :
+///                   • ref to voter (ref as a person, ref as a mandate)
+///                   • whether it is "per delegation" or not
+///                   • the actual vote
+
 class IndividualVoteFromJson {
   String? acteurRef;
   String? mandatRef;

@@ -11,8 +11,8 @@ class OpenAssembleeVoteDisplayer {
   List<IndividualVotes> votesAssemblyTest = [];
   ScrutinFromJson? scrutin;
 
-  Future<bool> getVotes(String path) async {
-    scrutin = await OpenAssembleeJsonTranscoder().getJsonScrutin(path);
+  Future<bool> getVotes(String localPath) async {
+    scrutin = await OpenAssembleeJsonTranscoder().getJsonScrutin(localPath);
     if (scrutin != null) {
       votesAssemblyTest =
           await OpenAssembleeJsonTranscoder().getJsonIndividualVotes(scrutin!);
@@ -21,14 +21,25 @@ class OpenAssembleeVoteDisplayer {
     return false;
   }
 
-  Widget DrawVoteHemicycle(String path) {
+  /// ### Creates a widget with French National Assembly view defined by these parameters :
+  ///
+  /// • [localPath] is the path to the JSON file that needs to be displayed.
+  ///
+  /// • [onlyVoters] is an optional boolean to display only the members that attended (even if didn't vote or used abstention).
+  Widget DrawVoteHemicycle(String localPath, {bool onlyVoters = false}) {
     return FutureBuilder(
-      future: getVotes(path),
+      future: getVotes(localPath),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return CircularProgressIndicator();
         }
         if (snapshot.hasData) {
+          int nbOfMembersInvolved = 0;
+          if (scrutin != null && scrutin!.groupVotesDetails != null) {
+            for (GroupVotesFromJson group in scrutin!.groupVotesDetails!) {
+              nbOfMembersInvolved += group.nbMembers ?? 0;
+            }
+          }
           return Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width,
@@ -37,9 +48,13 @@ class OpenAssembleeVoteDisplayer {
               children: [
                 Center(
                   child: DrawHemicycle(
-                    votesAssemblyTest.length,
+                    onlyVoters ? votesAssemblyTest.length : nbOfMembersInvolved,
                     assemblyWidth: 0.8,
-                    nbRows: (votesAssemblyTest.length / 48).round(),
+                    nbRows: ((onlyVoters
+                                ? votesAssemblyTest.length
+                                : nbOfMembersInvolved) /
+                            48)
+                        .round(),
                     individualVotes: votesAssemblyTest,
                   ),
                 ),
