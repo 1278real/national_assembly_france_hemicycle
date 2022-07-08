@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:hemicycle/attic/drawHemicycle.dart';
 import 'package:hemicycle/hemicycle.dart';
+import 'package:national_assembly_france_hemicycle/attic/json_vote_objecter.dart';
 
 import 'json_transcoder.dart';
 
 class OpenAssembleeVoteDisplayer {
   List<IndividualVotes> votesAssemblyTest = [];
+  ScrutinFromJson? scrutin;
 
   Future<bool> getVotes(String path) async {
-    votesAssemblyTest =
-        await OpenAssembleeJsonTranscoder().getJsonIndividualVotes(path);
-    return true;
+    scrutin = await OpenAssembleeJsonTranscoder().getJsonScrutin(path);
+    if (scrutin != null) {
+      votesAssemblyTest =
+          await OpenAssembleeJsonTranscoder().getJsonIndividualVotes(scrutin!);
+      return true;
+    }
+    return false;
   }
 
   Widget DrawVoteHemicycle(String path) {
@@ -21,11 +27,26 @@ class OpenAssembleeVoteDisplayer {
           return CircularProgressIndicator();
         }
         if (snapshot.hasData) {
-          return Center(
-            child: DrawHemicycle(votesAssemblyTest.length,
-                assemblyWidth: 0.75,
-                nbRows: (votesAssemblyTest.length / 25).ceil(),
-                individualVotes: votesAssemblyTest),
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Center(
+                  child: DrawHemicycle(
+                    votesAssemblyTest.length,
+                    assemblyWidth: 0.8,
+                    nbRows: (votesAssemblyTest.length / 25).ceil(),
+                    individualVotes: votesAssemblyTest,
+                    withLegend: true,
+                  ),
+                ),
+                Center(
+                  child: Text(scrutin?.codeVote ?? "---"),
+                )
+              ],
+            ),
           );
         }
         if (snapshot.hasError) {

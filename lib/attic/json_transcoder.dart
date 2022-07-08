@@ -7,9 +7,7 @@ import 'package:hemicycle/attic/individual_votes.dart';
 import 'json_vote_objecter.dart';
 
 class OpenAssembleeJsonTranscoder {
-  Future<List<IndividualVotes>> getJsonIndividualVotes(String path) async {
-    List<IndividualVotes> votesList = [];
-
+  Future<ScrutinFromJson?> getJsonScrutin(String path) async {
     final dynamic response = await rootBundle.loadString(path);
     if (response != null) {
 /*
@@ -40,52 +38,51 @@ class OpenAssembleeJsonTranscoder {
       ScrutinFromJson _newObjects =
           ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapBis);
 
-      // print("—————national_assembly_france_hemicycle————— ••••• _newObjects");
-      // inspect(_newObjects);
-      // print("—————national_assembly_france_hemicycle————— ••••• STEP 3");
+      return _newObjects;
+    }
+  }
 
-      if (_newObjects.groupVotesDetails != null) {
-        // print("—————national_assembly_france_hemicycle————— ••••• STEP 4");
-        if (_newObjects.groupVotesDetails!.length > 0) {
-          // print("—————national_assembly_france_hemicycle————— ••••• STEP 5");
-          int indexIncrement = 1;
-          for (var i = 0; i < _newObjects.groupVotesDetails!.length; i++) {
-            if (_newObjects.groupVotesDetails![i].individualVotesDetails !=
-                null) {
-              // print("—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " + i.toString());
-              if (_newObjects
-                      .groupVotesDetails![i].individualVotesDetails!.length >
-                  0) {
-                // print("—————national_assembly_france_hemicycle————— ••••• STEP 7");
-                for (var j = 0;
-                    j <
-                        _newObjects.groupVotesDetails![i]
-                            .individualVotesDetails!.length;
-                    j++) {
-                  IndividualVoteFromJson element = _newObjects
-                      .groupVotesDetails![i].individualVotesDetails![j];
-                  votesList.add(IndividualVotes(indexIncrement,
-                      voteResult: element.votedFor ?? false
-                          ? true
-                          : element.votedAgainst ?? false
-                              ? false
-                              : element.votedAbstention ?? false
-                                  ? null
-                                  : element.didNotVote ?? false
-                                      ? null
-                                      : null,
-                      groupPairing:
-                          _newObjects.groupVotesDetails![i].organeRef));
-                  indexIncrement += 1;
-                }
+  Future<List<IndividualVotes>> getJsonIndividualVotes(
+      ScrutinFromJson scrutin) async {
+    List<IndividualVotes> votesList = [];
+
+    if (scrutin.groupVotesDetails != null) {
+      // print("—————national_assembly_france_hemicycle————— ••••• STEP 4");
+      if (scrutin.groupVotesDetails!.length > 0) {
+        // print("—————national_assembly_france_hemicycle————— ••••• STEP 5");
+        int indexIncrement = 1;
+        for (var i = 0; i < scrutin.groupVotesDetails!.length; i++) {
+          if (scrutin.groupVotesDetails![i].individualVotesDetails != null) {
+            // print("—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " + i.toString());
+            if (scrutin.groupVotesDetails![i].individualVotesDetails!.length >
+                0) {
+              // print("—————national_assembly_france_hemicycle————— ••••• STEP 7");
+              for (var j = 0;
+                  j <
+                      scrutin
+                          .groupVotesDetails![i].individualVotesDetails!.length;
+                  j++) {
+                IndividualVoteFromJson element =
+                    scrutin.groupVotesDetails![i].individualVotesDetails![j];
+                votesList.add(IndividualVotes(indexIncrement,
+                    voteResult: element.votedFor ?? false
+                        ? true
+                        : element.votedAgainst ?? false
+                            ? false
+                            : element.votedAbstention ?? false
+                                ? null
+                                : element.didNotVote ?? false
+                                    ? null
+                                    : null,
+                    groupPairing: scrutin.groupVotesDetails![i].organeRef));
+                indexIncrement += 1;
               }
             }
           }
         }
       }
-
-      // print("—————national_assembly_france_hemicycle————— ••••• getJsonScrutin OVER");
     }
     return votesList;
+    // print("—————national_assembly_france_hemicycle————— ••••• getJsonScrutin OVER");
   }
 }
