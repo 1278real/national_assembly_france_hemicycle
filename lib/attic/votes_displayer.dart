@@ -58,7 +58,8 @@ class OpenAssembleeVoteDisplayer {
                         .round(),
                     individualVotes: votesAssemblyTest,
                     withTitle: true,
-                    title: scrutin?.organeRef,
+                    title: (scrutin?.titre ??
+                        ("Vote " + (scrutin?.codeVote ?? "-"))),
                   ),
                 ),
                 Padding(
@@ -66,14 +67,6 @@ class OpenAssembleeVoteDisplayer {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        (scrutin?.titre ??
-                                ("Vote " + (scrutin?.codeVote ?? "-")))
-                            .firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 14),
-                      ),
                       Text(
                         "par " + (scrutin?.demandeur ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
