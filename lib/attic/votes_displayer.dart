@@ -43,7 +43,7 @@ class OpenAssembleeVoteDisplayer {
           }
           return Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width * 1.15,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
