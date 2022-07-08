@@ -47,10 +47,10 @@ class OpenAssembleeVoteDisplayer {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
+                Padding(
+                  padding: EdgeInsets.all(10),
                   child: DrawHemicycle(
                     onlyVoters ? votesAssemblyTest.length : nbOfMembersInvolved,
-                    assemblyWidth: 0.8,
                     nbRows: ((onlyVoters
                                 ? votesAssemblyTest.length
                                 : nbOfMembersInvolved) /
@@ -60,7 +60,7 @@ class OpenAssembleeVoteDisplayer {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -69,12 +69,14 @@ class OpenAssembleeVoteDisplayer {
                                 ("Vote " + (scrutin?.codeVote ?? "-")))
                             .firstInCaps,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w900),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 14),
                       ),
                       Text(
-                        (scrutin?.demandeur ?? "-").firstInCaps,
+                        "par " + (scrutin?.demandeur ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 10),
                       ),
                       Padding(padding: EdgeInsets.all(2)),
                       Text(
@@ -94,10 +96,11 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.votedFor.toString() ?? "") +
-                                    " POUR" +
-                                    ((scrutin?.votedFor ?? 0) > 1 ? "S" : ""),
+                                    " pour" +
+                                    ((scrutin?.votedFor ?? 0) > 1 ? "s" : ""),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.w900),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 10),
                               ),
                             ],
                           ),
@@ -110,12 +113,13 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.votedAgainst.toString() ?? "") +
-                                    " CONTRE" +
+                                    " contre" +
                                     ((scrutin?.votedAgainst ?? 0) > 1
-                                        ? "S"
+                                        ? "s"
                                         : ""),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.w900),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 10),
                               ),
                             ],
                           ),
@@ -133,12 +137,13 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.votedAbstention.toString() ?? "") +
-                                    " ABSTENTION" +
+                                    " abstention" +
                                     ((scrutin?.votedAbstention ?? 0) > 1
-                                        ? "S"
+                                        ? "s"
                                         : ""),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.w900),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 10),
                               ),
                             ],
                           ),
@@ -149,10 +154,11 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.didNotVote.toString() ?? "") +
-                                    " NON VOTANT" +
-                                    ((scrutin?.didNotVote ?? 0) > 1 ? "S" : ""),
+                                    " non votant" +
+                                    ((scrutin?.didNotVote ?? 0) > 1 ? "s" : ""),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.w900),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 10),
                               ),
                             ],
                           ),
@@ -162,7 +168,8 @@ class OpenAssembleeVoteDisplayer {
                       Text(
                         (dateStringFormatter(scrutin?.dateScrutin)),
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 12),
                       ),
                     ],
                   ),
