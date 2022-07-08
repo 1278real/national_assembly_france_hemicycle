@@ -12,7 +12,7 @@ class OpenAssembleeVoteDisplayer {
         .getJsonIndividualVotes("assets/example_json/VTANR5L15V4417.json");
   }
 
-  Future<Widget> DrawVoteHemicycle(String path) async {
+  Widget DrawVoteHemicycle(String path) {
     getVotes();
     return Center(
       child: DrawHemicycle(votesAssemblyTest.length,
