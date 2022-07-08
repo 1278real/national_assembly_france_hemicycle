@@ -73,13 +73,14 @@ class OpenAssembleeVoteDisplayer {
                         style: TextStyle(
                             fontWeight: FontWeight.w300, fontSize: 10),
                       ),
-                      Padding(padding: EdgeInsets.all(2)),
+                      Padding(padding: EdgeInsets.all(10)),
                       Text(
-                        (scrutin?.resultatVote ?? "-").firstInCaps,
+                        (dateStringFormatter(scrutin?.dateScrutin)),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 12),
+                            fontWeight: FontWeight.w600, fontSize: 11),
                       ),
+                      Padding(padding: EdgeInsets.all(10)),
                       Text(
                         (scrutin?.majoriteVote ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
@@ -166,12 +167,11 @@ class OpenAssembleeVoteDisplayer {
                           ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.all(2)),
                       Text(
-                        (dateStringFormatter(scrutin?.dateScrutin)),
+                        (scrutin?.resultatVote ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 11),
+                            fontWeight: FontWeight.w900, fontSize: 12),
                       ),
                     ],
                   ),
