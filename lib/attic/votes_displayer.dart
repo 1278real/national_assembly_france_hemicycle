@@ -37,12 +37,15 @@ class OpenAssembleeVoteDisplayer {
                   child: DrawHemicycle(
                     votesAssemblyTest.length,
                     assemblyWidth: 0.8,
+                    nbRows: (votesAssemblyTest.length / 48).round(),
                     individualVotes: votesAssemblyTest,
-                    withLegend: true,
                   ),
                 ),
                 Center(
-                  child: Text(scrutin?.codeVote ?? "---"),
+                  child: Text(
+                    scrutin?.titre ?? "---",
+                    style: TextStyle(fontWeight: FontWeight.w900),
+                  ),
                 )
               ],
             ),
