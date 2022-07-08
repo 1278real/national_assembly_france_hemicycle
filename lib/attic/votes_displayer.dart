@@ -31,13 +31,13 @@ class OpenAssembleeVoteDisplayer {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
                   child: DrawHemicycle(
                     votesAssemblyTest.length,
                     assemblyWidth: 0.8,
-                    nbRows: (votesAssemblyTest.length / 25).ceil(),
+                    nbRows: (votesAssemblyTest.length / 48).round(),
                     individualVotes: votesAssemblyTest,
                     withLegend: true,
                   ),
