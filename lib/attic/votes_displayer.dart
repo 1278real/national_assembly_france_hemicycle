@@ -36,7 +36,6 @@ class OpenAssembleeVoteDisplayer {
                 Center(
                   child: DrawHemicycle(
                     votesAssemblyTest.length,
-                    assemblyWidth: 0.8,
                     nbRows: (votesAssemblyTest.length / 48).round(),
                     individualVotes: votesAssemblyTest,
                     withLegend: true,
