@@ -13,9 +13,9 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  # hemicycle: ^0.0.30
-  hemicycle:
-    git: https://github.com/1278real/hemicycle
+  hemicycle: ^0.1.0
+  #hemicycle:
+    #git: https://github.com/1278real/hemicycle
  
 
 dev_dependencies:
