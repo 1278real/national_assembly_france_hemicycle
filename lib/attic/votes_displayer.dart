@@ -27,7 +27,8 @@ class OpenAssembleeVoteDisplayer {
   /// • [localPath] is the path to the JSON file that needs to be displayed.
   ///
   /// • [onlyVoters] is an optional boolean to display only the members that attended (even if didn't vote or used abstention).
-  Widget DrawVoteHemicycle(String localPath, {bool onlyVoters = false}) {
+  Widget DrawVoteHemicycle(String localPath,
+      {bool onlyVoters = false, bool useGroupSector = false}) {
     return FutureBuilder(
       future: getVotes(localPath),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -65,7 +66,11 @@ class OpenAssembleeVoteDisplayer {
                     withTitle: true,
                     title: (scrutin?.titre ??
                         ("Vote " + (scrutin?.codeVote ?? "-"))),
-                    useGroupSector: true,
+                    useGroupSector: onlyVoters
+                        ? false
+                        : useGroupSector
+                            ? true
+                            : false,
                   ),
                 ),
                 Padding(
