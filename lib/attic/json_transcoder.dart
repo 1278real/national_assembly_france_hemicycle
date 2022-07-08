@@ -48,7 +48,7 @@ class OpenAssembleeJsonTranscoder {
         // print("—————national_assembly_france_hemicycle————— ••••• STEP 4");
         if (_newObjects.groupVotesDetails!.length > 0) {
           // print("—————national_assembly_france_hemicycle————— ••••• STEP 5");
-          int indexIncrement = 0;
+          int indexIncrement = 1;
           for (var i = 0; i < _newObjects.groupVotesDetails!.length; i++) {
             if (_newObjects.groupVotesDetails![i].individualVotesDetails !=
                 null) {
