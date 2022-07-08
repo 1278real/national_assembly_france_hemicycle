@@ -28,9 +28,11 @@ Just type ```OpenAssembleeVoteDisplayer().DrawVoteHemicycle``` and submit local 
 ```dart
     OpenAssembleeVoteDisplayer().DrawVoteHemicycle(
         "assets/example_json/VTANR5L15V4417.json"),
+
     OpenAssembleeVoteDisplayer().DrawVoteHemicycle(
         "assets/example_json/VTANR5L15V4418.json",
         useGroupSector: true),
+        
     OpenAssembleeVoteDisplayer().DrawVoteHemicycle(
         "assets/example_json/VTANR5L15V4419.json",
         useGroupSector: false),
