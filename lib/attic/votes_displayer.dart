@@ -83,7 +83,7 @@ class OpenAssembleeVoteDisplayer {
                         style: TextStyle(fontWeight: FontWeight.w900),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
                             children: [
@@ -94,7 +94,8 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.votedFor.toString() ?? "") +
-                                    " POUR".firstInCaps,
+                                    " POUR" +
+                                    ((scrutin?.votedFor ?? 0) > 1 ? "S" : ""),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontWeight: FontWeight.w900),
                               ),
@@ -109,7 +110,10 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.votedAgainst.toString() ?? "") +
-                                    " CONTRE".firstInCaps,
+                                    " CONTRE" +
+                                    ((scrutin?.votedAgainst ?? 0) > 1
+                                        ? "S"
+                                        : ""),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontWeight: FontWeight.w900),
                               ),
@@ -118,7 +122,7 @@ class OpenAssembleeVoteDisplayer {
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
                             children: [
@@ -129,7 +133,10 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.votedAbstention.toString() ?? "") +
-                                    " ABSTENTION".firstInCaps,
+                                    " ABSTENTION" +
+                                    ((scrutin?.votedAbstention ?? 0) > 1
+                                        ? "S"
+                                        : ""),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontWeight: FontWeight.w900),
                               ),
@@ -142,7 +149,8 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.didNotVote.toString() ?? "") +
-                                    " NON VOTANTS".firstInCaps,
+                                    " NON VOTANT" +
+                                    ((scrutin?.didNotVote ?? 0) > 1 ? "S" : ""),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontWeight: FontWeight.w900),
                               ),
