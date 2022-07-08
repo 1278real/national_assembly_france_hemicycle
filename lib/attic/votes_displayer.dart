@@ -35,10 +35,14 @@ class OpenAssembleeVoteDisplayer {
           return CircularProgressIndicator();
         }
         if (snapshot.hasData) {
+          List<GroupSectors> _localGroups = [];
           int nbOfMembersInvolved = 0;
           if (scrutin != null && scrutin!.groupVotesDetails != null) {
             for (GroupVotesFromJson group in scrutin!.groupVotesDetails!) {
               nbOfMembersInvolved += group.nbMembers ?? 0;
+              _localGroups.add(GroupSectors(
+                  group.nbMembers ?? 0, group.groupColor,
+                  description: group.groupName));
             }
           }
           return Container(
@@ -57,9 +61,11 @@ class OpenAssembleeVoteDisplayer {
                             48)
                         .round(),
                     individualVotes: votesAssemblyTest,
+                    groupSectors: _localGroups,
                     withTitle: true,
                     title: (scrutin?.titre ??
                         ("Vote " + (scrutin?.codeVote ?? "-"))),
+                    useGroupSector: true,
                   ),
                 ),
                 Padding(
