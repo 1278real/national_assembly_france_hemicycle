@@ -45,10 +45,10 @@ class OpenAssembleeVoteDisplayer {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
                     onlyVoters ? votesAssemblyTest.length : nbOfMembersInvolved,
                     nbRows: ((onlyVoters
