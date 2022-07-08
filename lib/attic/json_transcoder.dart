@@ -52,14 +52,11 @@ class OpenAssembleeJsonTranscoder {
           for (var i = 0; i < _newObjects.groupVotesDetails!.length; i++) {
             if (_newObjects.groupVotesDetails![i].individualVotesDetails !=
                 null) {
-              print(
-                  "—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " +
-                      i.toString());
+              // print("—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " + i.toString());
               if (_newObjects
                       .groupVotesDetails![i].individualVotesDetails!.length >
                   0) {
-                print(
-                    "—————national_assembly_france_hemicycle————— ••••• STEP 7");
+                // print("—————national_assembly_france_hemicycle————— ••••• STEP 7");
                 for (var j = 0;
                     j <
                         _newObjects.groupVotesDetails![i]
@@ -87,8 +84,7 @@ class OpenAssembleeJsonTranscoder {
         }
       }
 
-      print(
-          "—————national_assembly_france_hemicycle————— ••••• getJsonScrutin OVER");
+      // print("—————national_assembly_france_hemicycle————— ••••• getJsonScrutin OVER");
     }
     return votesList;
   }

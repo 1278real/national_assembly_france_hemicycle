@@ -89,7 +89,7 @@ class GroupVotesFromJson {
 
     Map<String, dynamic> _decompteNominatif = _vote["decompteNominatif"];
     if (_decompteNominatif['pours'] != null) {
-      print("----- POURS not null");
+      // print("----- POURS not null");
       Map<String, dynamic> _voteResult = _decompteNominatif['pours'];
       if (this.votedFor != null && this.votedFor! > 1) {
         List<dynamic> _votants = _voteResult['votant'];
@@ -107,7 +107,7 @@ class GroupVotesFromJson {
       }
     }
     if (_decompteNominatif['contres'] != null) {
-      print("----- CONTRES not null");
+      // print("----- CONTRES not null");
       Map<String, dynamic> _voteResult = _decompteNominatif['contres'];
       if (this.votedAgainst != null && this.votedAgainst! > 1) {
         List<dynamic> _votants = _voteResult['votant'];
@@ -125,7 +125,7 @@ class GroupVotesFromJson {
       }
     }
     if (_decompteNominatif['abstentions'] != null) {
-      print("----- ABSTENTION not null");
+      // print("----- ABSTENTION not null");
       Map<String, dynamic> _voteResult = _decompteNominatif['abstentions'];
       if (this.votedAbstention != null && this.votedAbstention! > 1) {
         List<dynamic> _votants = _voteResult['votant'];
@@ -143,7 +143,7 @@ class GroupVotesFromJson {
       }
     }
     if (_decompteNominatif['nonVotants'] != null) {
-      print("----- NV not null");
+      // print("----- NV not null");
       Map<String, dynamic> _voteResult = _decompteNominatif['nonVotants'];
       if (this.didNotVote != null && this.didNotVote! > 1) {
         List<dynamic> _votants = _voteResult['votant'];
