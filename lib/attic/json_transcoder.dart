@@ -81,9 +81,7 @@ class OpenAssembleeJsonTranscoder {
                 groupIncrement += 1;
               }
               if (groupIncrement < groupNumber) {
-                for (var j = 0; j < groupNumber - groupIncrement; j++) {
-                  IndividualVoteFromJson element =
-                      _reorder[i].individualVotesDetails![j];
+                for (var j = 0; j < (groupNumber - groupIncrement); j++) {
                   votesList.add(IndividualVotes(indexIncrement,
                       voteResult: null, groupPairing: _reorder[i].organeRef));
                   indexIncrement += 1;
