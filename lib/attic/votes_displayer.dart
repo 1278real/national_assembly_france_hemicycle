@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hemicycle/attic/drawHemicycle.dart';
+import 'package:hemicycle/attic/helpers.dart';
 import 'package:hemicycle/hemicycle.dart';
+import 'package:national_assembly_france_hemicycle/attic/helpers.dart';
 import 'package:national_assembly_france_hemicycle/attic/json_vote_objecter.dart';
 
 import 'json_transcoder.dart';
@@ -41,12 +43,31 @@ class OpenAssembleeVoteDisplayer {
                     individualVotes: votesAssemblyTest,
                   ),
                 ),
-                Center(
-                  child: Text(
-                    scrutin?.titre ?? "---",
-                    style: TextStyle(fontWeight: FontWeight.w900),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        (scrutin?.titre ??
+                                ("Vote " + (scrutin?.codeVote ?? "-")))
+                            .firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                      Text(
+                        (dateStringFormatter(scrutin?.dateScrutin)),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        (scrutin?.demandeur ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           );
