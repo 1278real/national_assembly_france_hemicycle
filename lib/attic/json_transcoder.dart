@@ -50,20 +50,20 @@ class OpenAssembleeJsonTranscoder {
       // print("—————national_assembly_france_hemicycle————— ••••• STEP 4");
       if (scrutin.groupVotesDetails!.length > 0) {
         // print("—————national_assembly_france_hemicycle————— ••••• STEP 5");
+        List<GroupVotesFromJson> _reorder = scrutin.groupVotesDetails!;
+        _reorder.sort();
+
         int indexIncrement = 1;
-        for (var i = 0; i < scrutin.groupVotesDetails!.length; i++) {
-          if (scrutin.groupVotesDetails![i].individualVotesDetails != null) {
+        for (var i = 0; i < _reorder.length; i++) {
+          if (_reorder[i].individualVotesDetails != null) {
             // print("—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " + i.toString());
-            if (scrutin.groupVotesDetails![i].individualVotesDetails!.length >
-                0) {
+            if (_reorder[i].individualVotesDetails!.length > 0) {
               // print("—————national_assembly_france_hemicycle————— ••••• STEP 7");
               for (var j = 0;
-                  j <
-                      scrutin
-                          .groupVotesDetails![i].individualVotesDetails!.length;
+                  j < _reorder[i].individualVotesDetails!.length;
                   j++) {
                 IndividualVoteFromJson element =
-                    scrutin.groupVotesDetails![i].individualVotesDetails![j];
+                    _reorder[i].individualVotesDetails![j];
                 votesList.add(IndividualVotes(indexIncrement,
                     voteResult: element.votedFor ?? false
                         ? true
@@ -74,7 +74,7 @@ class OpenAssembleeJsonTranscoder {
                                 : element.didNotVote ?? false
                                     ? null
                                     : null,
-                    groupPairing: scrutin.groupVotesDetails![i].organeRef));
+                    groupPairing: _reorder[i].organeRef));
                 indexIncrement += 1;
               }
             }

@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:national_assembly_france_hemicycle/attic/groupe_transcode.dart';
+
 import 'helpers.dart';
 
 /// TRANSFORM THE JSON FILE FROM OPEN DATA ASSEMBLEE NATIONALE TO :
@@ -65,7 +68,7 @@ class IndividualVoteFromJson {
   }
 }
 
-class GroupVotesFromJson {
+class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   String? organeRef;
   int? nbMembers;
   int? votedFor;
@@ -89,6 +92,40 @@ class GroupVotesFromJson {
         (votedAgainst ?? 0) -
         (votedAbstention ?? 0) -
         (didNotVote ?? 0);
+  }
+
+  GroupTranscode? get _groupTranscoded {
+    for (var i = 0; i < groupsLegis15.length; i++) {
+      if (groupsLegis15[i].organeRef == this.organeRef) {
+        return groupsLegis15[i];
+      }
+    }
+    for (var i = 0; i < groupsLegis16.length; i++) {
+      if (groupsLegis16[i].organeRef == this.organeRef) {
+        return groupsLegis16[i];
+      }
+    }
+  }
+
+  int get groupIndex {
+    if (_groupTranscoded != null) {
+      return _groupTranscoded!.index;
+    }
+    return 0;
+  }
+
+  Color get groupColor {
+    if (_groupTranscoded != null) {
+      return _groupTranscoded!.groupeColor;
+    }
+    return Color.fromARGB(255, 200, 200, 200);
+  }
+
+  String get groupName {
+    if (_groupTranscoded != null) {
+      return _groupTranscoded!.name;
+    }
+    return "-";
   }
 
   GroupVotesFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
@@ -180,6 +217,12 @@ class GroupVotesFromJson {
     }
 
     this.individualVotesDetails = _toPass;
+  }
+
+  @override
+  int compareTo(GroupVotesFromJson other) {
+    return this.groupIndex.compareTo(other
+        .groupIndex); // this.compareTo.other = ordre GAUCHE > CENTRE > DROITE
   }
 }
 
