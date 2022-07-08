@@ -82,8 +82,7 @@ class OpenAssembleeJsonTranscoder {
               }
               if (groupIncrement < groupNumber) {
                 for (var j = 0; j < (groupNumber - groupIncrement); j++) {
-                  votesList.add(IndividualVotes(indexIncrement,
-                      voteResult: null, groupPairing: _reorder[i].organeRef));
+                  // votesList.add(IndividualVotes(indexIncrement,voteResult: null, groupPairing: _reorder[i].organeRef));
                   indexIncrement += 1;
                 }
               }
