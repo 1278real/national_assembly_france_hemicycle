@@ -1,5 +1,16 @@
 import 'package:hemicycle/attic/helpers.dart';
 
+extension OtherExtension on String {
+  /// Delete ending point of a String if any
+  String get deleteEndinPoint {
+    if (this.substring(this.length) == ".") {
+      return this.substring(0, this.length - 1);
+    } else {
+      return this;
+    }
+  }
+}
+
 /// ### Convert a String [dateString] to DateTime
 ///
 /// • You can specify the [dateSeparator], by default = "/"...
