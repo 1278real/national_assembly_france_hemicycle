@@ -155,24 +155,30 @@ class OpenAssembleeVoteDisplayer {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Container(
-                                  width: 10, height: 10, color: hemicyleNoVote),
-                              Padding(padding: EdgeInsets.all(2)),
-                              Text(
-                                (scrutin?.didNotVote.toString() ?? "") +
-                                    " non votant" +
-                                    ((scrutin?.didNotVote ?? 0) > 0
-                                        ? "*"
-                                        : "") +
-                                    ((scrutin?.didNotVote ?? 0) > 1 ? "s" : ""),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 10),
-                              ),
-                            ],
-                          ),
+                          if ((scrutin?.didNotVote ?? 0) > 0)
+                            Row(
+                              children: [
+                                Container(
+                                    width: 10,
+                                    height: 10,
+                                    color: hemicyleNoVote),
+                                Padding(padding: EdgeInsets.all(2)),
+                                Text(
+                                  (scrutin?.didNotVote.toString() ?? "") +
+                                      " non votant" +
+                                      ((scrutin?.didNotVote ?? 0) > 0
+                                          ? "*"
+                                          : "") +
+                                      ((scrutin?.didNotVote ?? 0) > 1
+                                          ? "s"
+                                          : ""),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10),
+                                ),
+                              ],
+                            ),
                         ],
                       ),
                       Text(
