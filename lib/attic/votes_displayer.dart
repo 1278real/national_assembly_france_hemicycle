@@ -11,7 +11,7 @@ class OpenAssembleeVoteDisplayer {
 
   /// used by [drawVoteHemicycle] FutureBuilder
   Future<bool> getVotes({String? localPath, String? remotePath}) async {
-    if (localPath != null) {
+    if (localPath != null || remotePath != null) {
       scrutin = await OpenAssembleeJsonTranscoder()
           .getJsonScrutin(localPath: localPath, remotePath: remotePath);
     }
@@ -32,9 +32,7 @@ class OpenAssembleeVoteDisplayer {
   Widget drawVoteHemicycle(
       {String? localPath, String? remotePath, bool useGroupSector = false}) {
     return FutureBuilder(
-      future: getVotes(
-          localPath: localPath != null ? localPath : null,
-          remotePath: remotePath != null ? remotePath : null),
+      future: getVotes(localPath: localPath, remotePath: remotePath),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return circularWait(randomColor());

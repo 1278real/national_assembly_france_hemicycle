@@ -46,7 +46,7 @@ class OpenAssembleeJsonTranscoder {
     return "";
   }
 
-  /// Get local JSON and map to [ScrutinFromJson]
+  /// Get JSON file (local or remote) and map to [ScrutinFromJson]
   Future<ScrutinFromJson?> getJsonScrutin(
       {String? localPath, String? remotePath}) async {
     dynamic responseToProcess = "";
@@ -54,11 +54,10 @@ class OpenAssembleeJsonTranscoder {
     if (remotePath != null) {
       print("sendong to remote");
       responseToProcess = await _checkAvailabilityOfRemoteFile(remotePath);
+      print("&\n" + responseToProcess + "\n&");
     } else if (localPath != null) {
       responseToProcess = await _checkAvailabilityOfLocalFile(localPath);
     }
-
-    print("&\n" + responseToProcess + "\n&");
 
     if (responseToProcess != "") {
       // print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
