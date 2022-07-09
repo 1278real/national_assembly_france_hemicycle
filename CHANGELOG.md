@@ -4,10 +4,12 @@
 ```dart
 @Deprecated('Use drawVoteHemicycleFromPath instead')
 OpenAssembleeVoteDisplayer().drawVoteHemicycle(
-    "assets/example_json/VTANR5L15V4417.json"),
+    "assets/example_json/VTANR5L15V4417.json");
 
 OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:
-    "assets/example_json/VTANR5L15V4417.json"),
+    "assets/example_json/VTANR5L15V4417.json");
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(remotePath:
+    "https://www.example.com/assets/example_json/VTANR5L15V4417.json");
 ```
 
 ## 0.3.7
