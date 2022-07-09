@@ -10,8 +10,8 @@ import 'json_vote_objecter.dart';
 
 class OpenAssembleeJsonTranscoder {
   /// Checks if remote file is available and returns its body
-  Future<String> _checkAvailabilityOfRemoteFile(String remotePath) async {
-    String _toReturn = "";
+  Future<dynamic> _checkAvailabilityOfRemoteFile(String remotePath) async {
+    dynamic _toReturn = "";
 
     try {
       var url = Uri.parse(remotePath);
@@ -38,7 +38,7 @@ class OpenAssembleeJsonTranscoder {
   }
 
   /// Checks if local file is available and returns its content
-  Future<String> _checkAvailabilityOfLocalFile(String localPath) async {
+  Future<dynamic> _checkAvailabilityOfLocalFile(String localPath) async {
     final dynamic response = await rootBundle.loadString(localPath);
     if (response != null) {
       return response;
@@ -51,18 +51,15 @@ class OpenAssembleeJsonTranscoder {
       {String? localPath, String? remotePath}) async {
     dynamic responseToProcess = "";
     if (remotePath != null) {
+      print("sendong to remote");
       responseToProcess = await _checkAvailabilityOfRemoteFile(remotePath);
     } else if (localPath != null) {
       responseToProcess = await _checkAvailabilityOfLocalFile(localPath);
     }
 
-    if (responseToProcess != "") {
-/*
-      print(
-          "—————national_assembly_france_hemicycle————— getJsonScrutin SUCCESS : " +
-              response.length.toString());
-*/
+    print("&\n" + responseToProcess + "\n&");
 
+    if (responseToProcess != "") {
       // print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
       Map<String, dynamic> _map = json.decode(responseToProcess);
