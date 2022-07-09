@@ -26,12 +26,9 @@ You can give a local Path from your app to the JSON raw from open data (soon : U
 Just type ```OpenAssembleeVoteDisplayer().drawVoteHemicycle``` and submit local or remote JSON as a Path.
 
 ```dart
-OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:
-    "assets/example_json/VTANR5L15V4417.json"),
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:"assets/example_json/VTANR5L15V4417.json");
 
-OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(remotePath:
-    "https://www.example.com/assets/example_json/VTANR5L15V4419.json",
-    useGroupSector: false),
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(remotePath:"https://www.example.com/assets/example_json/VTANR5L15V4419.json", useGroupSector: false);
 ```
 
 You can choose to display or not the surrounding Arc of Group colors by submitting ```useGroupSector```. By default, it is set to false.
@@ -42,11 +39,9 @@ Since we are introducing  ```localPath:``` and ```remotePath:```, ```drawVoteHem
 
 ```dart
 @Deprecated('Use drawVoteHemicycleFromPath instead')
-OpenAssembleeVoteDisplayer().drawVoteHemicycle(
-    "assets/example_json/VTANR5L15V4417.json"),
+OpenAssembleeVoteDisplayer().drawVoteHemicycle("assets/example_json/VTANR5L15V4417.json");
 
-OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:
-    "assets/example_json/VTANR5L15V4417.json"),
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:"assets/example_json/VTANR5L15V4417.json");
 ```
 
 ## Additional information
