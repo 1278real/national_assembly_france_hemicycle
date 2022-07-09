@@ -19,15 +19,15 @@ class _OpenAssembleeExampleState extends State<OpenAssembleeExample> {
     return Scaffold(
       body: Column(children: <Widget>[
         OpenAssembleeVoteDisplayer().drawVoteHemicycle(
-            "assets/example_json/VTANR5L15V4417.json",
+            localPath: "assets/example_json/VTANR5L15V4417.json",
             useGroupSector: true),
         Padding(padding: EdgeInsets.all(20)),
         OpenAssembleeVoteDisplayer().drawVoteHemicycle(
-            "assets/example_json/VTANR5L15V4418.json",
+            localPath: "assets/example_json/VTANR5L15V4418.json",
             useGroupSector: true),
         Padding(padding: EdgeInsets.all(20)),
         OpenAssembleeVoteDisplayer().drawVoteHemicycle(
-            "assets/example_json/VTANR5L15V4419.json",
+            localPath: "assets/example_json/VTANR5L15V4419.json",
             useGroupSector: true),
       ]),
     );

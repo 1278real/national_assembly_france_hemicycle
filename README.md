@@ -23,18 +23,18 @@ You can give a local Path from your app to the JSON raw from open data (soon : U
 
 ## Usage
 
-Just type ```OpenAssembleeVoteDisplayer().drawVoteHemicycle``` and submit local JSON as a Path.
+Just type ```OpenAssembleeVoteDisplayer().drawVoteHemicycle``` and submit local or remote JSON as a Path.
 
 ```dart
-    OpenAssembleeVoteDisplayer().drawVoteHemicycle(
+    OpenAssembleeVoteDisplayer().drawVoteHemicycle(localPath:
         "assets/example_json/VTANR5L15V4417.json"),
 
-    OpenAssembleeVoteDisplayer().drawVoteHemicycle(
+    OpenAssembleeVoteDisplayer().drawVoteHemicycle(localPath:
         "assets/example_json/VTANR5L15V4418.json",
         useGroupSector: true),
 
-    OpenAssembleeVoteDisplayer().drawVoteHemicycle(
-        "assets/example_json/VTANR5L15V4419.json",
+    OpenAssembleeVoteDisplayer().drawVoteHemicycle(remotePath:
+        "https://www.example.com/assets/example_json/VTANR5L15V4419.json",
         useGroupSector: false),
 ```
 

@@ -26,15 +26,15 @@ List<GroupTranscode> groupsLegis15 = [
 
 /// Legislature XVI : 2022-...
 List<GroupTranscode> groupsLegis16 = [
-  GroupTranscode(1, "...", "LFI", nupesViolet),
-  GroupTranscode(2, "...", "GDR", nupesRouge),
-  GroupTranscode(3, "...", "EELV", nupesVert),
-  GroupTranscode(4, "...", "SOC", nupesRose),
-  GroupTranscode(5, "...", "LIOMT", liomtRose),
-  GroupTranscode(6, "...", "REN", renaissanceOrange),
-  GroupTranscode(7, "...", "DEM", modemJaune),
-  GroupTranscode(8, "...", "HRZ", horizonsBleu),
-  GroupTranscode(9, "...", "LR-UDI", republicainsBleu),
-  GroupTranscode(10, "...", "RN", rnBleu),
-  GroupTranscode(99, "...", "NI", nonInscritGris),
+  GroupTranscode(1, "PO800490", "LFI", nupesViolet),
+  GroupTranscode(2, "PO800502", "GDR", nupesRouge),
+  GroupTranscode(3, "PO800526", "ECOLO", nupesVert),
+  GroupTranscode(4, "PO800496", "SOC", nupesRose),
+  GroupTranscode(5, "PO800532", "LIOT", liotRose),
+  GroupTranscode(6, "PO800538", "RE", renaissanceOrange),
+  GroupTranscode(7, "PO800484", "DEM", modemJaune),
+  GroupTranscode(8, "PO800514", "HOR", horizonsBleu),
+  GroupTranscode(9, "PO800508", "LR", republicainsBleu),
+  GroupTranscode(10, "PO800520", "RN", rnBleu),
+  GroupTranscode(99, "PO793087", "NI", nonInscritGris),
 ];

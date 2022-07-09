@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/services.dart';
 import 'package:hemicycle/attic/individual_votes.dart';
@@ -6,10 +9,53 @@ import 'package:hemicycle/attic/individual_votes.dart';
 import 'json_vote_objecter.dart';
 
 class OpenAssembleeJsonTranscoder {
-  /// Get local JSON and map to [ScrutinFromJson]
-  Future<ScrutinFromJson?> getJsonScrutin(String localPath) async {
+  /// Checks if remote file is available and returns its body
+  Future<String> _checkAvailabilityOfRemoteFile(String remotePath) async {
+    String _toReturn = "";
+
+    try {
+      var url = Uri.parse(remotePath);
+      // https://www.1-2-7-8.tv/solutions/gauche/linkToJsons.json
+
+      final response = await http.get(url).timeout(Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        _toReturn = response.body;
+      } else {
+        _toReturn = "";
+      }
+    } on TimeoutException catch (_) {
+      // A timeout occurred.
+
+      _toReturn = "";
+    } on SocketException catch (_) {
+      // Other exception
+
+      _toReturn = "";
+    }
+    return _toReturn;
+  }
+
+  /// Checks if local file is available and returns its content
+  Future<String> _checkAvailabilityOfLocalFile(String localPath) async {
     final dynamic response = await rootBundle.loadString(localPath);
     if (response != null) {
+      return response;
+    }
+    return "";
+  }
+
+  /// Get local JSON and map to [ScrutinFromJson]
+  Future<ScrutinFromJson?> getJsonScrutin(
+      {String? localPath, String? remotePath}) async {
+    dynamic responseToProcess = "";
+    if (remotePath != null) {
+      responseToProcess = await _checkAvailabilityOfRemoteFile(remotePath);
+    } else if (localPath != null) {
+      responseToProcess = await _checkAvailabilityOfLocalFile(localPath);
+    }
+
+    if (responseToProcess != "") {
 /*
       print(
           "—————national_assembly_france_hemicycle————— getJsonScrutin SUCCESS : " +
@@ -18,7 +64,7 @@ class OpenAssembleeJsonTranscoder {
 
       // print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
 
-      Map<String, dynamic> _map = json.decode(response);
+      Map<String, dynamic> _map = json.decode(responseToProcess);
       Map<String, dynamic> _mapBis = _map["scrutin"];
 
       // print(" —————national_assembly_france_hemicycle————— ••••• _mapBis");

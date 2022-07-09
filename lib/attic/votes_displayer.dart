@@ -10,8 +10,12 @@ class OpenAssembleeVoteDisplayer {
   ScrutinFromJson? scrutin;
 
   /// used by [drawVoteHemicycle] FutureBuilder
-  Future<bool> getVotes(String localPath) async {
-    scrutin = await OpenAssembleeJsonTranscoder().getJsonScrutin(localPath);
+  Future<bool> getVotes({String? localPath, String? remotePath}) async {
+    if (localPath != null) {
+      scrutin = await OpenAssembleeJsonTranscoder()
+          .getJsonScrutin(localPath: localPath, remotePath: remotePath);
+    }
+
     if (scrutin != null) {
       votesAssemblyTest =
           await OpenAssembleeJsonTranscoder().getJsonIndividualVotes(scrutin!);
@@ -25,9 +29,12 @@ class OpenAssembleeVoteDisplayer {
   /// • [localPath] is the path to the JSON file that needs to be displayed.
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
-  Widget drawVoteHemicycle(String localPath, {bool useGroupSector = false}) {
+  Widget drawVoteHemicycle(
+      {String? localPath, String? remotePath, bool useGroupSector = false}) {
     return FutureBuilder(
-      future: getVotes(localPath),
+      future: getVotes(
+          localPath: localPath != null ? localPath : null,
+          remotePath: remotePath != null ? remotePath : null),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return circularWait(randomColor());

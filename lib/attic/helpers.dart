@@ -209,7 +209,7 @@ Color randomColor() {
     renaissanceOrange,
     republicainsBleu,
     territoiresRose,
-    liomtRose,
+    liotRose,
     modemJaune,
     nonInscritGris,
     agirBleu,

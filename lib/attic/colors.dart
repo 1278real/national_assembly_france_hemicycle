@@ -37,8 +37,8 @@ MaterialColor republicainsBleu = MaterialColor(0xFF1462F4, color);
 /// LIGHT PINK color for Territoires de Progres (legislature 15)
 MaterialColor territoiresRose = MaterialColor(0xFFCE84DA, color);
 
-/// LIGHT PINK color for L-I-OM-T (legislature 15)
-MaterialColor liomtRose = MaterialColor(0xFFCE84DA, color);
+/// LIGHT PINK color for LIOT (legislature 15)
+MaterialColor liotRose = MaterialColor(0xFFCE84DA, color);
 
 /// YELLOW color for MoDem
 MaterialColor modemJaune = MaterialColor(0xFFDFBD36, color);

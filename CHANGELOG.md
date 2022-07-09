@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Implementation of remote files : check README.md for update needed to your code.
+
 ## 0.3.7
 
 * Changed the waiting pattern during building.
