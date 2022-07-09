@@ -47,7 +47,7 @@ class OpenAssembleeVoteDisplayer {
           }
           return Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width * 1.15,
+            height: MediaQuery.of(context).size.width * 1.25,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -55,7 +55,7 @@ class OpenAssembleeVoteDisplayer {
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
                     nbOfMembersInvolved,
-                    assemblyAngle: 190,
+                    assemblyAngle: 195,
                     nbRows: (nbOfMembersInvolved / 48).round(),
                     individualVotes: votesAssemblyTest,
                     groupSectors: _localGroups,
