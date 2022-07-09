@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hemicycle/attic/colors.dart';
 import 'package:hemicycle/attic/helpers.dart';
 import 'package:hemicycle/hemicycle.dart';
-import 'package:national_assembly_france_hemicycle/attic/helpers.dart';
-import 'package:national_assembly_france_hemicycle/attic/json_vote_objecter.dart';
 
-import 'json_transcoder.dart';
+import '../national_assembly_france_hemicycle.dart';
 
 class OpenAssembleeVoteDisplayer {
   List<IndividualVotes> votesAssemblyTest = [];
@@ -192,7 +190,7 @@ class OpenAssembleeVoteDisplayer {
             ),
           );
         } else {
-          return CircularProgressIndicator();
+          return circularWait(randomColor());
         }
       },
     );

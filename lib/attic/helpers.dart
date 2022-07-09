@@ -1,4 +1,9 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 import 'package:hemicycle/attic/helpers.dart';
+
+import 'colors.dart';
 
 extension OtherExtension on String {
   /// Delete ending point of a String if any
@@ -192,3 +197,47 @@ List<String> joursLongs = [
   "Samedi",
   "Dimanche"
 ];
+
+/// ### Generate a Random color among the different custom colors defined...
+Color randomColor() {
+  List<Color> allCustomColors = [
+    nupesVert,
+    nupesJaune,
+    nupesRouge,
+    nupesRose,
+    nupesViolet,
+    renaissanceOrange,
+    republicainsBleu,
+    territoiresRose,
+    liomtRose,
+    modemJaune,
+    nonInscritGris,
+    agirBleu,
+    horizonsBleu,
+    udiBleu,
+    rnBleu
+  ];
+
+  int randomInteger = Random().nextInt(allCustomColors.length);
+
+  return allCustomColors[randomInteger];
+}
+
+/// ### Generate a CircularProgressIndicator with a received Random color...
+Padding circularWait(Color waitColor) {
+  return Padding(
+    padding: const EdgeInsets.all(15.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+            width: 150,
+            height: 150,
+            child: CircularProgressIndicator(
+              strokeWidth: 10,
+              color: waitColor,
+            )),
+      ],
+    ),
+  );
+}
