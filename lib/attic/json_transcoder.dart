@@ -15,7 +15,6 @@ class OpenAssembleeJsonTranscoder {
 
     try {
       var url = Uri.parse(remotePath);
-      // https://www.1-2-7-8.tv/solutions/gauche/linkToJsons.json
 
       final response = await http.get(url).timeout(Duration(seconds: 10));
 
