@@ -45,9 +45,12 @@ class OpenAssembleeVoteDisplayer {
     return FutureBuilder(
       future: getVotes(localPath: localPath, remotePath: remotePath),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+/*
         if (snapshot.connectionState != ConnectionState.done) {
           return circularWait(randomColor());
         }
+*/
+
         if (snapshot.hasData) {
           List<GroupSectors> _localGroups = [];
           int nbOfMembersInvolved = 0;
