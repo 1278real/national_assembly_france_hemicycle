@@ -29,7 +29,18 @@ class OpenAssembleeVoteDisplayer {
   /// • [localPath] is the path to the JSON file that needs to be displayed.
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
-  Widget drawVoteHemicycle(
+  @Deprecated('Use drawVoteHemicycleFromPath instead')
+  Widget drawVoteHemicycle(String localPath, {bool useGroupSector = false}) {
+    return drawVoteHemicycleFromPath(
+        localPath: localPath, useGroupSector: useGroupSector);
+  }
+
+  /// ### Creates a widget with French National Assembly view defined by these parameters :
+  ///
+  /// • [localPath] is the path to the JSON file that needs to be displayed.
+  ///
+  /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
+  Widget drawVoteHemicycleFromPath(
       {String? localPath, String? remotePath, bool useGroupSector = false}) {
     return FutureBuilder(
       future: getVotes(localPath: localPath, remotePath: remotePath),

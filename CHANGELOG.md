@@ -1,6 +1,14 @@
-## 0.4.1
+## 0.4.2
 
-* Implementation of remote files : check README.md for update needed to your code.
+* Implementation of remote files : ```drawVoteHemicycle``` is deprecated and replaced by ```drawVoteHemicycleFromPath```.
+```dart
+@Deprecated('Use drawVoteHemicycleFromPath instead')
+OpenAssembleeVoteDisplayer().drawVoteHemicycle(
+    "assets/example_json/VTANR5L15V4417.json"),
+
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:
+    "assets/example_json/VTANR5L15V4417.json"),
+```
 
 ## 0.3.7
 
