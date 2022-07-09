@@ -36,7 +36,9 @@ class OpenAssembleeVoteDisplayer {
           List<GroupSectors> _localGroups = [];
           int nbOfMembersInvolved = 0;
           if (scrutin != null && scrutin!.groupVotesDetails != null) {
-            for (GroupVotesFromJson group in scrutin!.groupVotesDetails!) {
+            List<GroupVotesFromJson> _reorder = scrutin!.groupVotesDetails!;
+            _reorder.sort();
+            for (GroupVotesFromJson group in _reorder) {
               nbOfMembersInvolved += group.nbMembers ?? 0;
               _localGroups.add(GroupSectors(
                   group.nbMembers ?? 0, group.groupColor,
