@@ -101,12 +101,12 @@ class OpenAssembleeVoteDisplayer {
                                   width: 10,
                                   height: 10,
                                   color: hemicyleVoteFor),
-                              Padding(padding: EdgeInsets.all(2)),
+                              Padding(padding: EdgeInsets.all(1)),
                               Container(
                                   width: 10,
                                   height: 10,
                                   color: hemicyleVoteFor.withOpacity(0.3)),
-                              Padding(padding: EdgeInsets.all(2)),
+                              Padding(padding: EdgeInsets.all(3)),
                               Text(
                                 (scrutin?.votedFor.toString() ?? "") +
                                     " pour" +
@@ -123,12 +123,12 @@ class OpenAssembleeVoteDisplayer {
                                   width: 10,
                                   height: 10,
                                   color: hemicyleVoteAgainst),
-                              Padding(padding: EdgeInsets.all(2)),
+                              Padding(padding: EdgeInsets.all(1)),
                               Container(
                                   width: 10,
                                   height: 10,
                                   color: hemicyleVoteAgainst.withOpacity(0.3)),
-                              Padding(padding: EdgeInsets.all(2)),
+                              Padding(padding: EdgeInsets.all(3)),
                               Text(
                                 (scrutin?.votedAgainst.toString() ?? "") +
                                     " contre" +
@@ -152,13 +152,13 @@ class OpenAssembleeVoteDisplayer {
                                   width: 10,
                                   height: 10,
                                   color: hemicyleVoteAbstention),
-                              Padding(padding: EdgeInsets.all(2)),
+                              Padding(padding: EdgeInsets.all(1)),
                               Container(
                                   width: 10,
                                   height: 10,
                                   color:
                                       hemicyleVoteAbstention.withOpacity(0.3)),
-                              Padding(padding: EdgeInsets.all(2)),
+                              Padding(padding: EdgeInsets.all(3)),
                               Text(
                                 (scrutin?.votedAbstention.toString() ?? "") +
                                     " abstention" +
@@ -179,13 +179,13 @@ class OpenAssembleeVoteDisplayer {
                                     height: 10,
                                     color:
                                         hemicyleVoteAbstention), // car présents, donc pas vote absent !!
-                                Padding(padding: EdgeInsets.all(2)),
+                                Padding(padding: EdgeInsets.all(1)),
                                 Container(
                                     width: 10,
                                     height: 10,
                                     color: hemicyleVoteAbstention.withOpacity(
                                         0.3)), // car présents, donc pas vote absent !!
-                                Padding(padding: EdgeInsets.all(2)),
+                                Padding(padding: EdgeInsets.all(3)),
                                 Text(
                                   (scrutin?.didNotVote.toString() ?? "") +
                                       " non votant" +
