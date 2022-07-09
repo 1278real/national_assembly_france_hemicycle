@@ -50,6 +50,7 @@ class OpenAssembleeJsonTranscoder {
   Future<ScrutinFromJson?> getJsonScrutin(
       {String? localPath, String? remotePath}) async {
     dynamic responseToProcess = "";
+
     if (remotePath != null) {
       print("sendong to remote");
       responseToProcess = await _checkAvailabilityOfRemoteFile(remotePath);
