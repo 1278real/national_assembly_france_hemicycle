@@ -27,8 +27,8 @@ List<GroupTranscode> groupsLegis15 = [
 /// Legislature XVI : 2022-...
 List<GroupTranscode> groupsLegis16 = [
   GroupTranscode(1, "...", "LFI", nupesViolet),
-  GroupTranscode(2, "...", "EELV", nupesVert),
-  GroupTranscode(3, "...", "GDR", nupesRouge),
+  GroupTranscode(2, "...", "GDR", nupesRouge),
+  GroupTranscode(3, "...", "EELV", nupesVert),
   GroupTranscode(4, "...", "SOC", nupesRose),
   GroupTranscode(5, "...", "LIOMT", liomtRose),
   GroupTranscode(6, "...", "REN", renaissanceOrange),
