@@ -19,8 +19,10 @@ class OpenAssembleeJsonTranscoder {
       final response = await http.get(url).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
+        print("&&&&& ok");
         _toReturn = response.body;
       } else {
+        print("&&&&& nope");
         _toReturn = "";
       }
     } on TimeoutException catch (_) {
