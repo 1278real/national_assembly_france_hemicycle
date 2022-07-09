@@ -55,6 +55,7 @@ class OpenAssembleeVoteDisplayer {
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
                     nbOfMembersInvolved,
+                    assemblyAngle: 190,
                     nbRows: (nbOfMembersInvolved / 48).round(),
                     individualVotes: votesAssemblyTest,
                     groupSectors: _localGroups,
