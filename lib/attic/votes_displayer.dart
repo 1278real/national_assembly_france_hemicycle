@@ -162,7 +162,7 @@ class OpenAssembleeVoteDisplayer {
                               Padding(padding: EdgeInsets.all(2)),
                               Text(
                                 (scrutin?.didNotVote.toString() ?? "") +
-                                    " non votant" +
+                                    " non votant*" +
                                     ((scrutin?.didNotVote ?? 0) > 1 ? "s" : ""),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -177,6 +177,12 @@ class OpenAssembleeVoteDisplayer {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w900, fontSize: 12),
+                      ),
+                      Text(
+                        "* 'non votants' parmi les présents, les autres sont notés 'absents'",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontWeight: FontWeight.w200, fontSize: 7),
                       ),
                     ],
                   ),
