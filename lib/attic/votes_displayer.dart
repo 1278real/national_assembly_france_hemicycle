@@ -11,7 +11,7 @@ class OpenAssembleeVoteDisplayer {
   List<GroupSectors> _localGroups = [];
   int nbOfMembersInvolved = 0;
 
-  /// used by [drawVoteHemicycle] FutureBuilder
+  /// used by [drawVoteHemicycleFromPath] FutureBuilder
   Future<bool> getVotes({String? localPath, String? remotePath}) async {
     if (localPath != null || remotePath != null) {
       scrutin = await OpenAssembleeJsonTranscoder()
@@ -65,11 +65,14 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
   ///
+  /// • [withDivider] is an optional boolean to display an Horizontal Divider before the Column of Widgets.
+  ///
   /// • [backgroundColor] is used to fill the Drawing area with a plain background color
   Widget drawVoteHemicycleFromPath(
       {String? localPath,
       String? remotePath,
       bool useGroupSector = false,
+      bool withDivider = false,
       Color? backgroundColor}) {
     return FutureBuilder(
       future: getVotes(localPath: localPath, remotePath: remotePath),
@@ -113,6 +116,8 @@ class OpenAssembleeVoteDisplayer {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      if (withDivider)
+                        for (Widget widget in theDivider()) widget,
                       Text(
                         "par " + (scrutin?.demandeur ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
