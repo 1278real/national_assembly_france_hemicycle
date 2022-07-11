@@ -63,11 +63,19 @@ class OpenAssembleeVoteDisplayer {
           if (scrutin != null && scrutin!.groupVotesDetails != null) {
             List<GroupVotesFromJson> _reorder = scrutin!.groupVotesDetails!;
             _reorder.sort();
+            int sum = 0;
             for (GroupVotesFromJson group in _reorder) {
               nbOfMembersInvolved += group.nbMembers ?? 0;
               _localGroups.add(GroupSectors(
                   group.nbMembers ?? 0, group.groupColor,
                   description: group.groupName));
+              sum += group.nbMembers ?? 0;
+              print("-----" +
+                  group.groupName +
+                  " / " +
+                  group.nbMembers.toString() +
+                  " = " +
+                  sum.toString());
             }
           }
           return Container(
