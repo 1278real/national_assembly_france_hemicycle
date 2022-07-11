@@ -78,6 +78,8 @@ class OpenAssembleeVoteDisplayer {
           return circularWait(randomColor());
         }
 */
+
+        print("nbOfMembersInvolved = " + nbOfMembersInvolved.toString());
         if (snapshot.hasData) {
           return Container(
             width: MediaQuery.of(context).size.width,
