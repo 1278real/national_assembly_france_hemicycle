@@ -127,7 +127,9 @@ class OpenAssembleeJsonTranscoder {
                 indexIncrement += 1;
                 groupIncrement += 1;
               }
-              indexIncrement += (groupNumber - groupIncrement + 1);
+              if (groupNumber > groupIncrement) {
+                indexIncrement += (groupNumber - groupIncrement + 1);
+              }
               print("groupNumber = " +
                   groupNumber.toString() +
                   " / groupIncrement = " +
