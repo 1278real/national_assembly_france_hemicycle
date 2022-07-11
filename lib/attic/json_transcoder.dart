@@ -100,7 +100,7 @@ class OpenAssembleeJsonTranscoder {
         List<GroupVotesFromJson> _reorder = scrutin.groupVotesDetails!;
         _reorder.sort();
 
-        int indexIncrement = 1;
+        int indexIncrement = 0;
         for (var i = 0; i < _reorder.length; i++) {
           if (_reorder[i].individualVotesDetails != null) {
             // print("—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " + i.toString());
