@@ -76,6 +76,7 @@ class OpenAssembleeVoteDisplayer {
                   group.nbMembers.toString() +
                   " = " +
                   sum.toString());
+              //
             }
           }
           return Container(
