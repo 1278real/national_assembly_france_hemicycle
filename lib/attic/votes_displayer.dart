@@ -88,10 +88,12 @@ class OpenAssembleeVoteDisplayer {
           return Container(
             width: MediaQuery.of(context).size.width,
             height:
-                MediaQuery.of(context).size.width * (withDivider ? 1.5 : 1.35),
+                MediaQuery.of(context).size.width * (withDivider ? 1.55 : 1.35),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                if (withDivider)
+                  for (Widget widget in theDivider()) widget,
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
@@ -117,8 +119,6 @@ class OpenAssembleeVoteDisplayer {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (withDivider)
-                        for (Widget widget in theDivider()) widget,
                       Text(
                         "par " + (scrutin?.demandeur ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
