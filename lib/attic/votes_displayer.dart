@@ -50,7 +50,6 @@ class OpenAssembleeVoteDisplayer {
           return circularWait(randomColor());
         }
 */
-
         if (snapshot.hasData) {
           List<GroupSectors> _localGroups = [];
           int nbOfMembersInvolved = 0;
