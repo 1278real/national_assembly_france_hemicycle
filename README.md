@@ -13,7 +13,7 @@ and the Flutter guide for
 
 The purpose of this Flutter package depends on hemicycle Flutter package but is specific to French National Assembly.
 
-| ![Image](https://github.com/1278real/national_assembly_france_hemicycle/blob/64b159c0497ed8fd06bf7a3df593def27eae7b11/assets/example1b.png) | ![Image](https://github.com/1278real/national_assembly_france_hemicycle/blob/64b159c0497ed8fd06bf7a3df593def27eae7b11/assets/example2b.png) |
+| ![Image](https://github.com/1278real/national_assembly_france_hemicycle/blob/b94238535524e31f88da39d0e0df173d823395f4/assets/example1_OK.png) | ![Image](https://github.com/1278real/national_assembly_france_hemicycle/blob/b94238535524e31f88da39d0e0df173d823395f4/assets/example2_OK.png) |
 | :------------: | :------------: |
 | **With surrounding** Group colors | **Without surrounding** Group colors |
 
