@@ -132,13 +132,14 @@ class OpenAssembleeJsonTranscoder {
               if (groupNumber > groupIncrement) {
                 indexIncrement += (groupNumber - groupIncrement);
               }
-
+/*
               print("groupNumber = " +
                   groupNumber.toString() +
                   " / groupIncrement = " +
                   groupIncrement.toString() +
                   " /// indexIncrement = " +
                   indexIncrement.toString());
+*/
             }
           }
         }

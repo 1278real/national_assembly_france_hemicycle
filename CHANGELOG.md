@@ -1,3 +1,7 @@
+## 0.4.3
+
+* Graphic enhancements for Individual Votes and surrounding arc
+
 ## 0.4.2
 
 * Implementation of remote files : ```drawVoteHemicycle``` is deprecated and replaced by ```drawVoteHemicycleFromPath```.

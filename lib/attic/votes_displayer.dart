@@ -27,13 +27,14 @@ class OpenAssembleeVoteDisplayer {
           nbOfMembersInvolved += group.nbMembers ?? 0;
           _localGroups.add(GroupSectors(group.nbMembers ?? 0, group.groupColor,
               description: group.groupName));
+/*
           print("-----" +
               group.groupName +
               " / " +
               group.nbMembers.toString() +
               " = " +
               nbOfMembersInvolved.toString());
-          //
+*/
         }
       }
       votesAssemblyTest =
@@ -79,7 +80,7 @@ class OpenAssembleeVoteDisplayer {
         }
 */
 
-        print("nbOfMembersInvolved = " + nbOfMembersInvolved.toString());
+        //       print("nbOfMembersInvolved = " + nbOfMembersInvolved.toString());
         if (snapshot.hasData) {
           return Container(
             width: MediaQuery.of(context).size.width,
