@@ -1,4 +1,4 @@
-## 0.4.6
+## 0.4.7
 
 * Graphic enhancements for Individual Votes and surrounding arc
 
