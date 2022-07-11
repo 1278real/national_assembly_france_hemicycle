@@ -128,11 +128,18 @@ class OpenAssembleeVoteDisplayer {
                       ),
                       Padding(padding: EdgeInsets.all(10)),
                       Text(
+                        (scrutin?.libelleVote ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12),
+                      ),
+                      Text(
                         (scrutin?.majoriteVote ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w300, fontSize: 12),
                       ),
+                      Padding(padding: EdgeInsets.all(10)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
