@@ -106,11 +106,14 @@ class OpenAssembleeJsonTranscoder {
             // print("—————national_assembly_france_hemicycle————— ••••• STEP 6 @ " + i.toString());
             if (_reorder[i].individualVotesDetails!.length > 0) {
               // print("—————national_assembly_france_hemicycle————— ••••• STEP 7");
-              int groupIncrement = 1;
+              int groupIncrement = 0;
               int groupNumber = _reorder[i].nbMembers ?? 0;
+
               for (var j = 0;
                   j < _reorder[i].individualVotesDetails!.length;
                   j++) {
+                indexIncrement += 1;
+                groupIncrement += 1;
                 IndividualVoteFromJson element =
                     _reorder[i].individualVotesDetails![j];
                 votesList.add(IndividualVotes(indexIncrement,
@@ -124,12 +127,12 @@ class OpenAssembleeJsonTranscoder {
                                     ? null
                                     : null,
                     groupPairing: _reorder[i].organeRef));
-                indexIncrement += 1;
-                groupIncrement += 1;
               }
+
               if (groupNumber > groupIncrement) {
-                indexIncrement += (groupNumber - groupIncrement + 1);
+                indexIncrement += (groupNumber - groupIncrement);
               }
+
               print("groupNumber = " +
                   groupNumber.toString() +
                   " / groupIncrement = " +
