@@ -8,6 +8,8 @@ import '../national_assembly_france_hemicycle.dart';
 class OpenAssembleeVoteDisplayer {
   List<IndividualVotes> votesAssemblyTest = [];
   ScrutinFromJson? scrutin;
+  List<GroupSectors> _localGroups = [];
+  int nbOfMembersInvolved = 0;
 
   /// used by [drawVoteHemicycle] FutureBuilder
   Future<bool> getVotes({String? localPath, String? remotePath}) async {
@@ -17,10 +19,29 @@ class OpenAssembleeVoteDisplayer {
     }
 
     if (scrutin != null) {
+      if (scrutin!.groupVotesDetails != null) {
+        List<GroupVotesFromJson> _reorder = scrutin!.groupVotesDetails!;
+        _reorder.sort();
+        int sum = 0;
+        for (GroupVotesFromJson group in _reorder) {
+          nbOfMembersInvolved += group.nbMembers ?? 0;
+          _localGroups.add(GroupSectors(group.nbMembers ?? 0, group.groupColor,
+              description: group.groupName));
+          print("-----" +
+              group.groupName +
+              " / " +
+              group.nbMembers.toString() +
+              " = " +
+              nbOfMembersInvolved.toString());
+          //
+        }
+      }
       votesAssemblyTest =
           await OpenAssembleeJsonTranscoder().getJsonIndividualVotes(scrutin!);
+
       return true;
     }
+
     return false;
   }
 
@@ -58,27 +79,6 @@ class OpenAssembleeVoteDisplayer {
         }
 */
         if (snapshot.hasData) {
-          List<GroupSectors> _localGroups = [];
-          int nbOfMembersInvolved = 0;
-          if (scrutin != null && scrutin!.groupVotesDetails != null) {
-            List<GroupVotesFromJson> _reorder = scrutin!.groupVotesDetails!;
-            _reorder.sort();
-            int sum = 0;
-            for (GroupVotesFromJson group in _reorder) {
-              nbOfMembersInvolved += group.nbMembers ?? 0;
-              _localGroups.add(GroupSectors(
-                  group.nbMembers ?? 0, group.groupColor,
-                  description: group.groupName));
-              sum += group.nbMembers ?? 0;
-              print("-----" +
-                  group.groupName +
-                  " / " +
-                  group.nbMembers.toString() +
-                  " = " +
-                  sum.toString());
-              //
-            }
-          }
           return Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width * 1.35,

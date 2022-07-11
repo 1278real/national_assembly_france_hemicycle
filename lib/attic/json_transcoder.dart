@@ -127,12 +127,13 @@ class OpenAssembleeJsonTranscoder {
                 indexIncrement += 1;
                 groupIncrement += 1;
               }
-              if (groupIncrement < groupNumber) {
-                for (var j = 0; j < (groupNumber - groupIncrement); j++) {
-                  // votesList.add(IndividualVotes(indexIncrement,voteResult: null, groupPairing: _reorder[i].organeRef));
-                  indexIncrement += 1;
-                }
-              }
+              indexIncrement += (groupNumber - groupIncrement);
+              print("groupNumber = " +
+                  groupNumber.toString() +
+                  " / groupIncrement = " +
+                  groupIncrement.toString() +
+                  " /// indexIncrement = " +
+                  indexIncrement.toString());
             }
           }
         }
