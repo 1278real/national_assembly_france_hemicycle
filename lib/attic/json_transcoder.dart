@@ -19,10 +19,10 @@ class OpenAssembleeJsonTranscoder {
       final response = await http.get(url).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        print("&&&&& ok");
+        // print("&&&&& ok");
         _toReturn = response.body;
       } else {
-        print("&&&&& nope");
+        // print("&&&&& nope");
         _toReturn = "";
       }
     } on TimeoutException catch (_) {
@@ -52,9 +52,9 @@ class OpenAssembleeJsonTranscoder {
     dynamic responseToProcess = "";
 
     if (remotePath != null) {
-      print("sendong to remote");
+      // print("sending to remote");
       responseToProcess = await _checkAvailabilityOfRemoteFile(remotePath);
-      print("&\n" + responseToProcess + "\n&");
+      // print("&\n" + responseToProcess + "\n&");
     } else if (localPath != null) {
       responseToProcess = await _checkAvailabilityOfLocalFile(localPath);
     }
