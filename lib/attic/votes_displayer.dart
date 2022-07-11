@@ -84,6 +84,8 @@ class OpenAssembleeVoteDisplayer {
                         .trim()
                         .deleteEndinPoint),
                     useGroupSector: useGroupSector,
+                    backgroundColor: Colors.amber,
+                    backgroundOpacity: 0.05,
                   ),
                 ),
                 Padding(
