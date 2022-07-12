@@ -13,11 +13,11 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  hemicycle: ^0.2.2
-  #hemicycle:
-  #  git: 
-  #    url: https://github.com/1278real/hemicycle
-  #    ref: outer_new
+  #hemicycle: ^0.2.2
+  hemicycle:
+    git: 
+      url: https://github.com/1278real/hemicycle
+      ref: hilite_frondeurs
   http: ^0.13.4
 
 dev_dependencies:
