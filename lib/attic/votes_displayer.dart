@@ -64,6 +64,8 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
   ///
+  /// • [hilite_fronde] is a boolean that display or not the No Vote and Abstention in Group that have a majority of Voters in Individual Votes view.
+  ///
   /// • [withDivider] is an optional boolean to display an Horizontal Divider before the Column of Widgets.
   ///
   /// • [backgroundColor] is used to fill the Drawing area with a plain background color
@@ -72,6 +74,7 @@ class OpenAssembleeVoteDisplayer {
       String? remotePath,
       bool useGroupSector = false,
       bool withDivider = false,
+      bool? hilite_fronde,
       Color? backgroundColor}) {
     return FutureBuilder(
       future: getVotes(localPath: localPath, remotePath: remotePath),
@@ -111,6 +114,7 @@ class OpenAssembleeVoteDisplayer {
                     backgroundColor: backgroundColor ??
                         Theme.of(context).scaffoldBackgroundColor,
                     backgroundOpacity: 0.05,
+                    hilite_fronde: hilite_fronde,
                   ),
                 ),
                 Padding(

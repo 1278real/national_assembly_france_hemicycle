@@ -1,3 +1,8 @@
+## 0.5.0
+
+* Enable the highlighting for discordant voters in a Group in Individual Votes mode
+(i.e. for Vote-For-only votes, the non-voters in a group are interesting to highlight)
+
 ## 0.4.8
 
 * Graphic enhancements for Individual Votes and surrounding arc
