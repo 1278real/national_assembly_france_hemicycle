@@ -133,7 +133,7 @@ class OpenAssembleeVoteDisplayer {
                                         (amendement!.numeroLong ?? "-")
                                 : (scrutin?.titre ??
                                     ("Vote " + (scrutin?.codeVote ?? "-"))))),
-                            40)
+                            250)
                         .firstInCaps
                         .trim()
                         .deleteEndinPoint,
