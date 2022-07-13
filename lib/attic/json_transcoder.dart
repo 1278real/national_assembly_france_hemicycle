@@ -84,7 +84,8 @@ class OpenAssembleeJsonTranscoder {
         print("••• STEP 1 •••");
         Map<String, dynamic> _mapAmendement = json.decode(amendementToProcess);
         print("••• STEP 2 •••");
-        Map<String, dynamic> _mapAmendementIndent = _mapScrutin["amendement"];
+        Map<String, dynamic> _mapAmendementIndent =
+            _mapAmendement["amendement"];
         print("••• STEP 3 •••");
 
         AmendementFromJson? _amendementToReturn =
