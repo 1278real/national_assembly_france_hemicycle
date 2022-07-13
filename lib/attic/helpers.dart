@@ -16,6 +16,7 @@ extension OtherExtension on String {
   }
 
   String get cleanRawHtmlString {
+    return "blabla";
     return this
         .replaceAll("&#224;", "à")
         .replaceAll("&#225;", "á")
