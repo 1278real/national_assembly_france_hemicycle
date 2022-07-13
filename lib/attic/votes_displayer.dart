@@ -90,6 +90,9 @@ class OpenAssembleeVoteDisplayer {
       bool? hiliteFronde,
       Color? backgroundColor,
       String? amendementString}) {
+    if (amendementString != null) {
+      print("amendementString = " + amendementString);
+    }
     return FutureBuilder(
       future: getVotes(
           localPath: localPath,
