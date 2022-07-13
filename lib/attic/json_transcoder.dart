@@ -94,9 +94,7 @@ class OpenAssembleeJsonTranscoder {
 
         // print("••• STEP 4 •••");
 
-        if (_amendementToReturn != null) {
-          _toReturn.amendement = _amendementToReturn;
-        }
+        _toReturn.amendement = _amendementToReturn;
       }
 
       return _toReturn;
