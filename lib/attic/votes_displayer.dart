@@ -100,14 +100,13 @@ class OpenAssembleeVoteDisplayer {
           hiliteFronde: hiliteFronde,
           amendementString: amendementString),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-/*
-        if (snapshot.connectionState != ConnectionState.done) {
-          return circularWait(randomColor());
-        }
-*/
-
-        //       print("nbOfMembersInvolved = " + nbOfMembersInvolved.toString());
-        if (snapshot.hasData) {
+        if (snapshot.hasError) {
+          return Container(
+            child: Text(
+              snapshot.error.toString(),
+            ),
+          );
+        } else if (snapshot.hasData) {
           String titleString = cleanRawHtmlString(amendement != null
               ? amendement?.exposeSommaire ?? ""
               : (scrutin?.titre ?? ("")));
@@ -321,13 +320,6 @@ class OpenAssembleeVoteDisplayer {
                     ),
                 ],
               ),
-            ),
-          );
-        }
-        if (snapshot.hasError) {
-          return Container(
-            child: Text(
-              snapshot.error.toString(),
             ),
           );
         } else {
