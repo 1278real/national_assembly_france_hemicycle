@@ -90,7 +90,7 @@ class OpenAssembleeJsonTranscoder {
 
   /// Inside the [ScrutinFromJson], reorder the Groups and INdividual Votes for Assembly display
   Future<List<IndividualVotes>> getJsonIndividualVotes(
-      ScrutinFromJson scrutin, bool? hilite_fronde) async {
+      ScrutinFromJson scrutin, bool? hiliteFronde) async {
     List<IndividualVotes> votesList = [];
 
     if (scrutin.groupVotesDetails != null) {
@@ -132,7 +132,7 @@ class OpenAssembleeJsonTranscoder {
               if (groupNumber > groupIncrement) {
                 for (var z = 0; z < groupNumber - groupIncrement; z++) {
                   indexIncrement += 1;
-                  if (hilite_fronde ?? false) {
+                  if (hiliteFronde ?? false) {
                     votesList.add(IndividualVotes(indexIncrement,
                         voteResult: null, groupPairing: _reorder[i].organeRef));
                   }

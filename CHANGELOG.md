@@ -1,7 +1,7 @@
-## 0.5.1
+## 0.5.2
 
+* Updating informations and comments for pub.dev scoring...
 * Correction on discordant voters appearance
-
 * Correction in dependency link with Hemicycle package
 
 ## 0.5.0
