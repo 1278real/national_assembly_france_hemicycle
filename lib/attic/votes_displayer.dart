@@ -323,6 +323,5 @@ class OpenAssembleeVoteDisplayer {
 
 String cleanRawHtmlString(String dirtyHtmlString) {
   print("--- dirtyHtmlString = " + dirtyHtmlString.toString());
-
-  return dirtyHtmlString.replaceAll("&#233;", "é");
+  return dirtyHtmlString.replaceAll("&#233;", "é").replaceAll("&#232;", "ê");
 }
