@@ -108,6 +108,10 @@ class OpenAssembleeVoteDisplayer {
 
         //       print("nbOfMembersInvolved = " + nbOfMembersInvolved.toString());
         if (snapshot.hasData) {
+          String titleString = cleanRawHtmlString((amendement != null
+              ? amendement!.exposeSommaire ??
+                  "Amendement" + (amendement!.numeroLong ?? "-")
+              : (scrutin?.titre ?? ("Vote " + (scrutin?.codeVote ?? "-")))));
           return Container(
             width: MediaQuery.of(context).size.width,
             height:
@@ -117,21 +121,17 @@ class OpenAssembleeVoteDisplayer {
               children: [
                 if (withDivider)
                   for (Widget widget in theDivider()) widget,
-                Text(
-                    limitLengthOfString(
-                            cleanRawHtmlString((amendement != null
-                                ? amendement!.exposeSommaire ??
-                                    "Amendement" +
-                                        (amendement!.numeroLong ?? "-")
-                                : (scrutin?.titre ??
-                                    ("Vote " + (scrutin?.codeVote ?? "-"))))),
-                            200)
-                        .firstInCaps
-                        .trim()
-                        .deleteEndingPoint,
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Text(
+                        limitLengthOfString(titleString, 200)
+                            .firstInCaps
+                            .trim()
+                            .deleteEndingPoint,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: (titleString.length > 100 ? 9 : 11)))),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
