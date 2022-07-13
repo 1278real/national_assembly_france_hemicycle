@@ -113,31 +113,26 @@ class OpenAssembleeVoteDisplayer {
               : (scrutin?.titre ?? ("")));
           return Container(
             width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (withDivider)
-                  for (Widget widget in theDivider()) widget,
-                Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Text(
-                        amendement != null
-                            ? "Amendement " + (amendement!.numeroLong ?? "")
-                            : "Scrutin " + (scrutin?.numero ?? ""),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 16))),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Text(
-                        titleString.firstInCaps.trim().deleteEndingPoint,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: (titleString.length > 150 ? 12 : 14)))),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: DrawHemicycle(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (withDivider)
+                    for (Widget widget in theDivider()) widget,
+                  Text(
+                      amendement != null
+                          ? "Amendement " + (amendement!.numeroLong ?? "")
+                          : "Scrutin " + (scrutin?.numero ?? ""),
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
+                  Text(titleString.firstInCaps.trim().deleteEndingPoint,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: (titleString.length > 150 ? 12 : 14))),
+                  DrawHemicycle(
                     nbOfMembersInvolved,
                     assemblyAngle: 195,
                     nbRows: (nbOfMembersInvolved / 48).round(),
@@ -149,39 +144,9 @@ class OpenAssembleeVoteDisplayer {
                     backgroundOpacity: 0.05,
                     hiliteFronde: hiliteFronde,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Column(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "par " + (scrutin?.demandeur ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 10),
-                      ),
-                      Padding(padding: EdgeInsets.all(10)),
-                      Text(
-                        (dateStringFormatter(scrutin?.dateScrutin)),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 11),
-                      ),
-                      Padding(padding: EdgeInsets.all(10)),
-                      Text(
-                        (scrutin?.libelleVote ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
-                      ),
-                      Text(
-                        (scrutin?.majoriteVote ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 12),
-                      ),
-                      Padding(padding: EdgeInsets.all(6)),
                       Transform.rotate(
                         angle: (-15.0).degreesToRadians,
                         child: Container(
@@ -221,6 +186,33 @@ class OpenAssembleeVoteDisplayer {
                             ),
                           ),
                         ),
+                      ),
+                      Padding(padding: EdgeInsets.all(6)),
+                      Text(
+                        "par " + (scrutin?.demandeur ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 10),
+                      ),
+                      Padding(padding: EdgeInsets.all(10)),
+                      Text(
+                        (dateStringFormatter(scrutin?.dateScrutin)),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 11),
+                      ),
+                      Padding(padding: EdgeInsets.all(10)),
+                      Text(
+                        (scrutin?.libelleVote ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12),
+                      ),
+                      Text(
+                        (scrutin?.majoriteVote ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 12),
                       ),
                       Padding(padding: EdgeInsets.all(6)),
                       Row(
@@ -346,8 +338,8 @@ class OpenAssembleeVoteDisplayer {
                         ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
