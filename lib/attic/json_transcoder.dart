@@ -52,6 +52,8 @@ class OpenAssembleeJsonTranscoder {
     dynamic responseToProcess = "";
     dynamic amendementToProcess = "";
 
+    print("amendementPath = " + (amendementPath ?? "NOPE"));
+
     if (remotePath != null) {
       // print("sending to remote");
       responseToProcess = await _checkAvailabilityOfRemoteFile(remotePath);
