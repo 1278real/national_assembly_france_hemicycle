@@ -60,6 +60,7 @@ class OpenAssembleeJsonTranscoder {
       if (amendementPath != null) {
         amendementToProcess =
             await _checkAvailabilityOfRemoteFile(amendementPath);
+        print("&\n" + amendementToProcess + "\n&");
       }
       // print("&\n" + responseToProcess + "\n&");
     } else if (localPath != null) {
@@ -80,14 +81,21 @@ class OpenAssembleeJsonTranscoder {
       ReturnFromJson _toReturn = ReturnFromJson(_scrutinToReturn);
 
       if (amendementToProcess != "") {
+        print("••• STEP 1 •••");
         Map<String, dynamic> _mapAmendement = json.decode(amendementToProcess);
+        print("••• STEP 2 •••");
         Map<String, dynamic> _mapAmendementIndent = _mapScrutin["amendement"];
+        print("••• STEP 3 •••");
 
         AmendementFromJson? _amendementToReturn =
             AmendementFromJson.fromFrenchNationalAssemblyJson(
                 _mapAmendementIndent);
 
-        _toReturn.amendement = _amendementToReturn;
+        print("••• STEP 4 •••");
+
+        if (_amendementToReturn != null) {
+          _toReturn.amendement = _amendementToReturn;
+        }
       }
 
       return _toReturn;
