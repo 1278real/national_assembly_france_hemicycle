@@ -157,7 +157,7 @@ class OpenAssembleeVoteDisplayer {
                           hiliteFronde: hiliteFronde,
                         ),
                         Transform.rotate(
-                          angle: (-15.0).degreesToRadians,
+                          angle: (-10.0).degreesToRadians,
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -293,8 +293,21 @@ class OpenAssembleeVoteDisplayer {
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 10),
                           ),
+                          if ((scrutin?.didNotVote ?? 0) > 0)
+                            Padding(padding: EdgeInsets.all(3)),
+                          if ((scrutin?.didNotVote ?? 0) > 0)
+                            Text(
+                              (scrutin?.didNotVote.toString() ?? "") +
+                                  " non votant" +
+                                  ((scrutin?.didNotVote ?? 0) > 0 ? "*" : "") +
+                                  ((scrutin?.didNotVote ?? 0) > 1 ? "s" : ""),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 10),
+                            ),
                         ],
                       ),
+/*
                       if ((scrutin?.didNotVote ?? 0) > 0)
                         Row(
                           children: [
@@ -321,6 +334,7 @@ class OpenAssembleeVoteDisplayer {
                             ),
                           ],
                         ),
+*/
                     ],
                   ),
                   if ((scrutin?.didNotVote ?? 0) > 0)
