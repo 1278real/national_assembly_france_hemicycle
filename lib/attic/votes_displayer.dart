@@ -141,58 +141,62 @@ class OpenAssembleeVoteDisplayer {
                           fontWeight: FontWeight.w500,
                           fontStyle: FontStyle.italic,
                           fontSize: (titleString.length > 150 ? 12 : 14))),
-                  DrawHemicycle(
-                    nbOfMembersInvolved,
-                    assemblyAngle: 195,
-                    nbRows: (nbOfMembersInvolved / 48).round(),
-                    individualVotes: votesAssemblyTest,
-                    groupSectors: _localGroups,
-                    useGroupSector: useGroupSector,
-                    backgroundColor: backgroundColor ??
-                        Theme.of(context).scaffoldBackgroundColor,
-                    backgroundOpacity: 0.05,
-                    hiliteFronde: hiliteFronde,
-                  ),
-                  Transform.rotate(
-                    angle: (-15.0).degreesToRadians,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                              color: (scrutin?.resultatVote
-                                          .toString()
-                                          .firstInCaps ==
-                                      "Adopté")
-                                  ? hemicyleVoteFor
-                                  : (scrutin?.resultatVote
-                                              .toString()
-                                              .firstInCaps ==
-                                          "Rejeté")
-                                      ? hemicyleVoteAgainst
-                                      : hemicyleVoteAbstention)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          (scrutin?.resultatVote ?? "-").firstInCaps,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 24,
-                              color: (scrutin?.resultatVote
-                                          .toString()
-                                          .firstInCaps ==
-                                      "Adopté")
-                                  ? hemicyleVoteFor
-                                  : (scrutin?.resultatVote
-                                              .toString()
-                                              .firstInCaps ==
-                                          "Rejeté")
-                                      ? hemicyleVoteAgainst
-                                      : hemicyleVoteAbstention),
+                  Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      children: [
+                        DrawHemicycle(
+                          nbOfMembersInvolved,
+                          assemblyAngle: 195,
+                          nbRows: (nbOfMembersInvolved / 48).round(),
+                          individualVotes: votesAssemblyTest,
+                          groupSectors: _localGroups,
+                          useGroupSector: useGroupSector,
+                          backgroundColor: backgroundColor ??
+                              Theme.of(context).scaffoldBackgroundColor,
+                          backgroundOpacity: 0.05,
+                          hiliteFronde: hiliteFronde,
                         ),
-                      ),
-                    ),
-                  ),
+                        Transform.rotate(
+                          angle: (-15.0).degreesToRadians,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: (scrutin?.resultatVote
+                                                .toString()
+                                                .firstInCaps ==
+                                            "Adopté")
+                                        ? hemicyleVoteFor
+                                        : (scrutin?.resultatVote
+                                                    .toString()
+                                                    .firstInCaps ==
+                                                "Rejeté")
+                                            ? hemicyleVoteAgainst
+                                            : hemicyleVoteAbstention)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                (scrutin?.resultatVote ?? "-").firstInCaps,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 24,
+                                    color: (scrutin?.resultatVote
+                                                .toString()
+                                                .firstInCaps ==
+                                            "Adopté")
+                                        ? hemicyleVoteFor
+                                        : (scrutin?.resultatVote
+                                                    .toString()
+                                                    .firstInCaps ==
+                                                "Rejeté")
+                                            ? hemicyleVoteAgainst
+                                            : hemicyleVoteAbstention),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]),
                   Padding(padding: EdgeInsets.all(6)),
                   Text(
                     "par " + (scrutin?.demandeur ?? "-").firstInCaps,
