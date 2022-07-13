@@ -128,12 +128,20 @@ class OpenAssembleeVoteDisplayer {
                         style: TextStyle(
                             fontWeight: FontWeight.w900, fontSize: 14)),
                   Text(
-                      amendement != null
-                          ? "Amendement " + (amendement!.numeroLong ?? "")
-                          : "Scrutin " + (scrutin?.numero ?? ""),
+                      (amendement != null
+                              ? "Amendement " + (amendement!.numeroLong ?? "")
+                              : "Scrutin " + (scrutin?.numero ?? "")) +
+                          " du " +
+                          dateStringFormatter(scrutin?.dateScrutin),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+                  Padding(padding: EdgeInsets.all(5)),
+                  Text(
+                    "par " + (scrutin?.demandeur ?? "-").firstInCaps,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 10),
+                  ),
                   Padding(padding: EdgeInsets.all(5)),
                   Text(titleString.firstInCaps.trim().deleteEndingPoint,
                       textAlign: TextAlign.center,
@@ -198,18 +206,6 @@ class OpenAssembleeVoteDisplayer {
                         ),
                       ]),
                   Padding(padding: EdgeInsets.all(6)),
-                  Text(
-                    "par " + (scrutin?.demandeur ?? "-").firstInCaps,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 10),
-                  ),
-                  Padding(padding: EdgeInsets.all(10)),
-                  Text(
-                    (dateStringFormatter(scrutin?.dateScrutin)),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
-                  ),
-                  Padding(padding: EdgeInsets.all(10)),
                   Text(
                     (scrutin?.libelleVote ?? "-").firstInCaps,
                     textAlign: TextAlign.center,
