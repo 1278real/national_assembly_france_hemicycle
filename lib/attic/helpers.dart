@@ -327,7 +327,7 @@ Padding circularWait(Color waitColor) {
 }
 
 List<Widget> theDivider({bool big = false}) {
-  double padding = 15;
+  double padding = big ? 25 : 15;
   return [
     Padding(padding: EdgeInsets.all(padding)),
     Divider(
