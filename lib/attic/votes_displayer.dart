@@ -91,7 +91,7 @@ class OpenAssembleeVoteDisplayer {
       Color? backgroundColor,
       String? amendementString}) {
     if (amendementString != null) {
-      print("amendementString = " + amendementString);
+      print("amendementString received = " + amendementString);
     }
     return FutureBuilder(
       future: getVotes(
