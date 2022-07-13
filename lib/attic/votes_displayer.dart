@@ -118,7 +118,7 @@ class OpenAssembleeVoteDisplayer {
                     backgroundColor: backgroundColor ??
                         Theme.of(context).scaffoldBackgroundColor,
                     backgroundOpacity: 0.05,
-                    hilite_fronde: hiliteFronde,
+                    hiliteFronde: hiliteFronde,
                   ),
                 ),
                 Padding(
