@@ -127,8 +127,10 @@ class OpenAssembleeVoteDisplayer {
                     groupSectors: _localGroups,
                     withTitle: true,
                     title: ((amendement != null
-                            ? cleanRawHtmlString(amendement!.exposeSommaire ??
-                                "Amendement" + (amendement!.numeroLong ?? "-"))
+                            ? amendement!.exposeSommaire ??
+                                "Amendement" +
+                                    (amendement!.numeroLong ?? "-")
+                                        .cleanRawHtmlString
                             : (scrutin?.titre ??
                                 ("Vote " + (scrutin?.codeVote ?? "-"))))
                         .firstInCaps
@@ -319,9 +321,4 @@ class OpenAssembleeVoteDisplayer {
       },
     );
   }
-}
-
-String cleanRawHtmlString(String dirtyHtmlString) {
-  print("--- dirtyHtmlString = " + dirtyHtmlString.toString());
-  return dirtyHtmlString.replaceAll("&#233;", "é").replaceAll("&#232;", "ê");
 }

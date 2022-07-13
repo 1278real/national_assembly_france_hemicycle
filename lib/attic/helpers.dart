@@ -14,6 +14,37 @@ extension OtherExtension on String {
       return this;
     }
   }
+
+  String get cleanRawHtmlString {
+    print("--- dirtyHtmlString = " + this.toString());
+    return this
+        .replaceAll("&#224;", "à")
+        .replaceAll("&#225;", "á")
+        .replaceAll("&#226;", "â")
+        .replaceAll("&#227;", "ã")
+        .replaceAll("&#228;", "ä")
+        .replaceAll("&#229;", "å")
+        .replaceAll("&#230;", "æ")
+        .replaceAll("&#231;", "ç")
+        .replaceAll("&#232;", "è")
+        .replaceAll("&#233;", "é")
+        .replaceAll("&#234;", "ê")
+        .replaceAll("&#235;", "ë")
+        .replaceAll("&#236;", "ì")
+        .replaceAll("&#237;", "í")
+        .replaceAll("&#238;", "î")
+        .replaceAll("&#239;", "ï")
+        .replaceAll("&#241;", "ñ")
+        .replaceAll("&#242;", "ò")
+        .replaceAll("&#243;", "ó")
+        .replaceAll("&#244;", "ô")
+        .replaceAll("&#245;", "õ")
+        .replaceAll("&#246;", "ö")
+        .replaceAll("&#249;", "ù")
+        .replaceAll("&#250;", "ú")
+        .replaceAll("&#251;", "û")
+        .replaceAll("&#252;", "ü");
+  }
 }
 
 /// ### Convert a String [dateString] to DateTime
