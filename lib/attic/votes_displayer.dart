@@ -297,7 +297,8 @@ class OpenAssembleeVoteDisplayer {
                             Padding(padding: EdgeInsets.all(3)),
                           if ((scrutin?.didNotVote ?? 0) > 0)
                             Text(
-                              (scrutin?.didNotVote.toString() ?? "") +
+                              " + " +
+                                  (scrutin?.didNotVote.toString() ?? "") +
                                   " non votant" +
                                   ((scrutin?.didNotVote ?? 0) > 0 ? "*" : "") +
                                   ((scrutin?.didNotVote ?? 0) > 1 ? "s" : ""),
