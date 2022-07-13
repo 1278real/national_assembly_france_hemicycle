@@ -117,16 +117,8 @@ class OpenAssembleeVoteDisplayer {
               children: [
                 if (withDivider)
                   for (Widget widget in theDivider()) widget,
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: DrawHemicycle(
-                    nbOfMembersInvolved,
-                    assemblyAngle: 195,
-                    nbRows: (nbOfMembersInvolved / 48).round(),
-                    individualVotes: votesAssemblyTest,
-                    groupSectors: _localGroups,
-                    withTitle: true,
-                    title: limitLengthOfString(
+                Text(
+                    limitLengthOfString(
                             cleanRawHtmlString((amendement != null
                                 ? amendement!.exposeSommaire ??
                                     "Amendement" +
@@ -136,7 +128,30 @@ class OpenAssembleeVoteDisplayer {
                             200)
                         .firstInCaps
                         .trim()
-                        .deleteEndinPoint,
+                        .deleteEndingPoint,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: (cleanRawHtmlString((amendement != null
+                                        ? amendement!.exposeSommaire ??
+                                            "Amendement" +
+                                                (amendement!.numeroLong ?? "-")
+                                        : (scrutin?.titre ??
+                                            ("Vote " +
+                                                (scrutin?.codeVote ?? "-")))))
+                                    .length >
+                                100)
+                            ? 9
+                            : 11)),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: DrawHemicycle(
+                    nbOfMembersInvolved,
+                    assemblyAngle: 195,
+                    nbRows: (nbOfMembersInvolved / 48).round(),
+                    individualVotes: votesAssemblyTest,
+                    groupSectors: _localGroups,
+                    withTitle: true,
                     useGroupSector: useGroupSector,
                     backgroundColor: backgroundColor ??
                         Theme.of(context).scaffoldBackgroundColor,

@@ -7,7 +7,7 @@ import 'colors.dart';
 
 extension OtherExtension on String {
   /// Delete ending point of a String if any
-  String get deleteEndinPoint {
+  String get deleteEndingPoint {
     if (this.substring(this.length - 1) == ".") {
       return this.substring(0, this.length - 1);
     } else {
