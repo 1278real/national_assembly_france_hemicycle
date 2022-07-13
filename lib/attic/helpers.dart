@@ -326,13 +326,13 @@ Padding circularWait(Color waitColor) {
   );
 }
 
-List<Widget> theDivider() {
+List<Widget> theDivider({bool big = false}) {
   double padding = 15;
   return [
     Padding(padding: EdgeInsets.all(padding)),
     Divider(
-      height: 8,
-      thickness: 4,
+      height: big ? 12 : 8,
+      thickness: big ? 8 : 4,
       indent: padding,
       endIndent: padding,
     ),

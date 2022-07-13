@@ -118,7 +118,7 @@ class OpenAssembleeVoteDisplayer {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   if (withDivider)
-                    for (Widget widget in theDivider()) widget,
+                    for (Widget widget in theDivider(big: true)) widget,
                   Text(
                       amendement != null
                           ? "Amendement " + (amendement!.numeroLong ?? "")
@@ -126,6 +126,7 @@ class OpenAssembleeVoteDisplayer {
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
+                  Padding(padding: EdgeInsets.all(5)),
                   Text(titleString.firstInCaps.trim().deleteEndingPoint,
                       textAlign: TextAlign.center,
                       style: TextStyle(
