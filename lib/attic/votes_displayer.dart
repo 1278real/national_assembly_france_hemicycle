@@ -130,19 +130,8 @@ class OpenAssembleeVoteDisplayer {
                         .trim()
                         .deleteEndingPoint,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: (cleanRawHtmlString((amendement != null
-                                        ? amendement!.exposeSommaire ??
-                                            "Amendement" +
-                                                (amendement!.numeroLong ?? "-")
-                                        : (scrutin?.titre ??
-                                            ("Vote " +
-                                                (scrutin?.codeVote ?? "-")))))
-                                    .length >
-                                100)
-                            ? 9
-                            : 11)),
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
