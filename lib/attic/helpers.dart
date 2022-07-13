@@ -16,7 +16,6 @@ extension OtherExtension on String {
   }
 
   String get cleanRawHtmlString {
-    print("--- dirtyHtmlString = " + this.toString());
     return this
         .replaceAll("&#224;", "à")
         .replaceAll("&#225;", "á")
@@ -43,7 +42,34 @@ extension OtherExtension on String {
         .replaceAll("&#249;", "ù")
         .replaceAll("&#250;", "ú")
         .replaceAll("&#251;", "û")
-        .replaceAll("&#252;", "ü");
+        .replaceAll("&#252;", "ü")
+        .replaceAll("&#192;", "À")
+        .replaceAll("&#193;", "Á")
+        .replaceAll("&#194;", "Â")
+        .replaceAll("&#195;", "Ã")
+        .replaceAll("&#196;", "Ä")
+        .replaceAll("&#197;", "Å")
+        .replaceAll("&#198;", "Æ")
+        .replaceAll("&#199;", "Ç")
+        .replaceAll("&#200;", "È")
+        .replaceAll("&#201;", "É")
+        .replaceAll("&#202;", "Ê")
+        .replaceAll("&#203;", "Ë")
+        .replaceAll("&#204;", "Ì")
+        .replaceAll("&#205;", "Í")
+        .replaceAll("&#206;", "Î")
+        .replaceAll("&#207;", "Ï")
+        .replaceAll("&#209;", "Ñ")
+        .replaceAll("&#210;", "Ò")
+        .replaceAll("&#211;", "Ó")
+        .replaceAll("&#212;", "Ô")
+        .replaceAll("&#213;", "Õ")
+        .replaceAll("&#214;", "Ö")
+        .replaceAll("&#217;", "Ù")
+        .replaceAll("&#218;", "Ú")
+        .replaceAll("&#219;", "Û")
+        .replaceAll("&#220;", "Ü")
+        .replaceAll("<p style=\"text-align: justify;\">", "");
   }
 }
 
