@@ -114,8 +114,6 @@ class OpenAssembleeVoteDisplayer {
               : (scrutin?.titre ?? ("Vote " + (scrutin?.codeVote ?? "-")))));
           return Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width *
-                ((withDivider ? 1.4 : 1.2) + (0.035 * titleString.length / 45)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
