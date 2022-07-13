@@ -47,42 +47,48 @@ class OpenAssembleeJsonTranscoder {
   }
 
   /// Get JSON file (local or remote) and map to [ScrutinFromJson]
-  Future<ScrutinFromJson?> getJsonScrutin(
-      {String? localPath, String? remotePath}) async {
+  Future<ReturnFromJson?> getJsonScrutin(
+      {String? localPath, String? remotePath, String? amendementPath}) async {
     dynamic responseToProcess = "";
+    dynamic amendementToProcess = "";
 
     if (remotePath != null) {
       // print("sending to remote");
       responseToProcess = await _checkAvailabilityOfRemoteFile(remotePath);
+      if (amendementPath != null) {
+        amendementToProcess =
+            await _checkAvailabilityOfRemoteFile(amendementPath);
+      }
       // print("&\n" + responseToProcess + "\n&");
     } else if (localPath != null) {
       responseToProcess = await _checkAvailabilityOfLocalFile(localPath);
+      if (amendementPath != null) {
+        amendementToProcess =
+            await _checkAvailabilityOfLocalFile(amendementPath);
+      }
     }
 
     if (responseToProcess != "") {
-      // print("—————national_assembly_france_hemicycle————— ••••• STEP 1");
+      Map<String, dynamic> _mapScrutin = json.decode(responseToProcess);
+      Map<String, dynamic> _mapScrutinIndent = _mapScrutin["scrutin"];
 
-      Map<String, dynamic> _map = json.decode(responseToProcess);
-      Map<String, dynamic> _mapBis = _map["scrutin"];
+      ScrutinFromJson _scrutinToReturn =
+          ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapScrutinIndent);
 
-      // print(" —————national_assembly_france_hemicycle————— ••••• _mapBis");
+      ReturnFromJson _toReturn = ReturnFromJson(_scrutinToReturn);
 
-/*
-      print(_mapBis);
-      print('---');
-      print(_mapBis["uid"]);
-      print('---');
-      print(_mapBis['sort']);
-      print('---');
-      print(_mapBis['groupe'][0]['organeRef']);
-*/
+      if (amendementToProcess != "") {
+        Map<String, dynamic> _mapAmendement = json.decode(amendementToProcess);
+        Map<String, dynamic> _mapAmendementIndent = _mapScrutin["amendement"];
 
-      // print(" —————national_assembly_france_hemicycle————— ••••• STEP 2");
+        AmendementFromJson? _amendementToReturn =
+            AmendementFromJson.fromFrenchNationalAssemblyJson(
+                _mapAmendementIndent);
 
-      ScrutinFromJson _newObjects =
-          ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapBis);
+        _toReturn.amendement = _amendementToReturn;
+      }
 
-      return _newObjects;
+      return _toReturn;
     } else {
       return null;
     }

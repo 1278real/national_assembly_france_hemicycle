@@ -10,13 +10,23 @@ class OpenAssembleeVoteDisplayer {
   ScrutinFromJson? scrutin;
   List<GroupSectors> _localGroups = [];
   int nbOfMembersInvolved = 0;
+  AmendementFromJson? amendement;
 
   /// used by [drawVoteHemicycleFromPath] FutureBuilder
   Future<bool> getVotes(
-      {String? localPath, String? remotePath, bool? hiliteFronde}) async {
+      {String? localPath,
+      String? remotePath,
+      bool? hiliteFronde,
+      String? amendementString}) async {
     if (localPath != null || remotePath != null) {
-      scrutin = await OpenAssembleeJsonTranscoder()
+      ReturnFromJson? _return = await OpenAssembleeJsonTranscoder()
           .getJsonScrutin(localPath: localPath, remotePath: remotePath);
+      if (_return != null) {
+        scrutin = _return.scrutin;
+        if (_return.amendement != null) {
+          amendement = _return.amendement;
+        }
+      }
     }
 
     if (scrutin != null) {
@@ -65,6 +75,8 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
   ///
+  /// • [amendementString] is an optional String to display the text of the Law Amendment instead of the Lax title : it needs the JSON file name.
+  ///
   /// • [hiliteFronde] is a boolean that display or not the No Vote and Abstention in Group that have a majority of Voters in Individual Votes view.
   ///
   /// • [withDivider] is an optional boolean to display an Horizontal Divider before the Column of Widgets.
@@ -77,12 +89,13 @@ class OpenAssembleeVoteDisplayer {
       bool withDivider = false,
       bool? hiliteFronde,
       Color? backgroundColor,
-      AmendementFromJson? amendement}) {
+      String? amendementString}) {
     return FutureBuilder(
       future: getVotes(
           localPath: localPath,
           remotePath: remotePath,
-          hiliteFronde: hiliteFronde),
+          hiliteFronde: hiliteFronde,
+          amendementString: amendementString),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
 /*
         if (snapshot.connectionState != ConnectionState.done) {
@@ -111,8 +124,8 @@ class OpenAssembleeVoteDisplayer {
                     groupSectors: _localGroups,
                     withTitle: true,
                     title: ((amendement != null
-                            ? amendement.exposeSommaire ??
-                                "Amendement" + (amendement.numeroLong ?? "-")
+                            ? amendement!.exposeSommaire ??
+                                "Amendement" + (amendement!.numeroLong ?? "-")
                             : (scrutin?.titre ??
                                 ("Vote " + (scrutin?.codeVote ?? "-"))))
                         .firstInCaps

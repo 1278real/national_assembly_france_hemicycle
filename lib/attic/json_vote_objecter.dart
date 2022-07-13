@@ -352,3 +352,10 @@ class AmendementFromJson {
     this.cycleDeVieSort = _cycleDeVie['sort'];
   }
 }
+
+class ReturnFromJson {
+  ScrutinFromJson scrutin;
+  AmendementFromJson? amendement;
+
+  ReturnFromJson(this.scrutin, {this.amendement});
+}
