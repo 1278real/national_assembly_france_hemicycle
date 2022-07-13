@@ -1,3 +1,9 @@
+## 0.5.1
+
+* Correction on discordant voters appearance
+
+* Correction in dependency link with Hemicycle package
+
 ## 0.5.0
 
 * Enable the highlighting for discordant voters in a Group in Individual Votes mode
