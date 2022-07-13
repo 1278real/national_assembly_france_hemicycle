@@ -139,6 +139,7 @@ class OpenAssembleeVoteDisplayer {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.italic,
                           fontSize: (titleString.length > 150 ? 12 : 14))),
                   DrawHemicycle(
                     nbOfMembersInvolved,
