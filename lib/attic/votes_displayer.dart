@@ -175,7 +175,25 @@ class OpenAssembleeVoteDisplayer {
                         style: TextStyle(
                             fontWeight: FontWeight.w300, fontSize: 12),
                       ),
-                      Padding(padding: EdgeInsets.all(10)),
+                      Padding(padding: EdgeInsets.all(6)),
+                      Text(
+                        (scrutin?.resultatVote ?? "-").firstInCaps,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 14,
+                            color:
+                                (scrutin?.resultatVote.toString().firstInCaps ==
+                                        "Adopté")
+                                    ? hemicyleVoteFor
+                                    : (scrutin?.resultatVote
+                                                .toString()
+                                                .firstInCaps ==
+                                            "Rejeté")
+                                        ? hemicyleVoteAgainst
+                                        : hemicyleVoteAbstention),
+                      ),
+                      Padding(padding: EdgeInsets.all(6)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -287,23 +305,6 @@ class OpenAssembleeVoteDisplayer {
                               ],
                             ),
                         ],
-                      ),
-                      Text(
-                        (scrutin?.resultatVote ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 14,
-                            color:
-                                (scrutin?.resultatVote.toString().firstInCaps ==
-                                        "Adopté")
-                                    ? hemicyleVoteFor
-                                    : (scrutin?.resultatVote
-                                                .toString()
-                                                .firstInCaps ==
-                                            "Rejeté")
-                                        ? hemicyleVoteAgainst
-                                        : hemicyleVoteAbstention),
                       ),
                       if ((scrutin?.didNotVote ?? 0) > 0)
                         Text(
