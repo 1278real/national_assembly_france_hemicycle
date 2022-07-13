@@ -12,7 +12,8 @@ class OpenAssembleeVoteDisplayer {
   int nbOfMembersInvolved = 0;
 
   /// used by [drawVoteHemicycleFromPath] FutureBuilder
-  Future<bool> getVotes({String? localPath, String? remotePath}) async {
+  Future<bool> getVotes(
+      {String? localPath, String? remotePath, bool? hiliteFronde}) async {
     if (localPath != null || remotePath != null) {
       scrutin = await OpenAssembleeJsonTranscoder()
           .getJsonScrutin(localPath: localPath, remotePath: remotePath);
@@ -36,8 +37,8 @@ class OpenAssembleeVoteDisplayer {
 */
         }
       }
-      votesAssemblyTest =
-          await OpenAssembleeJsonTranscoder().getJsonIndividualVotes(scrutin!);
+      votesAssemblyTest = await OpenAssembleeJsonTranscoder()
+          .getJsonIndividualVotes(scrutin!, hiliteFronde);
 
       return true;
     }
@@ -64,6 +65,8 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
   ///
+  /// • [hiliteFronde] is a boolean that display or not the No Vote and Abstention in Group that have a majority of Voters in Individual Votes view.
+  ///
   /// • [withDivider] is an optional boolean to display an Horizontal Divider before the Column of Widgets.
   ///
   /// • [backgroundColor] is used to fill the Drawing area with a plain background color
@@ -72,9 +75,13 @@ class OpenAssembleeVoteDisplayer {
       String? remotePath,
       bool useGroupSector = false,
       bool withDivider = false,
+      bool? hiliteFronde,
       Color? backgroundColor}) {
     return FutureBuilder(
-      future: getVotes(localPath: localPath, remotePath: remotePath),
+      future: getVotes(
+          localPath: localPath,
+          remotePath: remotePath,
+          hiliteFronde: hiliteFronde),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
 /*
         if (snapshot.connectionState != ConnectionState.done) {
@@ -111,6 +118,7 @@ class OpenAssembleeVoteDisplayer {
                     backgroundColor: backgroundColor ??
                         Theme.of(context).scaffoldBackgroundColor,
                     backgroundOpacity: 0.05,
+                    hilite_fronde: hiliteFronde,
                   ),
                 ),
                 Padding(

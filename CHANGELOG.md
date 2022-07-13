@@ -1,3 +1,14 @@
+## 0.5.2
+
+* Updating informations and comments for pub.dev scoring...
+* Correction on discordant voters appearance
+* Correction in dependency link with Hemicycle package
+
+## 0.5.0
+
+* Enable the highlighting for discordant voters in a Group in Individual Votes mode
+(i.e. for Vote-For-only votes, the non-voters in a group are interesting to highlight)
+
 ## 0.4.8
 
 * Graphic enhancements for Individual Votes and surrounding arc
