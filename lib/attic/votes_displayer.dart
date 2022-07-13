@@ -123,7 +123,7 @@ class OpenAssembleeVoteDisplayer {
                     child: Text(
                         amendement != null
                             ? "Amendement " + (amendement!.numeroLong ?? "")
-                            : "Scrutin " + (scrutin?.uuid ?? ""),
+                            : "Scrutin " + (scrutin?.numero ?? ""),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w900, fontSize: 16))),

@@ -242,6 +242,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
 class ScrutinFromJson {
   String? uuid;
   String? organeRef;
+  String? numero;
   DateTime? dateScrutin;
   String? codeVote;
   String? libelleVote;
@@ -259,6 +260,7 @@ class ScrutinFromJson {
   ScrutinFromJson(
       this.uuid,
       this.organeRef,
+      this.numero,
       this.dateScrutin,
       this.codeVote,
       this.libelleVote,
@@ -281,6 +283,7 @@ class ScrutinFromJson {
   ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
     this.uuid = json['uid'];
     this.organeRef = json['organeRef'];
+    this.numero = json['numero'];
     this.dateScrutin = dateFormatter(json['dateScrutin'],
         dateSeparator: "-", format: "YMD", noHour: true);
 
