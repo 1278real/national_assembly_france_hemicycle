@@ -20,7 +20,10 @@ class OpenAssembleeVoteDisplayer {
       String? amendementString}) async {
     if (localPath != null || remotePath != null) {
       ReturnFromJson? _return = await OpenAssembleeJsonTranscoder()
-          .getJsonScrutin(localPath: localPath, remotePath: remotePath);
+          .getJsonScrutin(
+              localPath: localPath,
+              remotePath: remotePath,
+              amendementPath: amendementString);
       if (_return != null) {
         scrutin = _return.scrutin;
         if (_return.amendement != null) {
@@ -90,9 +93,6 @@ class OpenAssembleeVoteDisplayer {
       bool? hiliteFronde,
       Color? backgroundColor,
       String? amendementString}) {
-    if (amendementString != null) {
-      print("amendementString received = " + amendementString);
-    }
     return FutureBuilder(
       future: getVotes(
           localPath: localPath,
