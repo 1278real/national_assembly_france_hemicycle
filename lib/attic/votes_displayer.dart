@@ -109,7 +109,7 @@ class OpenAssembleeVoteDisplayer {
         //       print("nbOfMembersInvolved = " + nbOfMembersInvolved.toString());
         if (snapshot.hasData) {
           String titleString = cleanRawHtmlString(amendement != null
-              ? amendement!.exposeSommaire ?? ""
+              ? amendement?.exposeSommaire ?? ""
               : (scrutin?.titre ?? ("")));
           return Container(
             width: MediaQuery.of(context).size.width,
@@ -144,200 +144,181 @@ class OpenAssembleeVoteDisplayer {
                     backgroundOpacity: 0.05,
                     hiliteFronde: hiliteFronde,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform.rotate(
-                        angle: (-15.0).degreesToRadians,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: (scrutin?.resultatVote
+                  Transform.rotate(
+                    angle: (-15.0).degreesToRadians,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                              color: (scrutin?.resultatVote
+                                          .toString()
+                                          .firstInCaps ==
+                                      "Adopté")
+                                  ? hemicyleVoteFor
+                                  : (scrutin?.resultatVote
                                               .toString()
                                               .firstInCaps ==
-                                          "Adopté")
-                                      ? hemicyleVoteFor
-                                      : (scrutin?.resultatVote
-                                                  .toString()
-                                                  .firstInCaps ==
-                                              "Rejeté")
-                                          ? hemicyleVoteAgainst
-                                          : hemicyleVoteAbstention)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              (scrutin?.resultatVote ?? "-").firstInCaps,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 24,
-                                  color: (scrutin?.resultatVote
+                                          "Rejeté")
+                                      ? hemicyleVoteAgainst
+                                      : hemicyleVoteAbstention)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          (scrutin?.resultatVote ?? "-").firstInCaps,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 24,
+                              color: (scrutin?.resultatVote
+                                          .toString()
+                                          .firstInCaps ==
+                                      "Adopté")
+                                  ? hemicyleVoteFor
+                                  : (scrutin?.resultatVote
                                               .toString()
                                               .firstInCaps ==
-                                          "Adopté")
-                                      ? hemicyleVoteFor
-                                      : (scrutin?.resultatVote
-                                                  .toString()
-                                                  .firstInCaps ==
-                                              "Rejeté")
-                                          ? hemicyleVoteAgainst
-                                          : hemicyleVoteAbstention),
-                            ),
-                          ),
+                                          "Rejeté")
+                                      ? hemicyleVoteAgainst
+                                      : hemicyleVoteAbstention),
                         ),
                       ),
-                      Padding(padding: EdgeInsets.all(6)),
-                      Text(
-                        "par " + (scrutin?.demandeur ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 10),
-                      ),
-                      Padding(padding: EdgeInsets.all(10)),
-                      Text(
-                        (dateStringFormatter(scrutin?.dateScrutin)),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 11),
-                      ),
-                      Padding(padding: EdgeInsets.all(10)),
-                      Text(
-                        (scrutin?.libelleVote ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
-                      ),
-                      Text(
-                        (scrutin?.majoriteVote ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 12),
-                      ),
-                      Padding(padding: EdgeInsets.all(6)),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.all(6)),
+                  Text(
+                    "par " + (scrutin?.demandeur ?? "-").firstInCaps,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 10),
+                  ),
+                  Padding(padding: EdgeInsets.all(10)),
+                  Text(
+                    (dateStringFormatter(scrutin?.dateScrutin)),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
+                  ),
+                  Padding(padding: EdgeInsets.all(10)),
+                  Text(
+                    (scrutin?.libelleVote ?? "-").firstInCaps,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                  ),
+                  Text(
+                    (scrutin?.majoriteVote ?? "-").firstInCaps,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                  ),
+                  Padding(padding: EdgeInsets.all(6)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                  width: 10,
-                                  height: 10,
-                                  color: hemicyleVoteFor),
-                              Padding(padding: EdgeInsets.all(1)),
-                              Container(
-                                  width: 10,
-                                  height: 10,
-                                  color: hemicyleVoteFor.withOpacity(0.3)),
-                              Padding(padding: EdgeInsets.all(3)),
-                              Text(
-                                (scrutin?.votedFor.toString() ?? "") +
-                                    " pour" +
-                                    ((scrutin?.votedFor ?? 0) > 1 ? "s" : ""),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                  width: 10,
-                                  height: 10,
-                                  color: hemicyleVoteAgainst),
-                              Padding(padding: EdgeInsets.all(1)),
-                              Container(
-                                  width: 10,
-                                  height: 10,
-                                  color: hemicyleVoteAgainst.withOpacity(0.3)),
-                              Padding(padding: EdgeInsets.all(3)),
-                              Text(
-                                (scrutin?.votedAgainst.toString() ?? "") +
-                                    " contre" +
-                                    ((scrutin?.votedAgainst ?? 0) > 1
-                                        ? "s"
-                                        : ""),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 10),
-                              ),
-                            ],
+                          Container(
+                              width: 10, height: 10, color: hemicyleVoteFor),
+                          Padding(padding: EdgeInsets.all(1)),
+                          Container(
+                              width: 10,
+                              height: 10,
+                              color: hemicyleVoteFor.withOpacity(0.3)),
+                          Padding(padding: EdgeInsets.all(3)),
+                          Text(
+                            (scrutin?.votedFor.toString() ?? "") +
+                                " pour" +
+                                ((scrutin?.votedFor ?? 0) > 1 ? "s" : ""),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 10),
                           ),
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                  width: 10,
-                                  height: 10,
-                                  color: hemicyleVoteAbstention),
-                              Padding(padding: EdgeInsets.all(1)),
-                              Container(
-                                  width: 10,
-                                  height: 10,
-                                  color:
-                                      hemicyleVoteAbstention.withOpacity(0.3)),
-                              Padding(padding: EdgeInsets.all(3)),
-                              Text(
-                                (scrutin?.votedAbstention.toString() ?? "") +
-                                    " abstention" +
-                                    ((scrutin?.votedAbstention ?? 0) > 1
-                                        ? "s"
-                                        : ""),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 10),
-                              ),
-                            ],
+                          Container(
+                              width: 10,
+                              height: 10,
+                              color: hemicyleVoteAgainst),
+                          Padding(padding: EdgeInsets.all(1)),
+                          Container(
+                              width: 10,
+                              height: 10,
+                              color: hemicyleVoteAgainst.withOpacity(0.3)),
+                          Padding(padding: EdgeInsets.all(3)),
+                          Text(
+                            (scrutin?.votedAgainst.toString() ?? "") +
+                                " contre" +
+                                ((scrutin?.votedAgainst ?? 0) > 1 ? "s" : ""),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 10),
                           ),
-                          if ((scrutin?.didNotVote ?? 0) > 0)
-                            Row(
-                              children: [
-                                Container(
-                                    width: 10,
-                                    height: 10,
-                                    color:
-                                        hemicyleVoteAbstention), // car présents, donc pas vote absent !!
-                                Padding(padding: EdgeInsets.all(1)),
-                                Container(
-                                    width: 10,
-                                    height: 10,
-                                    color: hemicyleVoteAbstention.withOpacity(
-                                        0.3)), // car présents, donc pas vote absent !!
-                                Padding(padding: EdgeInsets.all(3)),
-                                Text(
-                                  (scrutin?.didNotVote.toString() ?? "") +
-                                      " non votant" +
-                                      ((scrutin?.didNotVote ?? 0) > 0
-                                          ? "*"
-                                          : "") +
-                                      ((scrutin?.didNotVote ?? 0) > 1
-                                          ? "s"
-                                          : ""),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 10),
-                                ),
-                              ],
-                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                              width: 10,
+                              height: 10,
+                              color: hemicyleVoteAbstention),
+                          Padding(padding: EdgeInsets.all(1)),
+                          Container(
+                              width: 10,
+                              height: 10,
+                              color: hemicyleVoteAbstention.withOpacity(0.3)),
+                          Padding(padding: EdgeInsets.all(3)),
+                          Text(
+                            (scrutin?.votedAbstention.toString() ?? "") +
+                                " abstention" +
+                                ((scrutin?.votedAbstention ?? 0) > 1
+                                    ? "s"
+                                    : ""),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 10),
+                          ),
                         ],
                       ),
                       if ((scrutin?.didNotVote ?? 0) > 0)
-                        Text(
-                          "* 'non votant" +
-                              ((scrutin?.didNotVote ?? 0) > 1 ? "s" : "") +
-                              "' parmi les présents, les autres sont notés 'absents'",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w200, fontSize: 7),
+                        Row(
+                          children: [
+                            Container(
+                                width: 10,
+                                height: 10,
+                                color:
+                                    hemicyleVoteAbstention), // car présents, donc pas vote absent !!
+                            Padding(padding: EdgeInsets.all(1)),
+                            Container(
+                                width: 10,
+                                height: 10,
+                                color: hemicyleVoteAbstention.withOpacity(
+                                    0.3)), // car présents, donc pas vote absent !!
+                            Padding(padding: EdgeInsets.all(3)),
+                            Text(
+                              (scrutin?.didNotVote.toString() ?? "") +
+                                  " non votant" +
+                                  ((scrutin?.didNotVote ?? 0) > 0 ? "*" : "") +
+                                  ((scrutin?.didNotVote ?? 0) > 1 ? "s" : ""),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 10),
+                            ),
+                          ],
                         ),
                     ],
                   ),
+                  if ((scrutin?.didNotVote ?? 0) > 0)
+                    Text(
+                      "* 'non votant" +
+                          ((scrutin?.didNotVote ?? 0) > 1 ? "s" : "") +
+                          "' parmi les présents, les autres sont notés 'absents'",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w200, fontSize: 7),
+                    ),
                 ],
               ),
             ),
