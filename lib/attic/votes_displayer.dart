@@ -72,6 +72,8 @@ class OpenAssembleeVoteDisplayer {
 
   /// ### Creates a widget with French National Assembly view defined by these parameters :
   ///
+  /// • [initialComment] is an optional String to display the summary of the Vote displayed.
+  ///
   /// • [localPath] is the path to the local JSON file that needs to be displayed.
   ///
   /// • [remotePath] is the path to a remote JSON file that needs to be displayed.
@@ -86,7 +88,8 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [backgroundColor] is used to fill the Drawing area with a plain background color
   Widget drawVoteHemicycleFromPath(
-      {String? localPath,
+      {String? initialComment,
+      String? localPath,
       String? remotePath,
       String? amendementString,
       bool useGroupSector = false,
@@ -119,18 +122,23 @@ class OpenAssembleeVoteDisplayer {
                 children: [
                   if (withDivider)
                     for (Widget widget in theDivider(big: true)) widget,
+                  if (initialComment != null)
+                    Text(initialComment,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 14)),
                   Text(
                       amendement != null
                           ? "Amendement " + (amendement!.numeroLong ?? "")
                           : "Scrutin " + (scrutin?.numero ?? ""),
                       textAlign: TextAlign.center,
                       style:
-                          TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
                   Padding(padding: EdgeInsets.all(5)),
                   Text(titleString.firstInCaps.trim().deleteEndingPoint,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontSize: (titleString.length > 150 ? 12 : 14))),
                   DrawHemicycle(
                     nbOfMembersInvolved,
