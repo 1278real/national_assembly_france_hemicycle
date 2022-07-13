@@ -182,37 +182,44 @@ class OpenAssembleeVoteDisplayer {
                             fontWeight: FontWeight.w300, fontSize: 12),
                       ),
                       Padding(padding: EdgeInsets.all(6)),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: (scrutin?.resultatVote
-                                            .toString()
-                                            .firstInCaps ==
-                                        "Adopté")
-                                    ? hemicyleVoteFor
-                                    : (scrutin?.resultatVote
-                                                .toString()
-                                                .firstInCaps ==
-                                            "Rejeté")
-                                        ? hemicyleVoteAgainst
-                                        : hemicyleVoteAbstention)),
-                        child: Text(
-                          (scrutin?.resultatVote ?? "-").firstInCaps,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 24,
-                              color: (scrutin?.resultatVote
-                                          .toString()
-                                          .firstInCaps ==
-                                      "Adopté")
-                                  ? hemicyleVoteFor
-                                  : (scrutin?.resultatVote
+                      Transform.rotate(
+                        angle: 30,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: (scrutin?.resultatVote
                                               .toString()
                                               .firstInCaps ==
-                                          "Rejeté")
-                                      ? hemicyleVoteAgainst
-                                      : hemicyleVoteAbstention),
+                                          "Adopté")
+                                      ? hemicyleVoteFor
+                                      : (scrutin?.resultatVote
+                                                  .toString()
+                                                  .firstInCaps ==
+                                              "Rejeté")
+                                          ? hemicyleVoteAgainst
+                                          : hemicyleVoteAbstention)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              (scrutin?.resultatVote ?? "-").firstInCaps,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 24,
+                                  color: (scrutin?.resultatVote
+                                              .toString()
+                                              .firstInCaps ==
+                                          "Adopté")
+                                      ? hemicyleVoteFor
+                                      : (scrutin?.resultatVote
+                                                  .toString()
+                                                  .firstInCaps ==
+                                              "Rejeté")
+                                          ? hemicyleVoteAgainst
+                                          : hemicyleVoteAbstention),
+                            ),
+                          ),
                         ),
                       ),
                       Padding(padding: EdgeInsets.all(6)),
