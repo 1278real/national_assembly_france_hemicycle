@@ -76,9 +76,9 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [remotePath] is the path to a remote JSON file that needs to be displayed.
   ///
-  /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
-  ///
   /// • [amendementString] is an optional String to display the text of the Law Amendment instead of the Lax title : it needs the JSON file name.
+  ///
+  /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
   ///
   /// • [hiliteFronde] is a boolean that display or not the No Vote and Abstention in Group that have a majority of Voters in Individual Votes view.
   ///
@@ -88,11 +88,11 @@ class OpenAssembleeVoteDisplayer {
   Widget drawVoteHemicycleFromPath(
       {String? localPath,
       String? remotePath,
+      String? amendementString,
       bool useGroupSector = false,
       bool withDivider = false,
       bool? hiliteFronde,
-      Color? backgroundColor,
-      String? amendementString}) {
+      Color? backgroundColor}) {
     return FutureBuilder(
       future: getVotes(
           localPath: localPath,
@@ -182,14 +182,12 @@ class OpenAssembleeVoteDisplayer {
                             fontWeight: FontWeight.w300, fontSize: 12),
                       ),
                       Padding(padding: EdgeInsets.all(6)),
-                      Text(
-                        (scrutin?.resultatVote ?? "-").firstInCaps,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 14,
-                            color:
-                                (scrutin?.resultatVote.toString().firstInCaps ==
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: (scrutin?.resultatVote
+                                            .toString()
+                                            .firstInCaps ==
                                         "Adopté")
                                     ? hemicyleVoteFor
                                     : (scrutin?.resultatVote
@@ -197,7 +195,25 @@ class OpenAssembleeVoteDisplayer {
                                                 .firstInCaps ==
                                             "Rejeté")
                                         ? hemicyleVoteAgainst
-                                        : hemicyleVoteAbstention),
+                                        : hemicyleVoteAbstention)),
+                        child: Text(
+                          (scrutin?.resultatVote ?? "-").firstInCaps,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 24,
+                              color: (scrutin?.resultatVote
+                                          .toString()
+                                          .firstInCaps ==
+                                      "Adopté")
+                                  ? hemicyleVoteFor
+                                  : (scrutin?.resultatVote
+                                              .toString()
+                                              .firstInCaps ==
+                                          "Rejeté")
+                                      ? hemicyleVoteAgainst
+                                      : hemicyleVoteAbstention),
+                        ),
                       ),
                       Padding(padding: EdgeInsets.all(6)),
                       Row(
