@@ -12,7 +12,8 @@ class OpenAssembleeVoteDisplayer {
   int nbOfMembersInvolved = 0;
 
   /// used by [drawVoteHemicycleFromPath] FutureBuilder
-  Future<bool> getVotes({String? localPath, String? remotePath}) async {
+  Future<bool> getVotes(
+      {String? localPath, String? remotePath, bool? hilite_fronde}) async {
     if (localPath != null || remotePath != null) {
       scrutin = await OpenAssembleeJsonTranscoder()
           .getJsonScrutin(localPath: localPath, remotePath: remotePath);
@@ -36,8 +37,8 @@ class OpenAssembleeVoteDisplayer {
 */
         }
       }
-      votesAssemblyTest =
-          await OpenAssembleeJsonTranscoder().getJsonIndividualVotes(scrutin!);
+      votesAssemblyTest = await OpenAssembleeJsonTranscoder()
+          .getJsonIndividualVotes(scrutin!, hilite_fronde);
 
       return true;
     }
@@ -77,7 +78,10 @@ class OpenAssembleeVoteDisplayer {
       bool? hilite_fronde,
       Color? backgroundColor}) {
     return FutureBuilder(
-      future: getVotes(localPath: localPath, remotePath: remotePath),
+      future: getVotes(
+          localPath: localPath,
+          remotePath: remotePath,
+          hilite_fronde: hilite_fronde),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
 /*
         if (snapshot.connectionState != ConnectionState.done) {
