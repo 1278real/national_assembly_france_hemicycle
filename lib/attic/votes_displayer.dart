@@ -183,7 +183,7 @@ class OpenAssembleeVoteDisplayer {
                       ),
                       Padding(padding: EdgeInsets.all(6)),
                       Transform.rotate(
-                        angle: (-22.0).degreesToRadians,
+                        angle: (-15.0).degreesToRadians,
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
