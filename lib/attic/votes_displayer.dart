@@ -108,10 +108,9 @@ class OpenAssembleeVoteDisplayer {
 
         //       print("nbOfMembersInvolved = " + nbOfMembersInvolved.toString());
         if (snapshot.hasData) {
-          String titleString = cleanRawHtmlString((amendement != null
-              ? amendement!.exposeSommaire ??
-                  "Amendement" + (amendement!.numeroLong ?? "-")
-              : (scrutin?.titre ?? ("Vote " + (scrutin?.codeVote ?? "-")))));
+          String titleString = cleanRawHtmlString(amendement != null
+              ? amendement!.exposeSommaire ?? ""
+              : (scrutin?.titre ?? ("")));
           return Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -119,6 +118,15 @@ class OpenAssembleeVoteDisplayer {
               children: [
                 if (withDivider)
                   for (Widget widget in theDivider()) widget,
+                Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Text(
+                        amendement != null
+                            ? "Amendement " + (amendement!.numeroLong ?? "")
+                            : "Vote " + (scrutin?.codeVote ?? ""),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 16))),
                 Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Text(
