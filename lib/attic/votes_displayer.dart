@@ -128,7 +128,7 @@ class OpenAssembleeVoteDisplayer {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: (titleString.length > 100 ? 11 : 14)))),
+                            fontSize: (titleString.length > 100 ? 11 : 13)))),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
