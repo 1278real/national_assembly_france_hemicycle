@@ -292,7 +292,13 @@ class OpenAssembleeVoteDisplayer {
                         (scrutin?.resultatVote ?? "-").firstInCaps,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 12),
+                            fontWeight: FontWeight.w900,
+                            fontSize: 14,
+                            color: (scrutin?.resultatVote == "Adopté")
+                                ? hemicyleVoteFor
+                                : (scrutin?.resultatVote == "Rejeté")
+                                    ? hemicyleVoteAgainst
+                                    : hemicyleVoteAbstention),
                       ),
                       if ((scrutin?.didNotVote ?? 0) > 0)
                         Text(
