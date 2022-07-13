@@ -1,6 +1,15 @@
 ## 0.6.0
 
-* Possibilité d'afficher en titre le texte d'amendement le cas échéant
+* Ability to display a user-selected String as a Title
+* Choice between divider before of after : ```withDivider``` needs to be replaced by ```withDividerBefore```. You can also use ```withDividerAfter``` now.
+```dart
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(
+    remotePath: "your/remote/path/to/file.json",
+    initialComment: "Title to display",
+    withDividerBefore: false,
+    withDividerAfter: true,
+);
+```
 
 ## 0.5.3
 

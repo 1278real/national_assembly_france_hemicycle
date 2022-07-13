@@ -84,7 +84,8 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [hiliteFronde] is a boolean that display or not the No Vote and Abstention in Group that have a majority of Voters in Individual Votes view.
   ///
-  /// • [withDivider] is an optional boolean to display an Horizontal Divider before the Column of Widgets.
+  /// • [withDividerBefore] is an optional boolean to display an Horizontal Divider before the Column of Widgets.
+  /// • [withDividerAfter] is an optional boolean to display an Horizontal Divider after the Column of Widgets.
   ///
   /// • [backgroundColor] is used to fill the Drawing area with a plain background color
   Widget drawVoteHemicycleFromPath(
@@ -93,7 +94,8 @@ class OpenAssembleeVoteDisplayer {
       String? remotePath,
       String? amendementString,
       bool useGroupSector = false,
-      bool withDivider = false,
+      bool withDividerBefore = false,
+      bool withDividerAfter = false,
       bool? hiliteFronde,
       Color? backgroundColor}) {
     return FutureBuilder(
@@ -120,7 +122,7 @@ class OpenAssembleeVoteDisplayer {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  if (withDivider)
+                  if (withDividerBefore)
                     for (Widget widget in theDivider(big: true)) widget,
                   if (initialComment != null)
                     Text(initialComment,
@@ -343,6 +345,8 @@ class OpenAssembleeVoteDisplayer {
                       style:
                           TextStyle(fontWeight: FontWeight.w200, fontSize: 7),
                     ),
+                  if (withDividerAfter)
+                    for (Widget widget in theDivider(big: true)) widget,
                 ],
               ),
             ),
