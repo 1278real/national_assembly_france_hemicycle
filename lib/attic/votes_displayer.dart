@@ -124,14 +124,11 @@ class OpenAssembleeVoteDisplayer {
                 Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Text(
-                        limitLengthOfString(titleString, 200)
-                            .firstInCaps
-                            .trim()
-                            .deleteEndingPoint,
+                        titleString.firstInCaps.trim().deleteEndingPoint,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: (titleString.length > 100 ? 9 : 11)))),
+                            fontSize: (titleString.length > 100 ? 11 : 14)))),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: DrawHemicycle(
