@@ -126,11 +126,9 @@ class OpenAssembleeVoteDisplayer {
                     individualVotes: votesAssemblyTest,
                     groupSectors: _localGroups,
                     withTitle: true,
-                    title: ((amendement != null
+                    title: cleanRawHtmlString((amendement != null
                             ? amendement!.exposeSommaire ??
-                                "Amendement" +
-                                    (amendement!.numeroLong ?? "-")
-                                        .cleanRawHtmlString
+                                "Amendement" + (amendement!.numeroLong ?? "-")
                             : (scrutin?.titre ??
                                 ("Vote " + (scrutin?.codeVote ?? "-"))))
                         .firstInCaps
