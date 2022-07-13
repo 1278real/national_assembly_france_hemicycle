@@ -76,7 +76,8 @@ class OpenAssembleeVoteDisplayer {
       bool useGroupSector = false,
       bool withDivider = false,
       bool? hiliteFronde,
-      Color? backgroundColor}) {
+      Color? backgroundColor,
+      AmendementFromJson? amendement}) {
     return FutureBuilder(
       future: getVotes(
           localPath: localPath,
@@ -109,8 +110,11 @@ class OpenAssembleeVoteDisplayer {
                     individualVotes: votesAssemblyTest,
                     groupSectors: _localGroups,
                     withTitle: true,
-                    title: ((scrutin?.titre ??
-                            ("Vote " + (scrutin?.codeVote ?? "-")))
+                    title: ((amendement != null
+                            ? amendement.exposeSommaire ??
+                                "Amendement" + (amendement.numeroLong ?? "-")
+                            : (scrutin?.titre ??
+                                ("Vote " + (scrutin?.codeVote ?? "-"))))
                         .firstInCaps
                         .trim()
                         .deleteEndinPoint),

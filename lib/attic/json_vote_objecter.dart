@@ -319,3 +319,36 @@ class ScrutinFromJson {
     this.groupVotesDetails = _toPass;
   }
 }
+
+class AmendementFromJson {
+  String? uuid;
+  String? numeroLong;
+  String? texteLegislatifRef;
+  String? libelleSignataires;
+  String? cycleDeVieSort;
+  String? exposeSommaire;
+
+  /// [AmendementFromJson] is the detail of the Amendement to display
+  AmendementFromJson(this.uuid, this.numeroLong, this.texteLegislatifRef,
+      this.libelleSignataires, this.cycleDeVieSort, this.exposeSommaire);
+
+  /// Mapping from JSON
+  AmendementFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+    this.uuid = json['uid'];
+
+    Map<String, dynamic> _identification = json["identification"];
+    this.numeroLong = _identification['numeroLong'];
+
+    this.texteLegislatifRef = json['texteLegislatifRef'];
+
+    Map<String, dynamic> _signataires = json["signataires"];
+    this.libelleSignataires = _signataires['libelle'];
+
+    Map<String, dynamic> _corps = json["corps"];
+    Map<String, dynamic> _contenuAuteur = _corps["contenuAuteur"];
+    this.exposeSommaire = _contenuAuteur['exposeSommaire'];
+
+    Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
+    this.cycleDeVieSort = _cycleDeVie['sort'];
+  }
+}

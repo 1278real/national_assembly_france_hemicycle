@@ -1,4 +1,8 @@
-## 0.5.2
+## 0.6.0
+
+* Possibilité d'afficher en titre le texte d'amendement le cas échéant
+
+## 0.5.3
 
 * Updating informations and comments for pub.dev scoring...
 * Correction on discordant voters appearance
