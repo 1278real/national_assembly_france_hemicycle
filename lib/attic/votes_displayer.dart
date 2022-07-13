@@ -151,7 +151,6 @@ class OpenAssembleeVoteDisplayer {
                     nbRows: (nbOfMembersInvolved / 48).round(),
                     individualVotes: votesAssemblyTest,
                     groupSectors: _localGroups,
-                    withTitle: true,
                     useGroupSector: useGroupSector,
                     backgroundColor: backgroundColor ??
                         Theme.of(context).scaffoldBackgroundColor,
