@@ -16,6 +16,32 @@ extension OtherExtension on String {
   }
 }
 
+String limitLengthOfString(String originalString, int maxLength) {
+  if (maxLength < 5) {
+    return "Taille minimale doit être supérieure à 5...";
+  }
+  int stringLength = originalString.length;
+  String _toBeReturned = "";
+  if (stringLength > maxLength) {
+    String _tempString = originalString.substring(0, maxLength - 5);
+    List<String> _subTempString = _tempString.split(" ");
+    for (var i = 0; i < _subTempString.length - 1; i++) {
+      if (i > 0) {
+        _toBeReturned += " ";
+      }
+      _toBeReturned += _subTempString[i];
+    }
+    if (_toBeReturned == "") {
+      _toBeReturned = _tempString;
+    } else {
+      _toBeReturned += " (...)";
+    }
+  } else {
+    _toBeReturned = originalString;
+  }
+  return _toBeReturned;
+}
+
 String cleanRawHtmlString(String dirtyHtmlString) {
   return dirtyHtmlString
       .replaceAll("&#224;", "à")
@@ -70,7 +96,8 @@ String cleanRawHtmlString(String dirtyHtmlString) {
       .replaceAll("&#218;", "Ú")
       .replaceAll("&#219;", "Û")
       .replaceAll("&#220;", "Ü")
-      .replaceAll("<p style=\"text-align: justify;\">", "");
+      .replaceAll("<p style=\"text-align: justify;\">", "")
+      .replaceAll("</p>", " ");
 }
 
 /// ### Convert a String [dateString] to DateTime

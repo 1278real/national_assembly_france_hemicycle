@@ -126,14 +126,17 @@ class OpenAssembleeVoteDisplayer {
                     individualVotes: votesAssemblyTest,
                     groupSectors: _localGroups,
                     withTitle: true,
-                    title: cleanRawHtmlString((amendement != null
-                            ? amendement!.exposeSommaire ??
-                                "Amendement" + (amendement!.numeroLong ?? "-")
-                            : (scrutin?.titre ??
-                                ("Vote " + (scrutin?.codeVote ?? "-"))))
+                    title: limitLengthOfString(
+                            cleanRawHtmlString((amendement != null
+                                ? amendement!.exposeSommaire ??
+                                    "Amendement" +
+                                        (amendement!.numeroLong ?? "-")
+                                : (scrutin?.titre ??
+                                    ("Vote " + (scrutin?.codeVote ?? "-"))))),
+                            40)
                         .firstInCaps
                         .trim()
-                        .deleteEndinPoint),
+                        .deleteEndinPoint,
                     useGroupSector: useGroupSector,
                     backgroundColor: backgroundColor ??
                         Theme.of(context).scaffoldBackgroundColor,
