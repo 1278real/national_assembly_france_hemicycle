@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:archive/archive_io.dart';
 import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
 
 /// ### *Download the ZIP archives* from National Assembly open data and *extract* in App Support directory :
 ///
