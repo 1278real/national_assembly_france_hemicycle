@@ -4,13 +4,15 @@ import 'package:archive/archive_io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
-/// ### *Download the ZIP archives* from National Assembly open data and *extract* in App Support directory :
+/// ### *Download the ZIP archives* from National Assembly open data and *extract* in designated directory :
 ///
 /// • [pathToDossiers] is the path to AN Legislative Files. If not provided, uses the default Path.
 ///
 /// • [pathToVotes] is the path to AN Votes. If not provided, uses the default Path.
 ///
 /// • [pathToAmendements] is the path to AN Amendments. If not provided, uses the default Path.
+///
+/// • [destinationDirectory] is the required Directory to download and extract files. You can use App Support directory for instance.
 Future<bool> getUpdatedDatasFromAssembly(
     {String pathToDossiers =
         "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/dossiers_legislatifs/Dossiers_Legislatifs.json.zip",
