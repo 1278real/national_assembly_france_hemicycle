@@ -3,6 +3,32 @@ import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+bool checkPrefs() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool shouldUpdate = true;
+    String _lastFetched = (prefs.getString('NAF_lastFetched') ?? "");
+    
+    if (_lastFetched != "") {
+    DateTime _lastFetchedTime = dateFormatter(_lastFetched);
+    if (_lastFetchedTime.isBefore(DateTime.now()) {
+    shouldUpdate = true;
+    }
+    } else {
+    shouldUpdate = true;
+    }
+    
+    return shouldUpdate;
+  }
+  
+void updatePrefs() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    prefs.setString('NAF_lastFetched', dateStringFormatter(DateTime.now())).then((bool success) {
+      return value;
+    });
+  }
 
 /// ### *Download the ZIP archives* from National Assembly open data and *extract* in designated directory :
 ///
@@ -21,6 +47,8 @@ Future<bool> getUpdatedDatasFromAssembly(
     String pathToAmendements =
         "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/amendements_div_legis/Amendements.json.zip",
     required Directory destinationDirectory}) async {
+    
+  if(checkPrefs()) {
   if (destinationDirectory != null) {
     HttpClient httpClient = new HttpClient();
 
@@ -199,8 +227,11 @@ Future<bool> getUpdatedDatasFromAssembly(
     /// return TRUE for success
     ///
     ///
+    
+    updatePrefs();
 
     return true;
+  }
   }
 
   return false;
