@@ -14,7 +14,8 @@ Future<bool> checkPrefs() async {
 
   if (_lastFetched != "") {
     DateTime _lastFetchedTime = dateFormatter(_lastFetched);
-    if (_lastFetchedTime.isBefore(DateTime.now())) {
+    if (_lastFetchedTime
+        .isBefore(DateTime.now().subtract(Duration(hours: 6)))) {
       shouldUpdate = true;
     }
   } else {
