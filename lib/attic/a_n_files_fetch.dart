@@ -17,6 +17,12 @@ Future<bool> checkPrefs() async {
     if (_lastFetchedTime
         .isBefore(DateTime.now().subtract(Duration(hours: 6)))) {
       shouldUpdate = true;
+    } else if (_lastFetchedTime.day < DateTime.now().day ||
+        (_lastFetchedTime.day == DateTime.now().day &&
+            _lastFetchedTime.hour < 6)) {
+      shouldUpdate = true;
+    } else {
+      print("No need to update");
     }
   } else {
     shouldUpdate = true;
@@ -54,6 +60,7 @@ Future<bool> getUpdatedDatasFromAssembly(
     required Directory destinationDirectory}) async {
   bool needsUpdate = await checkPrefs();
   if (needsUpdate) {
+    print("Update !");
     if (destinationDirectory != null) {
       HttpClient httpClient = new HttpClient();
 
