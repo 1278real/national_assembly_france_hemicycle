@@ -4,14 +4,22 @@ import 'package:archive/archive_io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
+/// ### *Download the ZIP archives* from National Assembly open data and *extract* in App Support directory :
+///
+/// • [pathToDossiers] is the path to AN Legislative Files. If not provided, uses the default Path.
+///
+/// • [pathToVotes] is the path to AN Votes. If not provided, uses the default Path.
+///
+/// • [pathToAmendements] is the path to AN Amendments. If not provided, uses the default Path.
 Future<bool> getUpdatedDatasFromAssembly(
-    {required String pathToDossiers,
-    required String pathToVotes,
-    required String pathToAmendements,
-    bool progress = false}) async {
-  Directory? _appSupportDirectory = await getApplicationSupportDirectory();
-
-  if (_appSupportDirectory != null) {
+    {String pathToDossiers =
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/dossiers_legislatifs/Dossiers_Legislatifs.json.zip",
+    String pathToVotes =
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/scrutins/Scrutins.json.zip",
+    String pathToAmendements =
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/amendements_div_legis/Amendements.json.zip",
+    required Directory destinationDirectory}) async {
+  if (destinationDirectory != null) {
     HttpClient httpClient = new HttpClient();
 
     ///
@@ -21,7 +29,7 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     List<FileSystemEntity> initialListOfFiles =
-        await _appSupportDirectory.list(recursive: true).toList();
+        await destinationDirectory.list(recursive: true).toList();
 
     int numberOfFilesDeleted = 0;
     for (FileSystemEntity file in initialListOfFiles) {
@@ -54,7 +62,7 @@ Future<bool> getUpdatedDatasFromAssembly(
       var response = await request.close();
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
-        dossiersFilePath = _appSupportDirectory.path + "/dossiers.zip";
+        dossiersFilePath = destinationDirectory.path + "/dossiers.zip";
         dossiersFile = File(dossiersFilePath);
         await dossiersFile.writeAsBytes(bytes);
       } else {
@@ -71,10 +79,10 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     await extractFileToDisk(
-        dossiersFilePath, _appSupportDirectory.path + "/docs_legis");
+        dossiersFilePath, destinationDirectory.path + "/docs_legis");
 
     initialListOfFiles =
-        await _appSupportDirectory.list(recursive: true).toList();
+        await destinationDirectory.list(recursive: true).toList();
     for (FileSystemEntity file in initialListOfFiles) {
       if (file.path == dossiersFilePath) {
         file.delete();
@@ -96,7 +104,7 @@ Future<bool> getUpdatedDatasFromAssembly(
       var response = await request.close();
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
-        votesFilePath = _appSupportDirectory.path + "/votes.zip";
+        votesFilePath = destinationDirectory.path + "/votes.zip";
         votesFile = File(votesFilePath);
         await votesFile.writeAsBytes(bytes);
       } else {
@@ -113,10 +121,10 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     await extractFileToDisk(
-        votesFilePath, _appSupportDirectory.path + "/votes");
+        votesFilePath, destinationDirectory.path + "/votes");
 
     initialListOfFiles =
-        await _appSupportDirectory.list(recursive: true).toList();
+        await destinationDirectory.list(recursive: true).toList();
     for (FileSystemEntity file in initialListOfFiles) {
       if (file.path == votesFilePath) {
         file.delete();
@@ -138,7 +146,7 @@ Future<bool> getUpdatedDatasFromAssembly(
       var response = await request.close();
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
-        amendementsFilePath = _appSupportDirectory.path + "/amendements.zip";
+        amendementsFilePath = destinationDirectory.path + "/amendements.zip";
         amendementsFile = File(amendementsFilePath);
         await amendementsFile.writeAsBytes(bytes);
       } else {
@@ -155,10 +163,10 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     await extractFileToDisk(
-        amendementsFilePath, _appSupportDirectory.path + "/amendements");
+        amendementsFilePath, destinationDirectory.path + "/amendements");
 
     initialListOfFiles =
-        await _appSupportDirectory.list(recursive: true).toList();
+        await destinationDirectory.list(recursive: true).toList();
     for (FileSystemEntity file in initialListOfFiles) {
       if (file.path == amendementsFilePath) {
         file.delete();
@@ -173,7 +181,7 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     List<FileSystemEntity> listOfFiles =
-        await _appSupportDirectory.list(recursive: true).toList();
+        await destinationDirectory.list(recursive: true).toList();
 
     int numberOfFilesAdded = 0;
     for (FileSystemEntity file in listOfFiles) {
