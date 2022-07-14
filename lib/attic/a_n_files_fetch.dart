@@ -9,7 +9,7 @@ import 'helpers.dart';
 
 Future<bool> checkPrefs() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool shouldUpdate = true;
+  bool shouldUpdate = false;
   String _lastFetched = (prefs.getString('NAF_lastFetched') ?? "");
 
   if (_lastFetched != "") {
