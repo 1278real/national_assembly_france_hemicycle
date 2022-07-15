@@ -273,10 +273,10 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       await theDirectory.list(recursive: true).toList();
   for (FileSystemEntity file in initialListOfFiles) {
     if (file.path.split("/").last.substring(0, 1) != ".") {
+      // to exclude any system file
       File _theFile = File(file.path);
       dynamic response = await _theFile.readAsString();
 
-      // print("••• trying " + file.path.split("/").last);
       if (response != null) {
         Map<String, dynamic> _map = json.decode(response);
         Map<String, dynamic> _mapIndent = _map["dossierParlementaire"];
@@ -284,7 +284,31 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
             DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(
                 _mapIndent);
         _listToReturn.add(_toReturn);
-        print("••• added " + file.path.split("/").last);
+      }
+    }
+  }
+  return _listToReturn;
+}
+
+Future<List<AmendementFromJson>> getListOfAmendements(
+    {required Directory mainDirectory}) async {
+  List<AmendementFromJson> _listToReturn = [];
+  Directory theDirectory = Directory(
+      mainDirectory.path + _amendementsDirectory + _jsonIntermediaryDirectory);
+  List<FileSystemEntity> initialListOfFiles =
+      await theDirectory.list(recursive: true).toList();
+  for (FileSystemEntity file in initialListOfFiles) {
+    if (file.path.split("/").last.substring(0, 1) != ".") {
+      // to exclude any system file
+      File _theFile = File(file.path);
+      dynamic response = await _theFile.readAsString();
+
+      if (response != null) {
+        Map<String, dynamic> _map = json.decode(response);
+        Map<String, dynamic> _mapIndent = _map["amendement"];
+        AmendementFromJson _toReturn =
+            AmendementFromJson.fromFrenchNationalAssemblyJson(_mapIndent);
+        _listToReturn.add(_toReturn);
       }
     }
   }

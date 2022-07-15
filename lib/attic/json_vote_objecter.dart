@@ -280,7 +280,9 @@ class ScrutinFromJson {
   }
 
   /// Mapping from JSON
-  ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+  ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
+    Map<String, dynamic> json = _map["scrutin"];
+
     this.uuid = json['uid'];
     this.organeRef = json['organeRef'];
     this.numero = json['numero'];
@@ -336,7 +338,9 @@ class AmendementFromJson {
       this.libelleSignataires, this.cycleDeVieSort, this.exposeSommaire);
 
   /// Mapping from JSON
-  AmendementFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+  AmendementFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
+    Map<String, dynamic> json = _map["amendement"];
+
     this.uuid = json['uid'];
 
     Map<String, dynamic> _identification = json["identification"];

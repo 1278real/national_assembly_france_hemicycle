@@ -73,10 +73,9 @@ class OpenAssembleeJsonTranscoder {
 
     if (responseToProcess != "") {
       Map<String, dynamic> _mapScrutin = json.decode(responseToProcess);
-      Map<String, dynamic> _mapScrutinIndent = _mapScrutin["scrutin"];
 
       ScrutinFromJson _scrutinToReturn =
-          ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapScrutinIndent);
+          ScrutinFromJson.fromFrenchNationalAssemblyJson(_mapScrutin);
 
       ReturnFromJson _toReturn = ReturnFromJson(_scrutinToReturn);
 
@@ -84,13 +83,9 @@ class OpenAssembleeJsonTranscoder {
         // print("••• STEP 1 •••");
         Map<String, dynamic> _mapAmendement = json.decode(amendementToProcess);
         // print("••• STEP 2 •••");
-        Map<String, dynamic> _mapAmendementIndent =
-            _mapAmendement["amendement"];
-        // print("••• STEP 3 •••");
 
         AmendementFromJson? _amendementToReturn =
-            AmendementFromJson.fromFrenchNationalAssemblyJson(
-                _mapAmendementIndent);
+            AmendementFromJson.fromFrenchNationalAssemblyJson(_mapAmendement);
 
         // print("••• STEP 4 •••");
 
