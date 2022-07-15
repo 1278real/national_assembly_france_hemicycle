@@ -361,17 +361,11 @@ class DossierLegislatifFromJson {
   String? legislature;
   String? titre;
   String? libelleProcedureParlementaire;
-  String? libelleActeLegislatifLong;
-  String? libelleActeLegislatifCourt;
+  String? libelleActeLegislatif;
 
   /// [DossierLegislatifFromJson] is the detail of the Amendement to display
-  DossierLegislatifFromJson(
-      this.uuid,
-      this.legislature,
-      this.titre,
-      this.libelleProcedureParlementaire,
-      this.libelleActeLegislatifLong,
-      this.libelleActeLegislatifCourt);
+  DossierLegislatifFromJson(this.uuid, this.legislature, this.titre,
+      this.libelleProcedureParlementaire, this.libelleActeLegislatif);
 
   /// Mapping from JSON
   DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(
@@ -389,9 +383,7 @@ class DossierLegislatifFromJson {
     Map<String, dynamic> _actesLegislatifs = json["actesLegislatifs"];
     Map<String, dynamic> _acteLegislatif = _actesLegislatifs["acteLegislatif"];
     Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
-    this.libelleActeLegislatifLong = _libelleActe['nomCanonique'] ?? "";
-    this.libelleActeLegislatifCourt =
-        _libelleActe['libelleCourt'] ?? this.libelleActeLegislatifLong;
+    this.libelleActeLegislatif = _libelleActe['nomCanonique'];
   }
 }
 
