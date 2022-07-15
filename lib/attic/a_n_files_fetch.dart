@@ -269,9 +269,9 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       _docsLegisDirectory +
       _jsonIntermediaryDirectory +
       _dossierParlementaireDirectory);
-  List<FileSystemEntity> initialListOfFiles =
+  List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
-  for (FileSystemEntity file in initialListOfFiles) {
+  for (FileSystemEntity file in _initialListOfFiles) {
     if (file.path.split("/").last.substring(0, 1) != ".") {
       // to exclude any system file
       File _theFile = File(file.path);
@@ -279,10 +279,8 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
 
       if (response != null) {
         Map<String, dynamic> _map = json.decode(response);
-        Map<String, dynamic> _mapIndent = _map["dossierParlementaire"];
         DossierLegislatifFromJson _toReturn =
-            DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(
-                _mapIndent);
+            DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(_map);
         _listToReturn.add(_toReturn);
       }
     }
@@ -295,20 +293,70 @@ Future<List<AmendementFromJson>> getListOfAmendements(
   List<AmendementFromJson> _listToReturn = [];
   Directory theDirectory = Directory(
       mainDirectory.path + _amendementsDirectory + _jsonIntermediaryDirectory);
-  List<FileSystemEntity> initialListOfFiles =
+  List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
   for (FileSystemEntity file in initialListOfFiles) {
-    if (file.path.split("/").last.substring(0, 1) != ".") {
-      // to exclude any system file
-      File _theFile = File(file.path);
-      dynamic response = await _theFile.readAsString();
 
-      if (response != null) {
-        Map<String, dynamic> _map = json.decode(response);
-        Map<String, dynamic> _mapIndent = _map["amendement"];
-        AmendementFromJson _toReturn =
-            AmendementFromJson.fromFrenchNationalAssemblyJson(_mapIndent);
-        _listToReturn.add(_toReturn);
+  String _dossierLegisRef = "";
+  String _projetLoiRef = "";
+
+  for (FileSystemEntity entityLevelOne in _initialListOfFiles) {
+    if (entityLevelOne.path.split("/").last.substring(0, 1) != ".") {
+      // to exclude any system file
+
+      ///
+      ///
+      /// LIST OF DOSSIERS LEGISLATIFS
+      ///
+      ///
+
+      if (entityLevelOne is Directory) {
+        List<FileSystemEntity> _listOfDossiers =
+            await theDirectory.list(recursive: true).toList();
+
+        _dossierLegisRef = entityLevelOne.path.split("/").last;
+
+        for (FileSystemEntity entityLevelTwo in _listOfDossiers) {
+          if (entityLevelTwo.path.split("/").last.substring(0, 1) != ".") {
+            // to exclude any system file
+
+            ///
+            ///
+            /// LIST OF PROJETS LOIS
+            ///
+            ///
+
+            if (entityLevelTwo is Directory) {
+              List<FileSystemEntity> _listOfProjets =
+                  await theDirectory.list(recursive: true).toList();
+
+              _projetLoiRef = entityLevelTwo.path.split("/").last;
+
+              for (FileSystemEntity entityLevelThree in _listOfProjets) {
+                if (entityLevelThree.path.split("/").last.substring(0, 1) !=
+                    ".") {
+                  // to exclude any system file
+
+                  ///
+                  ///
+                  /// LIST OF AMENDEMENTS
+                  ///
+                  ///
+
+                  File _theFile = File(entityLevelThree.path);
+                  dynamic response = await _theFile.readAsString();
+
+                  if (response != null) {
+                    Map<String, dynamic> _map = json.decode(response);
+                    AmendementFromJson _toReturn =
+                        AmendementFromJson.fromFrenchNationalAssemblyJson(_map);
+                    _listToReturn.add(_toReturn);
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
