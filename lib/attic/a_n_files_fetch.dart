@@ -269,12 +269,13 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       _docsLegisDirectory +
       _jsonIntermediaryDirectory +
       _dossierParlementaireDirectory);
-  print("• theDirectory");
+  // print("• theDirectory");
   List<FileSystemEntity> initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
-  print("••• initialListOfFiles");
+  // print("••• initialListOfFiles");
   for (FileSystemEntity file in initialListOfFiles) {
-    final dynamic response = await rootBundle.loadString(file.path);
+    final dynamic response = File(file.path);
+    print("••••• trying " + file.path);
     if (response != null) {
       Map<String, dynamic> _map = json.decode(response);
       Map<String, dynamic> _mapIndent = _map["dossierParlementaire"];
