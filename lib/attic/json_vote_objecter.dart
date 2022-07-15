@@ -381,9 +381,20 @@ class DossierLegislatifFromJson {
     this.libelleProcedureParlementaire = _procedureParlementaire['libelle'];
 
     Map<String, dynamic> _actesLegislatifs = json["actesLegislatifs"];
-    Map<String, dynamic> _acteLegislatif = _actesLegislatifs["acteLegislatif"];
-    Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
-    this.libelleActeLegislatif = _libelleActe['nomCanonique'];
+    if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) == "{") {
+      Map<String, dynamic> _acteLegislatif =
+          _actesLegislatifs["acteLegislatif"];
+      Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
+      this.libelleActeLegislatif = _libelleActe['nomCanonique'];
+    } else if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
+        "[") {
+      List<dynamic> _acteLegislatifList =
+          _actesLegislatifs["acteLegislatif"] as List;
+      dynamic _lastActeLegislatif = _acteLegislatifList.last;
+      Map<String, dynamic> _acteLegislatif = _lastActeLegislatif;
+      Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
+      this.libelleActeLegislatif = _libelleActe['nomCanonique'];
+    }
   }
 }
 
