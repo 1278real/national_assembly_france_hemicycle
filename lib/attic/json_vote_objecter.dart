@@ -389,8 +389,9 @@ class DossierLegislatifFromJson {
     Map<String, dynamic> _actesLegislatifs = json["actesLegislatifs"];
     Map<String, dynamic> _acteLegislatif = _actesLegislatifs["acteLegislatif"];
     Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
-    this.libelleActeLegislatifLong = _libelleActe['nomCanonique'];
-    this.libelleActeLegislatifCourt = _libelleActe['libelleCourt'];
+    this.libelleActeLegislatifLong = _libelleActe['nomCanonique'] ?? "";
+    this.libelleActeLegislatifCourt =
+        _libelleActe['libelleCourt'] ?? this.libelleActeLegislatifLong;
   }
 }
 

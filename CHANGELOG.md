@@ -23,7 +23,7 @@ getUpdatedDatasFromAssembly(
 ```dart
 Directory? _appSupportDirectory = await getApplicationSupportDirectory();
 
-getListOfDossiersLegislatifs(
+List<DossierLegislatifFromJson> _listProcessed = getListOfDossiersLegislatifs(
     mainDirectory: _appSupportDirectory);
 ```
 
