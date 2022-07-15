@@ -280,6 +280,7 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       DossierLegislatifFromJson _toReturn =
           DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(_mapIndent);
       _listToReturn.add(_toReturn);
+      print("added one");
     }
   }
   return _listToReturn;
