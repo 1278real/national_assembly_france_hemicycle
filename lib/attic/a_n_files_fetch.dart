@@ -314,7 +314,7 @@ Future<List<AmendementFromJson>> getListOfAmendements(
       if (entityLevelOne is Directory) {
         print("CCC");
         List<FileSystemEntity> _listOfDossiers =
-            await theDirectory.list(recursive: true).toList();
+            await entityLevelOne.list(recursive: true).toList();
 
         print("DDD");
         _dossierLegisRef = entityLevelOne.path.split("/").last;
@@ -335,7 +335,7 @@ Future<List<AmendementFromJson>> getListOfAmendements(
             if (entityLevelTwo is Directory) {
               print("HHH");
               List<FileSystemEntity> _listOfProjets =
-                  await theDirectory.list(recursive: true).toList();
+                  await entityLevelTwo.list(recursive: true).toList();
 
               print("III");
               _projetLoiRef = entityLevelTwo.path.split("/").last;
