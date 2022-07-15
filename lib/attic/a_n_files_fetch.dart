@@ -343,14 +343,12 @@ Future<List<AmendementFromJson>> getListOfAmendements(
                   ///
 
                   File _theFile = File(entityLevelThree.path);
-                  print("_theFile = " + _theFile.path);
                   dynamic response = await _theFile.readAsString();
 
                   if (response != null) {
                     Map<String, dynamic> _map = json.decode(response);
                     AmendementFromJson _toReturn =
                         AmendementFromJson.fromFrenchNationalAssemblyJson(_map);
-                    print("OK");
                     _listToReturn.add(_toReturn);
                   }
                 }
