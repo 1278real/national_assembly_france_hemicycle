@@ -269,13 +269,12 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       _docsLegisDirectory +
       _jsonIntermediaryDirectory +
       _dossierParlementaireDirectory);
-  // print("• theDirectory");
   List<FileSystemEntity> initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
-  // print("••• initialListOfFiles");
   for (FileSystemEntity file in initialListOfFiles) {
     final dynamic response = await File(file.path).readAsString();
-    // print("••••• trying " + file.path);
+
+    print("••• trying " + file.path.split("/").last);
     if (response != null) {
       print("••••• step1");
       Map<String, dynamic> _map = json.decode(response);
@@ -285,7 +284,7 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       DossierLegislatifFromJson _toReturn =
           DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(_mapIndent);
       _listToReturn.add(_toReturn);
-      print("••••• added one");
+      print("••• added " + file.path.split("/").last);
     }
   }
   return _listToReturn;
