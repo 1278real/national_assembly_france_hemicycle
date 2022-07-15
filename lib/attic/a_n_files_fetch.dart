@@ -277,7 +277,7 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       print("BBB");
       File _theFile = File(file.path);
       print("CCC");
-      dynamic response = _theFile.readAsString();
+      dynamic response = await _theFile.readAsString();
       print("DDD");
 
       // print("••• trying " + file.path.split("/").last);
