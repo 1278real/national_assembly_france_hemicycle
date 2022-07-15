@@ -274,7 +274,7 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       await theDirectory.list(recursive: true).toList();
   // print("••• initialListOfFiles");
   for (FileSystemEntity file in initialListOfFiles) {
-    final dynamic response = File(file.path).readAsString();
+    final dynamic response = await File(file.path).readAsString();
     print("••••• trying " + file.path);
     if (response != null) {
       Map<String, dynamic> _map = json.decode(response);
