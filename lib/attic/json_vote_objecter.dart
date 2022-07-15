@@ -353,7 +353,11 @@ class AmendementFromJson {
 
     Map<String, dynamic> _corps = json["corps"];
     Map<String, dynamic> _contenuAuteur = _corps["contenuAuteur"];
-    this.exposeSommaire = _contenuAuteur['exposeSommaire'];
+    if (_contenuAuteur['exposeSommaire'] != null) {
+      this.exposeSommaire = _contenuAuteur['exposeSommaire'];
+    } else {
+      this.exposeSommaire = "-";
+    }
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
     this.cycleDeVieSort = _cycleDeVie['sort'];
