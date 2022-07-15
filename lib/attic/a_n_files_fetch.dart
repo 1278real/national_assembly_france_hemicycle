@@ -295,7 +295,6 @@ Future<List<AmendementFromJson>> getListOfAmendements(
       mainDirectory.path + _amendementsDirectory + _jsonIntermediaryDirectory);
   List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
-  for (FileSystemEntity file in initialListOfFiles) {
 
   String _dossierLegisRef = "";
   String _projetLoiRef = "";
