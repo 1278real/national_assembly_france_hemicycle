@@ -360,7 +360,11 @@ class AmendementFromJson {
     }
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
-    this.cycleDeVieSort = _cycleDeVie['sort'];
+    if (_cycleDeVie['sort'].toString().substring(0, 1) == "{") {
+      this.cycleDeVieSort = "";
+    } else if (_cycleDeVie['sort'].toString().substring(0, 1) == "\"") {
+      this.cycleDeVieSort = _cycleDeVie['sort'];
+    }
   }
 }
 
