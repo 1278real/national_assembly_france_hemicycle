@@ -272,13 +272,9 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
   List<FileSystemEntity> initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
   for (FileSystemEntity file in initialListOfFiles) {
-    print("AAA");
     if (file.path.split("/").last.substring(0, 1) != ".") {
-      print("BBB");
       File _theFile = File(file.path);
-      print("CCC");
       dynamic response = await _theFile.readAsString();
-      print("DDD");
 
       // print("••• trying " + file.path.split("/").last);
       if (response != null) {
