@@ -300,7 +300,6 @@ Future<List<AmendementFromJson>> getListOfAmendements(
   String _projetLoiRef = "";
 
   for (FileSystemEntity entityLevelOne in _initialListOfFiles) {
-    print("AAA");
     if (entityLevelOne.path.split("/").last.substring(0, 1) != ".") {
       // to exclude any system file
 
@@ -310,18 +309,13 @@ Future<List<AmendementFromJson>> getListOfAmendements(
       ///
       ///
 
-      print("BBB");
       if (entityLevelOne is Directory) {
-        print("CCC");
         List<FileSystemEntity> _listOfDossiers =
             await entityLevelOne.list(recursive: true).toList();
 
-        print("DDD");
         _dossierLegisRef = entityLevelOne.path.split("/").last;
 
-        print("EEE");
         for (FileSystemEntity entityLevelTwo in _listOfDossiers) {
-          print("FFF");
           if (entityLevelTwo.path.split("/").last.substring(0, 1) != ".") {
             // to exclude any system file
 
@@ -331,18 +325,13 @@ Future<List<AmendementFromJson>> getListOfAmendements(
             ///
             ///
 
-            print("GGG");
             if (entityLevelTwo is Directory) {
-              print("HHH");
               List<FileSystemEntity> _listOfProjets =
                   await entityLevelTwo.list(recursive: true).toList();
 
-              print("III");
               _projetLoiRef = entityLevelTwo.path.split("/").last;
 
-              print("JJJ");
               for (FileSystemEntity entityLevelThree in _listOfProjets) {
-                print("KKK");
                 if (entityLevelThree.path.split("/").last.substring(0, 1) !=
                     ".") {
                   // to exclude any system file
@@ -353,17 +342,15 @@ Future<List<AmendementFromJson>> getListOfAmendements(
                   ///
                   ///
 
-                  print("LLL");
                   File _theFile = File(entityLevelThree.path);
-                  print("MMM = " + _theFile.path);
+                  print("_theFile = " + _theFile.path);
                   dynamic response = await _theFile.readAsString();
 
-                  print("NNN");
                   if (response != null) {
-                    print("OOO");
                     Map<String, dynamic> _map = json.decode(response);
                     AmendementFromJson _toReturn =
                         AmendementFromJson.fromFrenchNationalAssemblyJson(_map);
+                    print("OK");
                     _listToReturn.add(_toReturn);
                   }
                 }
