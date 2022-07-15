@@ -269,8 +269,10 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       _docsLegisDirectory +
       _jsonIntermediaryDirectory +
       _dossierParlementaireDirectory);
+  print("• theDirectory");
   List<FileSystemEntity> initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
+  print("••• initialListOfFiles");
   for (FileSystemEntity file in initialListOfFiles) {
     final dynamic response = await rootBundle.loadString(file.path);
     if (response != null) {
@@ -280,7 +282,7 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
       DossierLegislatifFromJson _toReturn =
           DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(_mapIndent);
       _listToReturn.add(_toReturn);
-      print("added one");
+      print("••••• added one");
     }
   }
   return _listToReturn;
