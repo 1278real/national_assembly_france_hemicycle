@@ -1,3 +1,32 @@
+## 0.7.0
+
+* Download the whole JSON files from National Assembly Open Data to process :
+```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+
+getUpdatedDatasFromAssembly(
+    destinationDirectory: _appSupportDirectory);
+```
+In case the URL is changed for any reason, you can specify it...
+```dart
+getUpdatedDatasFromAssembly(
+    pathToDossiers:
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/dossiers_legislatifs/Dossiers_Legislatifs.json.zip",
+    pathToVotes:
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/scrutins/Scrutins.json.zip",
+    pathToAmendements:
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/amendements_div_legis/Amendements.json.zip",
+    destinationDirectory: _appSupportDirectory);
+```
+
+* Process ```DossierLegislatifFromJson``` from downloaded files :
+```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+
+getListOfDossiersLegislatifs(
+    mainDirectory: _appSupportDirectory);
+```
+
 ## 0.6.0
 
 * Ability to display a user-selected String as a Title
