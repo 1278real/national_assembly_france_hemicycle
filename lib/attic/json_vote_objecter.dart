@@ -512,7 +512,7 @@ class ProjetLoiFromJson {
         _toReturn += "VIe Rép. ";
       }
       if (_localUuid.substring(8, 9) == "L") {
-        _toReturn += "Légis." + _localUuid.substring(9, 11) + ") ";
+        _toReturn += "Légis." + _localUuid.substring(9, 11) + ") • ";
         if (_localUuid.substring(11, 14) == "BTA") {
           _toReturn += "ADOPTÉ " + _localUuid.substring(14);
         } else if (_localUuid.substring(11, 14) == "BTS") {
@@ -525,7 +525,7 @@ class ProjetLoiFromJson {
           _toReturn += "-NON- ADOPTÉ " + _localUuid.substring(12);
         }
       } else if (_localUuid.substring(8, 9) == "S") {
-        _toReturn += "Sess." + _localUuid.substring(9, 12) + ") ";
+        _toReturn += "Sess." + _localUuid.substring(9, 12) + ") • ";
         if (_localUuid.substring(12, 15) == "BTA") {
           _toReturn += "ADOPTÉ " + _localUuid.substring(15);
         } else if (_localUuid.substring(12, 15) == "BTS") {
