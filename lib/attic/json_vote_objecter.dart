@@ -505,7 +505,8 @@ class ActeLegislatifFromJson {
     List<String> _tempVotes = [];
     if (_acteLegislatif["voteRefs"] != null) {
       Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
-      _tempVotes.add(_voteRefs['voteRef']);
+      _tempVotes
+          .add(_voteRefs['voteRef'] + "_" + _acteLegislatif["reunionRef"]);
     }
 
     Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
