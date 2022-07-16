@@ -390,3 +390,28 @@ Future<List<ProjetLoiFromJson>> getListOfProjetsLois(
   }
   return _listToReturn;
 }
+
+Future<List<ScrutinFromJson>> getListOfVotes(
+    {required Directory mainDirectory}) async {
+  List<ScrutinFromJson> _listToReturn = [];
+  Directory theDirectory = Directory(
+      mainDirectory.path + _votesDirectory + _jsonIntermediaryDirectory);
+  List<FileSystemEntity> _initialListOfFiles =
+      await theDirectory.list(recursive: true).toList();
+  for (FileSystemEntity file in _initialListOfFiles) {
+    if (file.path.split("/").last.substring(0, 1) != ".") {
+      // to exclude any system file
+
+      File _theFile = File(file.path);
+      dynamic response = await _theFile.readAsString();
+
+      if (response != null) {
+        Map<String, dynamic> _map = json.decode(response);
+        ScrutinFromJson _toReturn =
+            ScrutinFromJson.fromFrenchNationalAssemblyJson(_map);
+        _listToReturn.add(_toReturn);
+      }
+    }
+  }
+  return _listToReturn;
+}
