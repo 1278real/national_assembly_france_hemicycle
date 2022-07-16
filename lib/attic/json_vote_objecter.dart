@@ -461,7 +461,7 @@ class DossierLegislatifFromJson {
         }
       }
     }
-    return null;
+    return _tempVotes;
   }
 }
 
