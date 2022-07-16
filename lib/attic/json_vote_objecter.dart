@@ -510,7 +510,7 @@ class DossierLegislatifFromJson {
 
     _tempReunions.sort();
 
-    return _tempReunions;
+    // return _tempReunions;
 
     for (var i = 0; i < _tempReunions.length - 1; i++) {
       if (_tempReunions[i] != _tempReunions[i + 1]) {
