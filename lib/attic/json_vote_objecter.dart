@@ -502,9 +502,9 @@ class ProjetLoiFromJson {
     if (_localUuid.substring(0, 4) == "PRJL") {
       _toReturn += "Proj. Loi ";
       if (_localUuid.substring(4, 6) == "AN") {
-        _toReturn += "Ass. Nat. ";
+        _toReturn += "(Ass. Nat. ";
       } else if (_localUuid.substring(4, 6) == "SN") {
-        _toReturn += "Sénat ";
+        _toReturn += "(Sénat ";
       }
       if (_localUuid.substring(6, 8) == "R5") {
         _toReturn += "Ve Répub. ";
@@ -512,26 +512,26 @@ class ProjetLoiFromJson {
         _toReturn += "VIe Répub. ";
       }
       if (_localUuid.substring(8, 9) == "L") {
-        _toReturn += "Légis. " + _localUuid.substring(9, 11) + " ";
+        _toReturn += "Légis. " + _localUuid.substring(9, 11) + ") ";
         if (_localUuid.substring(11, 14) == "BTS") {
-          _toReturn += "Adopté Séance " + _localUuid.substring(14);
+          _toReturn += "ADOPTÉ Séance " + _localUuid.substring(14);
         } else if (_localUuid.substring(11, 14) == "BTC") {
-          _toReturn += "Adopté Commission au fond " + _localUuid.substring(14);
+          _toReturn += "ADOPTÉ Commission au fond " + _localUuid.substring(14);
         } else if (_localUuid.substring(11, 14) == "BTG") {
-          _toReturn += "Adopté en Congrès " + _localUuid.substring(14);
+          _toReturn += "ADOPTÉ en Congrès " + _localUuid.substring(14);
         } else if (_localUuid.substring(11, 12) == "B") {
-          _toReturn += "Non adopté " + _localUuid.substring(12);
+          _toReturn += "-NON- ADOPTÉ " + _localUuid.substring(12);
         }
       } else if (_localUuid.substring(8, 9) == "S") {
-        _toReturn += "Sess. " + _localUuid.substring(9, 12) + " ";
+        _toReturn += "Sess. " + _localUuid.substring(9, 12) + ") ";
         if (_localUuid.substring(12, 15) == "BTS") {
-          _toReturn += "Adopté Séance " + _localUuid.substring(15);
+          _toReturn += "ADOPTÉ Séance " + _localUuid.substring(15);
         } else if (_localUuid.substring(12, 15) == "BTC") {
-          _toReturn += "Adopté Commission au fond " + _localUuid.substring(15);
+          _toReturn += "ADOPTÉ Commission au fond " + _localUuid.substring(15);
         } else if (_localUuid.substring(12, 15) == "BTG") {
-          _toReturn += "Adopté en Congrès " + _localUuid.substring(15);
+          _toReturn += "ADOPTÉ en Congrès " + _localUuid.substring(15);
         } else if (_localUuid.substring(12, 13) == "B") {
-          _toReturn += "Non adopté " + _localUuid.substring(13);
+          _toReturn += "-NON- ADOPTÉ " + _localUuid.substring(13);
         }
       }
     }
