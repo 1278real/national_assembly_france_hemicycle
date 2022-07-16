@@ -487,7 +487,7 @@ class ProjetLoiFromJson {
     this.dossierRef = json['dossierRef'];
   }
 
-  String translate(String uuid) {
+  String get uuidTranslate {
     /// from :
     ///   PRJLANR5L16BTC0144 / PRJLSNR5S359B0561
     /// to :
@@ -495,45 +495,46 @@ class ProjetLoiFromJson {
     ///   Proj. Loi Sénat Ve Répub. Sess. 359 Non adopté 0561
     ///
     String _toReturn = "";
+    String _localUuid = this.uuid ?? "-";
 
-    if (uuid.substring(0, 3) == "PRJL") {
+    if (_localUuid.substring(0, 3) == "PRJL") {
       _toReturn += "Proj. Loi ";
-      if (uuid.substring(4, 5) == "AN") {
+      if (_localUuid.substring(4, 5) == "AN") {
         _toReturn += "Ass. Nat. ";
-      } else if (uuid.substring(4, 5) == "SN") {
+      } else if (_localUuid.substring(4, 5) == "SN") {
         _toReturn += "Sénat ";
       }
-      if (uuid.substring(6, 7) == "R5") {
+      if (_localUuid.substring(6, 7) == "R5") {
         _toReturn += "Ve Répub. ";
-      } else if (uuid.substring(6, 7) == "R6") {
+      } else if (_localUuid.substring(6, 7) == "R6") {
         _toReturn += "VIe Répub. ";
       }
-      if (uuid.substring(8, 8) == "L") {
-        _toReturn += "Légis. " + uuid.substring(9, 10) + " ";
-        if (uuid.substring(11, 13) == "BTS") {
-          _toReturn += "Adopté Séance " + uuid.substring(14);
-        } else if (uuid.substring(11, 13) == "BTC") {
-          _toReturn += "Adopté Commission au fond " + uuid.substring(14);
-        } else if (uuid.substring(11, 13) == "BTG") {
-          _toReturn += "Adopté en Congrès " + uuid.substring(14);
-        } else if (uuid.substring(11, 11) == "B") {
-          _toReturn += "Non adopté " + uuid.substring(12);
+      if (_localUuid.substring(8, 8) == "L") {
+        _toReturn += "Légis. " + _localUuid.substring(9, 10) + " ";
+        if (_localUuid.substring(11, 13) == "BTS") {
+          _toReturn += "Adopté Séance " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 13) == "BTC") {
+          _toReturn += "Adopté Commission au fond " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 13) == "BTG") {
+          _toReturn += "Adopté en Congrès " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 11) == "B") {
+          _toReturn += "Non adopté " + _localUuid.substring(12);
         }
-      } else if (uuid.substring(8, 8) == "S") {
-        _toReturn += "Sess. " + uuid.substring(9, 11) + " ";
-        if (uuid.substring(12, 14) == "BTS") {
-          _toReturn += "Adopté Séance " + uuid.substring(15);
-        } else if (uuid.substring(12, 14) == "BTC") {
-          _toReturn += "Adopté Commission au fond " + uuid.substring(15);
-        } else if (uuid.substring(12, 14) == "BTG") {
-          _toReturn += "Adopté en Congrès " + uuid.substring(15);
-        } else if (uuid.substring(12, 12) == "B") {
-          _toReturn += "Non adopté " + uuid.substring(13);
+      } else if (_localUuid.substring(8, 8) == "S") {
+        _toReturn += "Sess. " + _localUuid.substring(9, 11) + " ";
+        if (_localUuid.substring(12, 14) == "BTS") {
+          _toReturn += "Adopté Séance " + _localUuid.substring(15);
+        } else if (_localUuid.substring(12, 14) == "BTC") {
+          _toReturn += "Adopté Commission au fond " + _localUuid.substring(15);
+        } else if (_localUuid.substring(12, 14) == "BTG") {
+          _toReturn += "Adopté en Congrès " + u_localUuiduid.substring(15);
+        } else if (_localUuid.substring(12, 12) == "B") {
+          _toReturn += "Non adopté " + _localUuid.substring(13);
         }
       }
     }
     if (_toReturn == "") {
-      return uuid;
+      return _localUuid;
     } else {
       return _toReturn;
     }
