@@ -500,20 +500,22 @@ class ProjetLoiFromJson {
     String _localUuid = this.uuid ?? "-";
 
     if (_localUuid.substring(0, 4) == "PRJL") {
-      _toReturn += "Proj. Loi ";
+      _toReturn += "Proj.Loi ";
       if (_localUuid.substring(4, 6) == "AN") {
-        _toReturn += "(Ass. Nat. ";
+        _toReturn += "(Ass.Nat. - ";
       } else if (_localUuid.substring(4, 6) == "SN") {
-        _toReturn += "(Sénat ";
+        _toReturn += "(Sénat - ";
       }
       if (_localUuid.substring(6, 8) == "R5") {
-        _toReturn += "Ve Répub. ";
+        _toReturn += "Ve Rép. ";
       } else if (_localUuid.substring(6, 8) == "R6") {
-        _toReturn += "VIe Répub. ";
+        _toReturn += "VIe Rép. ";
       }
       if (_localUuid.substring(8, 9) == "L") {
-        _toReturn += "Légis. " + _localUuid.substring(9, 11) + ") ";
-        if (_localUuid.substring(11, 14) == "BTS") {
+        _toReturn += "Légis." + _localUuid.substring(9, 11) + ") ";
+        if (_localUuid.substring(11, 14) == "BTA") {
+          _toReturn += "ADOPTÉ " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 14) == "BTS") {
           _toReturn += "ADOPTÉ Séance " + _localUuid.substring(14);
         } else if (_localUuid.substring(11, 14) == "BTC") {
           _toReturn += "ADOPTÉ Commission au fond " + _localUuid.substring(14);
@@ -523,8 +525,10 @@ class ProjetLoiFromJson {
           _toReturn += "-NON- ADOPTÉ " + _localUuid.substring(12);
         }
       } else if (_localUuid.substring(8, 9) == "S") {
-        _toReturn += "Sess. " + _localUuid.substring(9, 12) + ") ";
-        if (_localUuid.substring(12, 15) == "BTS") {
+        _toReturn += "Sess." + _localUuid.substring(9, 12) + ") ";
+        if (_localUuid.substring(12, 15) == "BTA") {
+          _toReturn += "ADOPTÉ " + _localUuid.substring(15);
+        } else if (_localUuid.substring(12, 15) == "BTS") {
           _toReturn += "ADOPTÉ Séance " + _localUuid.substring(15);
         } else if (_localUuid.substring(12, 15) == "BTC") {
           _toReturn += "ADOPTÉ Commission au fond " + _localUuid.substring(15);
