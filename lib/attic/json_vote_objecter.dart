@@ -489,6 +489,16 @@ class DossierLegislatifFromJson {
                     subSubActe.reunionRef != []) {
                   _tempReunions.add(subSubActe.reunionRef!);
                 }
+                if (subSubActe.actesIntra != null &&
+                    subSubActe.actesIntra != []) {
+                  for (ActeLegislatifFromJson subSubSubActe in subSubActe
+                      .actesIntra as List<ActeLegislatifFromJson>) {
+                    if (subSubSubActe.reunionRef != null &&
+                        subSubSubActe.reunionRef != []) {
+                      _tempReunions.add(subSubSubActe.reunionRef!);
+                    }
+                  }
+                }
               }
             }
           }
