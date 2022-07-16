@@ -500,6 +500,8 @@ class ActeLegislatifFromJson {
   /// Mapping from JSON
   ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
       Map<String, dynamic> _acteLegislatif) {
+    this.uuid = _acteLegislatif["uid"];
+
     List<String> _tempVotes = [];
     if (_acteLegislatif["voteRefs"] != null) {
       Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
