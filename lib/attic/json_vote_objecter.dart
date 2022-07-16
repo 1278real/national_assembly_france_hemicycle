@@ -512,7 +512,7 @@ class DossierLegislatifFromJson {
         _reduxTempReunions.add(_tempReunions[i]);
       }
     }
-    _reduxTempReunions.add(_tempReunions[_tempReunions.length - 1]);
+    _reduxTempReunions.add(_tempReunions.last);
     return _reduxTempReunions;
   }
 }
