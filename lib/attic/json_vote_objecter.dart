@@ -423,7 +423,7 @@ class ProjetLoiFromJson {
 
   /// Mapping from JSON
   ProjetLoiFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
-    Map<String, dynamic> json = _map["dossierParlementaire"];
+    Map<String, dynamic> json = _map["document"];
 
     this.uuid = json['uid'];
     this.legislature = json['legislature'];
