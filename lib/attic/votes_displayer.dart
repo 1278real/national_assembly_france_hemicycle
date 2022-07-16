@@ -368,7 +368,7 @@ class OpenAssembleeVoteDisplayer {
             votesDirectory +
             jsonIntermediaryDirectory +
             "/" +
-            uuid +
+            uuid.split("_")[0] +
             ".json"),
         useGroupSector: true,
         hiliteFronde: true);
