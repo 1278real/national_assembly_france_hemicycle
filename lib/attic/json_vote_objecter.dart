@@ -498,6 +498,16 @@ class ProjetLoiFromJson {
         : DateTime.now();
   }
 
+  bool get isAdopted {
+    if ((this.uuid ?? "-").contains("BTA") ||
+        (this.uuid ?? "-").contains("BTS") ||
+        (this.uuid ?? "-").contains("BTC") ||
+        (this.uuid ?? "-").contains("BTG")) {
+      return true;
+    }
+    return false;
+  }
+
   String get uuidTranslate {
     ///
     /// from :
