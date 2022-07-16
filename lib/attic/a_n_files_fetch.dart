@@ -10,10 +10,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'helpers.dart';
 
-const String _docsLegisDirectory = "/docs_legis";
+const String _jsonIntermediaryDirectory = "/json";
 const String _votesDirectory = "/votes";
 const String _amendementsDirectory = "/amendements";
-const String _jsonIntermediaryDirectory = "/json";
+const String _docsLegisDirectory = "/docs_legis";
+const String _dossierParlementaireDirectory = "/dossierParlementaire";
+const String _documentDirectory = "/document";
 
 Future<bool> checkPrefs() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -264,7 +266,6 @@ Future<bool> getUpdatedDatasFromAssembly(
 Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
     {required Directory mainDirectory}) async {
   List<DossierLegislatifFromJson> _listToReturn = [];
-  String _dossierParlementaireDirectory = "/dossierParlementaire";
   Directory theDirectory = Directory(mainDirectory.path +
       _docsLegisDirectory +
       _jsonIntermediaryDirectory +
@@ -355,6 +356,34 @@ Future<List<AmendementFromJson>> getListOfAmendements(
               }
             }
           }
+        }
+      }
+    }
+  }
+  return _listToReturn;
+}
+
+Future<List<ProjetLoiFromJson>> getListOfProjetsLois(
+    {required Directory mainDirectory}) async {
+  List<ProjetLoiFromJson> _listToReturn = [];
+  Directory theDirectory = Directory(mainDirectory.path +
+      _docsLegisDirectory +
+      _jsonIntermediaryDirectory +
+      _documentDirectory);
+  List<FileSystemEntity> _initialListOfFiles =
+      await theDirectory.list(recursive: true).toList();
+  for (FileSystemEntity file in _initialListOfFiles) {
+    if (file.path.split("/").last.substring(0, 1) != ".") {
+      // to exclude any system file
+      if (file.path.split("/").last.substring(0, 4) == "PRJL") {
+        File _theFile = File(file.path);
+        dynamic response = await _theFile.readAsString();
+
+        if (response != null) {
+          Map<String, dynamic> _map = json.decode(response);
+          ProjetLoiFromJson _toReturn =
+              ProjetLoiFromJson.fromFrenchNationalAssemblyJson(_map);
+          _listToReturn.add(_toReturn);
         }
       }
     }

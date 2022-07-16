@@ -333,7 +333,7 @@ class AmendementFromJson {
   String? cycleDeVieSort;
   String? exposeSommaire;
 
-  /// [AmendementFromJson] is the detail of the Amendement to display
+  /// [AmendementFromJson] is the detail of the Amendment to display
   AmendementFromJson(this.uuid, this.numeroLong, this.texteLegislatifRef,
       this.libelleSignataires, this.cycleDeVieSort, this.exposeSommaire);
 
@@ -375,7 +375,7 @@ class DossierLegislatifFromJson {
   String? libelleProcedureParlementaire;
   String? libelleActeLegislatif;
 
-  /// [DossierLegislatifFromJson] is the detail of the Amendement to display
+  /// [DossierLegislatifFromJson] is the detail of the Legislative File to display
   DossierLegislatifFromJson(this.uuid, this.legislature, this.titre,
       this.libelleProcedureParlementaire, this.libelleActeLegislatif);
 
@@ -409,6 +409,31 @@ class DossierLegislatifFromJson {
       Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
       this.libelleActeLegislatif = _libelleActe['nomCanonique'];
     }
+  }
+}
+
+class ProjetLoiFromJson {
+  String? uuid;
+  String? legislature;
+  String? titre;
+  String? dossierRef;
+
+  /// [ProjetLoiFromJson] is the detail of the Law Project to display
+  ProjetLoiFromJson(this.uuid, this.legislature, this.titre, this.dossierRef);
+
+  /// Mapping from JSON
+  ProjetLoiFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
+    Map<String, dynamic> json = _map["dossierParlementaire"];
+
+    this.uuid = json['uid'];
+    this.legislature = json['legislature'];
+
+    Map<String, dynamic> _titreDossier = json["titres"];
+    this.titre = _titreDossier['titrePrincipalCourt'] != null
+        ? _titreDossier['titrePrincipalCourt']
+        : _titreDossier['titrePrincipal'];
+
+    this.dossierRef = json['dossierRef'];
   }
 }
 
