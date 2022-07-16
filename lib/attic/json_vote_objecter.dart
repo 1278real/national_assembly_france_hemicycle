@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:national_assembly_france_hemicycle/attic/groupe_transcode.dart';
 
@@ -490,11 +492,10 @@ class ProjetLoiFromJson {
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
     Map<String, dynamic> _chrono = _cycleDeVie["chrono"];
-    this.dateDepot = dateFormatter(
-        _chrono["dateDepot"].toString().substring(0, 10),
-        dateSeparator: "-",
-        noHour: true,
-        format: "YMD");
+    this.dateDepot = _chrono["dateDepot"].toString().length > 9
+        ? dateFormatter(_chrono["dateDepot"].toString().split("T")[0],
+            dateSeparator: "-", noHour: true, format: "YMD")
+        : DateTime.now();
   }
 
   String get uuidTranslate {
