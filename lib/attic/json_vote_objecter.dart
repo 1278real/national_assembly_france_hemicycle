@@ -373,8 +373,8 @@ class DossierLegislatifFromJson {
   String? legislature;
   String? titre;
   String? libelleProcedureParlementaire;
-  String? libelleActeLegislatif;
-  List<String>? votesRef;
+  String? lastLibelleActeLegislatif;
+  List<ActeLegislatifFromJson>? actesLegislatifs;
 
   /// [DossierLegislatifFromJson] is the detail of the Legislative File to display
   DossierLegislatifFromJson(
@@ -382,8 +382,8 @@ class DossierLegislatifFromJson {
       this.legislature,
       this.titre,
       this.libelleProcedureParlementaire,
-      this.libelleActeLegislatif,
-      this.votesRef);
+      this.lastLibelleActeLegislatif,
+      this.actesLegislatifs);
 
   /// Mapping from JSON
   DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(
@@ -400,96 +400,68 @@ class DossierLegislatifFromJson {
         json["procedureParlementaire"];
     this.libelleProcedureParlementaire = _procedureParlementaire['libelle'];
 
-    List<String> _tempVotes = [];
-
     Map<String, dynamic> _actesLegislatifs = json["actesLegislatifs"];
+
     if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) == "{") {
-      Map<String, dynamic> _acteLegislatif =
-          _actesLegislatifs["acteLegislatif"];
+      this.actesLegislatifs = [
+        ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+            _actesLegislatifs["acteLegislatif"])
+      ];
 
-      if (_acteLegislatif["voteRefs"] != null) {
-        Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
-        _tempVotes.add(_voteRefs['voteRef']);
-      }
-
-      Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
-      this.libelleActeLegislatif = _libelleActe['nomCanonique'];
+      this.lastLibelleActeLegislatif =
+          ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+                  _actesLegislatifs["acteLegislatif"])
+              .libelleActeLegislatif;
     } else if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
         "[") {
+      List<ActeLegislatifFromJson> _temp = [];
       List<dynamic> _acteLegislatifList =
           _actesLegislatifs["acteLegislatif"] as List;
-
       for (dynamic instance in _acteLegislatifList) {
         Map<String, dynamic> _acteLegislatif = instance;
-        if (_acteLegislatif["voteRefs"] != null) {
-          Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
-          _tempVotes.add(_voteRefs['voteRef']);
-        }
-        Map<String, dynamic> _subActesLegislatifs =
-            _acteLegislatif["actesLegislatifs"];
-        if (_subActesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
-            "{") {
-          Map<String, dynamic> _subActeLegislatif =
-              _subActesLegislatifs["acteLegislatif"];
-          if (_subActeLegislatif["voteRefs"] != null) {
-            Map<String, dynamic> _voteRefs = _subActeLegislatif["voteRefs"];
-            _tempVotes.add(_voteRefs['voteRef']);
+        _temp.add(ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+            _acteLegislatif));
+      }
+      this.actesLegislatifs = _temp;
+      Map<String, dynamic> _acteLegislatif = _acteLegislatifList.last;
+      this.lastLibelleActeLegislatif =
+          ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(_acteLegislatif)
+              .libelleActeLegislatif;
+    }
+  }
+
+  List<String>? get votesRef {
+    List<String> _tempVotes = [];
+    if (this.actesLegislatifs != null) {
+      for (ActeLegislatifFromJson acte in this.actesLegislatifs!) {
+        if (acte.votesRef != null && acte.votesRef != []) {
+          for (String vote in acte.votesRef!) {
+            _tempVotes.add(vote);
           }
-        } else if (_subActesLegislatifs["acteLegislatif"]
-                .toString()
-                .substring(0, 1) ==
-            "[") {
-          List<dynamic> _subActeLegislatifList =
-              _subActesLegislatifs["acteLegislatif"] as List;
-          for (dynamic subInstance in _subActeLegislatifList) {
-            Map<String, dynamic> _subActeLegislatif = subInstance;
-            if (_subActeLegislatif["voteRefs"] != null) {
-              Map<String, dynamic> _voteRefs = _subActeLegislatif["voteRefs"];
-              _tempVotes.add(_voteRefs['voteRef']);
-            }
-            Map<String, dynamic> _subSubActesLegislatifs =
-                _subActeLegislatif["actesLegislatifs"];
-            if (_subSubActesLegislatifs["acteLegislatif"]
-                    .toString()
-                    .substring(0, 1) ==
-                "{") {
-              Map<String, dynamic> _subSubActeLegislatif =
-                  _subSubActesLegislatifs["acteLegislatif"];
-
-              if (_subSubActesLegislatifs["voteRefs"] != null) {
-                Map<String, dynamic> _voteRefs =
-                    _subSubActesLegislatifs["voteRefs"];
-                _tempVotes.add(_voteRefs['voteRef']);
+        }
+        if (acte.actesIntra != null && acte.actesIntra != []) {
+          for (ActeLegislatifFromJson subActe
+              in acte.actesIntra as List<ActeLegislatifFromJson>) {
+            if (subActe.votesRef != null && subActe.votesRef != []) {
+              for (String vote in subActe.votesRef!) {
+                _tempVotes.add(vote);
               }
-            } else if (_subSubActesLegislatifs["acteLegislatif"]
-                    .toString()
-                    .substring(0, 1) ==
-                "[") {
-              List<dynamic> _subSubActeLegislatifList =
-                  _subSubActesLegislatifs["acteLegislatif"] as List;
-              for (dynamic subSubIstance in _subSubActeLegislatifList) {
-                Map<String, dynamic> _subSubActeLegislatif = subSubIstance;
-
-                if (_subSubActeLegislatif["voteRefs"] != null) {
-                  Map<String, dynamic> _voteRefs =
-                      _subSubActeLegislatif["voteRefs"];
-                  _tempVotes.add(_voteRefs['voteRef']);
+            }
+            if (subActe.actesIntra != null && subActe.actesIntra != []) {
+              for (ActeLegislatifFromJson subSubActe
+                  in subActe.actesIntra as List<ActeLegislatifFromJson>) {
+                if (subSubActe.votesRef != null && subSubActe.votesRef != []) {
+                  for (String vote in subSubActe.votesRef!) {
+                    _tempVotes.add(vote);
+                  }
                 }
               }
             }
           }
         }
       }
-
-      dynamic _lastActeLegislatif = _acteLegislatifList.last;
-      Map<String, dynamic> _acteLegislatif = _lastActeLegislatif;
-      Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
-      this.libelleActeLegislatif = _libelleActe['nomCanonique'];
     }
-    if (_tempVotes != []) {
-      print((this.uuid ?? "---") + " >> " + _tempVotes.toString());
-    }
-    this.votesRef = _tempVotes;
+    return null;
   }
 }
 
@@ -513,6 +485,61 @@ class ProjetLoiFromJson {
     this.titre = _titreDossier['titrePrincipal'];
 
     this.dossierRef = json['dossierRef'];
+  }
+}
+
+class ActeLegislatifFromJson {
+  String? uuid;
+  String? libelleActeLegislatif;
+  List<String>? votesRef;
+  dynamic actesIntra;
+
+  ActeLegislatifFromJson(
+      this.uuid, this.libelleActeLegislatif, this.actesIntra);
+
+  /// Mapping from JSON
+  ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+      Map<String, dynamic> _acteLegislatif) {
+    List<String> _tempVotes = [];
+    if (_acteLegislatif["voteRefs"] != null) {
+      Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
+      _tempVotes.add(_voteRefs['voteRef']);
+    }
+
+    Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
+    this.libelleActeLegislatif = _libelleActe['nomCanonique'];
+
+    if (_acteLegislatif["actesLegislatifs"] != null) {
+      // this.actesIntra = _acteLegislatif["actesLegislatifs"];
+
+      Map<String, dynamic> _subActesLegislatifs =
+          _acteLegislatif["actesLegislatifs"];
+
+      if (_subActesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
+          "{") {
+        this.actesIntra = [
+          ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+              _subActesLegislatifs["acteLegislatif"])
+        ];
+      } else if (_subActesLegislatifs["acteLegislatif"]
+              .toString()
+              .substring(0, 1) ==
+          "[") {
+        List<ActeLegislatifFromJson> _temp = [];
+        List<dynamic> _acteLegislatifList =
+            _subActesLegislatifs["acteLegislatif"] as List;
+        for (dynamic instance in _acteLegislatifList) {
+          Map<String, dynamic> _acteLegislatif = instance;
+          _temp.add(ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+              _acteLegislatif));
+        }
+        this.actesIntra = _temp;
+      }
+    }
+    if (_tempVotes != []) {
+      print((this.uuid ?? "---") + " >> " + _tempVotes.toString());
+    }
+    this.votesRef = _tempVotes;
   }
 }
 
