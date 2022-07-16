@@ -165,6 +165,7 @@ class OpenAssembleeVoteDisplayer {
                         DrawHemicycle(
                           nbOfMembersInvolved,
                           assemblyAngle: 195,
+                          assemblyWidth: downloaded != null ? 0.6 : 1,
                           nbRows: (nbOfMembersInvolved / 48).round(),
                           individualVotes: votesAssemblyTest,
                           groupSectors: _localGroups,
