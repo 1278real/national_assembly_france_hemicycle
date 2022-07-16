@@ -508,7 +508,13 @@ class DossierLegislatifFromJson {
 
     _tempReunions.sort();
 
-    // _tempReunions.toSet().toList(); // remove duplicates
+    for (int i = 0; i < _tempReunions.length; i++) {
+      for (int j = i + 1; j < _tempReunions.length; j++) {
+        if (_tempReunions[i] == _tempReunions[j]) {
+          _tempReunions.removeAt(j);
+        }
+      }
+    }
 
     return _tempReunions;
   }
