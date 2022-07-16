@@ -19,6 +19,7 @@ class OpenAssembleeVoteDisplayer {
   Future<bool> getVotes(
       {String? localPath,
       String? remotePath,
+      ScrutinFromJson? downloaded,
       bool? hiliteFronde,
       String? amendementString}) async {
     if (localPath != null || remotePath != null) {
@@ -33,6 +34,8 @@ class OpenAssembleeVoteDisplayer {
           amendement = _return.amendement;
         }
       }
+    } else if (downloaded != null) {
+      scrutin = downloaded;
     }
 
     if (scrutin != null) {
@@ -95,6 +98,7 @@ class OpenAssembleeVoteDisplayer {
       {String? initialComment,
       String? localPath,
       String? remotePath,
+      ScrutinFromJson? downloaded,
       String? amendementString,
       bool useGroupSector = false,
       bool withDividerBefore = false,
@@ -105,6 +109,7 @@ class OpenAssembleeVoteDisplayer {
       future: getVotes(
           localPath: localPath,
           remotePath: remotePath,
+          downloaded: downloaded,
           hiliteFronde: hiliteFronde,
           amendementString: amendementString),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -361,16 +366,8 @@ class OpenAssembleeVoteDisplayer {
     );
   }
 
-  Widget drawVoteHemicycleFromAppSupport(
-      {required Directory mainDirectory, required String uuid}) {
+  Widget drawVoteHemicycleFromAppSupport({required ScrutinFromJson vote}) {
     return drawVoteHemicycleFromPath(
-        localPath: (mainDirectory.path +
-            votesDirectory +
-            jsonIntermediaryDirectory +
-            "/" +
-            uuid.split("_")[0] +
-            ".json"),
-        useGroupSector: true,
-        hiliteFronde: true);
+        downloaded: vote, useGroupSector: true, hiliteFronde: true);
   }
 }
