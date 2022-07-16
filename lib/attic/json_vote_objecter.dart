@@ -487,7 +487,7 @@ class ProjetLoiFromJson {
     this.dossierRef = json['dossierRef'];
   }
 
-  String? translate(String uuid) {
+  String translate(String uuid) {
     /// from :
     ///   PRJLANR5L16BTC0144 / PRJLSNR5S359B0561
     /// to :
