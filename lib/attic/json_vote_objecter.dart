@@ -490,8 +490,11 @@ class ProjetLoiFromJson {
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
     Map<String, dynamic> _chrono = _cycleDeVie["chrono"];
-    this.dateDepot = dateFormatter(_chrono["dateDepot"],
-        dateSeparator: "-", noHour: true, format: "YMD");
+    this.dateDepot = dateFormatter(
+        _chrono["dateDepot"].toString().substring(0, 10),
+        dateSeparator: "-",
+        noHour: true,
+        format: "YMD");
   }
 
   String get uuidTranslate {
