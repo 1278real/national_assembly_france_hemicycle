@@ -496,38 +496,38 @@ class ProjetLoiFromJson {
     ///
     String _toReturn = "";
 
-    if (uuid.substring(0, 4) == "PRJL") {
+    if (uuid.substring(0, 3) == "PRJL") {
       _toReturn += "Proj. Loi ";
-      if (uuid.substring(4, 2) == "AN") {
+      if (uuid.substring(4, 5) == "AN") {
         _toReturn += "Ass. Nat. ";
-      } else if (uuid.substring(4, 2) == "SN") {
+      } else if (uuid.substring(4, 5) == "SN") {
         _toReturn += "Sénat ";
       }
-      if (uuid.substring(6, 2) == "R5") {
+      if (uuid.substring(6, 7) == "R5") {
         _toReturn += "Ve Répub. ";
-      } else if (uuid.substring(6, 2) == "R6") {
+      } else if (uuid.substring(6, 7) == "R6") {
         _toReturn += "VIe Répub. ";
       }
-      if (uuid.substring(8, 1) == "L") {
-        _toReturn += "Légis. " + uuid.substring(9, 2) + " ";
-        if (uuid.substring(11, 3) == "BTS") {
+      if (uuid.substring(8, 8) == "L") {
+        _toReturn += "Légis. " + uuid.substring(9, 10) + " ";
+        if (uuid.substring(11, 13) == "BTS") {
           _toReturn += "Adopté Séance " + uuid.substring(14);
-        } else if (uuid.substring(11, 3) == "BTC") {
+        } else if (uuid.substring(11, 13) == "BTC") {
           _toReturn += "Adopté Commission au fond " + uuid.substring(14);
-        } else if (uuid.substring(11, 3) == "BTG") {
+        } else if (uuid.substring(11, 13) == "BTG") {
           _toReturn += "Adopté en Congrès " + uuid.substring(14);
-        } else if (uuid.substring(11, 1) == "B") {
+        } else if (uuid.substring(11, 11) == "B") {
           _toReturn += "Non adopté " + uuid.substring(12);
         }
-      } else if (uuid.substring(8, 1) == "S") {
-        _toReturn += "Sess. " + uuid.substring(9, 3) + " ";
-        if (uuid.substring(12, 3) == "BTS") {
+      } else if (uuid.substring(8, 8) == "S") {
+        _toReturn += "Sess. " + uuid.substring(9, 11) + " ";
+        if (uuid.substring(12, 14) == "BTS") {
           _toReturn += "Adopté Séance " + uuid.substring(15);
-        } else if (uuid.substring(12, 3) == "BTC") {
+        } else if (uuid.substring(12, 14) == "BTC") {
           _toReturn += "Adopté Commission au fond " + uuid.substring(15);
-        } else if (uuid.substring(12, 3) == "BTG") {
+        } else if (uuid.substring(12, 14) == "BTG") {
           _toReturn += "Adopté en Congrès " + uuid.substring(15);
-        } else if (uuid.substring(12, 1) == "B") {
+        } else if (uuid.substring(12, 12) == "B") {
           _toReturn += "Non adopté " + uuid.substring(13);
         }
       }
