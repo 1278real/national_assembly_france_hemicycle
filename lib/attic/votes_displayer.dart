@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hemicycle/attic/colors.dart';
 import 'package:hemicycle/attic/helpers.dart';
 import 'package:hemicycle/hemicycle.dart';
+import 'package:national_assembly_france_hemicycle/attic/folders.dart';
 
 import '../national_assembly_france_hemicycle.dart';
 
@@ -356,5 +359,13 @@ class OpenAssembleeVoteDisplayer {
         }
       },
     );
+  }
+
+  Widget drawVoteHemicycleFromAppSupport(
+      {required Directory mainDirectory, required String uuid}) {
+    return drawVoteHemicycleFromPath(
+        localPath: (mainDirectory.path + votesDirectory + "/" + uuid + ".json"),
+        useGroupSector: true,
+        hiliteFronde: true);
   }
 }

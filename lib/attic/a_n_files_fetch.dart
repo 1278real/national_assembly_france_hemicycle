@@ -9,13 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'helpers.dart';
-
-const String _jsonIntermediaryDirectory = "/json";
-const String _votesDirectory = "/votes";
-const String _amendementsDirectory = "/amendements";
-const String _docsLegisDirectory = "/docs_legis";
-const String _dossierParlementaireDirectory = "/dossierParlementaire";
-const String _documentDirectory = "/document";
+import 'folders.dart';
 
 Future<bool> checkPrefs() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -132,7 +126,7 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     await extractFileToDisk(
-        dossiersFilePath, destinationDirectory.path + _docsLegisDirectory);
+        dossiersFilePath, destinationDirectory.path + docsLegisDirectory);
 
     initialListOfFiles =
         await destinationDirectory.list(recursive: true).toList();
@@ -174,7 +168,7 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     await extractFileToDisk(
-        votesFilePath, destinationDirectory.path + _votesDirectory);
+        votesFilePath, destinationDirectory.path + votesDirectory);
 
     initialListOfFiles =
         await destinationDirectory.list(recursive: true).toList();
@@ -216,7 +210,7 @@ Future<bool> getUpdatedDatasFromAssembly(
     ///
 
     await extractFileToDisk(
-        amendementsFilePath, destinationDirectory.path + _amendementsDirectory);
+        amendementsFilePath, destinationDirectory.path + amendementsDirectory);
 
     initialListOfFiles =
         await destinationDirectory.list(recursive: true).toList();
@@ -267,9 +261,9 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
     {required Directory mainDirectory}) async {
   List<DossierLegislatifFromJson> _listToReturn = [];
   Directory theDirectory = Directory(mainDirectory.path +
-      _docsLegisDirectory +
-      _jsonIntermediaryDirectory +
-      _dossierParlementaireDirectory);
+      docsLegisDirectory +
+      jsonIntermediaryDirectory +
+      dossierParlementaireDirectory);
   List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
   for (FileSystemEntity file in _initialListOfFiles) {
@@ -293,7 +287,7 @@ Future<List<AmendementFromJson>> getListOfAmendements(
     {required Directory mainDirectory}) async {
   List<AmendementFromJson> _listToReturn = [];
   Directory theDirectory = Directory(
-      mainDirectory.path + _amendementsDirectory + _jsonIntermediaryDirectory);
+      mainDirectory.path + amendementsDirectory + jsonIntermediaryDirectory);
   List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
 
@@ -367,9 +361,9 @@ Future<List<ProjetLoiFromJson>> getListOfProjetsLois(
     {required Directory mainDirectory}) async {
   List<ProjetLoiFromJson> _listToReturn = [];
   Directory theDirectory = Directory(mainDirectory.path +
-      _docsLegisDirectory +
-      _jsonIntermediaryDirectory +
-      _documentDirectory);
+      docsLegisDirectory +
+      jsonIntermediaryDirectory +
+      documentDirectory);
   List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
   for (FileSystemEntity file in _initialListOfFiles) {
@@ -395,7 +389,7 @@ Future<List<ScrutinFromJson>> getListOfVotes(
     {required Directory mainDirectory}) async {
   List<ScrutinFromJson> _listToReturn = [];
   Directory theDirectory = Directory(
-      mainDirectory.path + _votesDirectory + _jsonIntermediaryDirectory);
+      mainDirectory.path + votesDirectory + jsonIntermediaryDirectory);
   List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
   for (FileSystemEntity file in _initialListOfFiles) {
