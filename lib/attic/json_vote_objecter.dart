@@ -538,7 +538,7 @@ class ActeLegislatifFromJson {
         this.actesIntra = _temp;
       }
     }
-    if (_tempVotes != []) {
+    if (_tempVotes.length > 0) {
       print((this.uuid ?? "---") + " >> " + _tempVotes.toString());
     }
     this.votesRef = _tempVotes;
