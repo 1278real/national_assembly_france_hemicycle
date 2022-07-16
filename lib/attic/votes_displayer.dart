@@ -364,7 +364,12 @@ class OpenAssembleeVoteDisplayer {
   Widget drawVoteHemicycleFromAppSupport(
       {required Directory mainDirectory, required String uuid}) {
     return drawVoteHemicycleFromPath(
-        localPath: (mainDirectory.path + votesDirectory + "/" + uuid + ".json"),
+        localPath: (mainDirectory.path +
+            votesDirectory +
+            jsonIntermediaryDirectory +
+            "/" +
+            uuid +
+            ".json"),
         useGroupSector: true,
         hiliteFronde: true);
   }
