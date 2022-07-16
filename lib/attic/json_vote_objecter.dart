@@ -624,6 +624,7 @@ class ActeLegislatifFromJson {
   ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
       Map<String, dynamic> _acteLegislatif) {
     this.uuid = _acteLegislatif["uid"];
+    this.reunionRef = _acteLegislatif["reunionRef"];
 
     List<String> _tempVotes = [];
     if (_acteLegislatif["voteRefs"] != null) {
