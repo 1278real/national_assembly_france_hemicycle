@@ -506,20 +506,11 @@ class DossierLegislatifFromJson {
       }
     }
 
-    List<String> _reduxTempReunions = [];
-
     _tempReunions.sort();
 
-    // return _tempReunions;
+    _tempReunions.toSet().toList(); // remove duplicates
 
-    for (var i = 0; i < _tempReunions.length - 1; i++) {
-      if (_tempReunions[i] != _tempReunions[i + 1]) {
-        _reduxTempReunions.add(_tempReunions[i]);
-      }
-    }
-    _reduxTempReunions.add(_tempReunions.last);
-
-    return _reduxTempReunions;
+    return _tempReunions;
   }
 }
 
