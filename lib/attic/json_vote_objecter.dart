@@ -465,6 +465,35 @@ class DossierLegislatifFromJson {
     }
     return _tempVotes;
   }
+
+  List<String>? get reunionsRef {
+    List<String> _tempReunions = [];
+    if (this.actesLegislatifs != null) {
+      for (ActeLegislatifFromJson acte in this.actesLegislatifs!) {
+        if (acte.reunionRef != null && acte.reunionRef != []) {
+          _tempReunions.add(acte.reunionRef!);
+        }
+        if (acte.actesIntra != null && acte.actesIntra != []) {
+          for (ActeLegislatifFromJson subActe
+              in acte.actesIntra as List<ActeLegislatifFromJson>) {
+            if (subActe.reunionRef != null && subActe.reunionRef != []) {
+              _tempReunions.add(subActe.reunionRef!);
+            }
+            if (subActe.actesIntra != null && subActe.actesIntra != []) {
+              for (ActeLegislatifFromJson subSubActe
+                  in subActe.actesIntra as List<ActeLegislatifFromJson>) {
+                if (subSubActe.reunionRef != null &&
+                    subSubActe.reunionRef != []) {
+                  _tempReunions.add(subSubActe.reunionRef!);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return _tempReunions;
+  }
 }
 
 class ProjetLoiFromJson {
@@ -572,6 +601,7 @@ class ActeLegislatifFromJson {
   String? uuid;
   String? libelleActeLegislatif;
   List<String>? votesRef;
+  String? reunionRef;
   dynamic actesIntra;
 
   ActeLegislatifFromJson(
