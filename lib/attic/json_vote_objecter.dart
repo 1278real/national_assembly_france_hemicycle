@@ -374,10 +374,16 @@ class DossierLegislatifFromJson {
   String? titre;
   String? libelleProcedureParlementaire;
   String? libelleActeLegislatif;
+  List<String>? votesRef;
 
   /// [DossierLegislatifFromJson] is the detail of the Legislative File to display
-  DossierLegislatifFromJson(this.uuid, this.legislature, this.titre,
-      this.libelleProcedureParlementaire, this.libelleActeLegislatif);
+  DossierLegislatifFromJson(
+      this.uuid,
+      this.legislature,
+      this.titre,
+      this.libelleProcedureParlementaire,
+      this.libelleActeLegislatif,
+      this.votesRef);
 
   /// Mapping from JSON
   DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(
@@ -394,21 +400,96 @@ class DossierLegislatifFromJson {
         json["procedureParlementaire"];
     this.libelleProcedureParlementaire = _procedureParlementaire['libelle'];
 
+    List<String> _tempVotes = [];
+
     Map<String, dynamic> _actesLegislatifs = json["actesLegislatifs"];
     if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) == "{") {
       Map<String, dynamic> _acteLegislatif =
           _actesLegislatifs["acteLegislatif"];
+
+      if (_acteLegislatif["voteRefs"] != null) {
+        Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
+        _tempVotes.add(_voteRefs['voteRef']);
+      }
+
       Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
       this.libelleActeLegislatif = _libelleActe['nomCanonique'];
     } else if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
         "[") {
       List<dynamic> _acteLegislatifList =
           _actesLegislatifs["acteLegislatif"] as List;
+
+      for (dynamic instance in _acteLegislatifList) {
+        Map<String, dynamic> _acteLegislatif = instance;
+        if (_acteLegislatif["voteRefs"] != null) {
+          Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
+          _tempVotes.add(_voteRefs['voteRef']);
+        }
+        Map<String, dynamic> _subActesLegislatifs =
+            _acteLegislatif["actesLegislatifs"];
+        if (_subActesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
+            "{") {
+          Map<String, dynamic> _subActeLegislatif =
+              _subActesLegislatifs["acteLegislatif"];
+          if (_subActeLegislatif["voteRefs"] != null) {
+            Map<String, dynamic> _voteRefs = _subActeLegislatif["voteRefs"];
+            _tempVotes.add(_voteRefs['voteRef']);
+          }
+        } else if (_subActesLegislatifs["acteLegislatif"]
+                .toString()
+                .substring(0, 1) ==
+            "[") {
+          List<dynamic> _subActeLegislatifList =
+              _subActesLegislatifs["acteLegislatif"] as List;
+          for (dynamic subInstance in _subActeLegislatifList) {
+            Map<String, dynamic> _subActeLegislatif = subInstance;
+            if (_subActeLegislatif["voteRefs"] != null) {
+              Map<String, dynamic> _voteRefs = _subActeLegislatif["voteRefs"];
+              _tempVotes.add(_voteRefs['voteRef']);
+            }
+            Map<String, dynamic> _subSubActesLegislatifs =
+                _subActeLegislatif["actesLegislatifs"];
+            if (_subSubActesLegislatifs["acteLegislatif"]
+                    .toString()
+                    .substring(0, 1) ==
+                "{") {
+              Map<String, dynamic> _subSubActeLegislatif =
+                  _subSubActesLegislatifs["acteLegislatif"];
+
+              if (_subSubActesLegislatifs["voteRefs"] != null) {
+                Map<String, dynamic> _voteRefs =
+                    _subSubActesLegislatifs["voteRefs"];
+                _tempVotes.add(_voteRefs['voteRef']);
+              }
+            } else if (_subSubActesLegislatifs["acteLegislatif"]
+                    .toString()
+                    .substring(0, 1) ==
+                "[") {
+              List<dynamic> _subSubActeLegislatifList =
+                  _subSubActesLegislatifs["acteLegislatif"] as List;
+              for (dynamic subSubIstance in _subSubActeLegislatifList) {
+                Map<String, dynamic> _subSubActeLegislatif = subSubIstance;
+
+                if (_subSubActeLegislatif["voteRefs"] != null) {
+                  Map<String, dynamic> _voteRefs =
+                      _subSubActeLegislatif["voteRefs"];
+                  _tempVotes.add(_voteRefs['voteRef']);
+                }
+              }
+            }
+          }
+        }
+      }
+
       dynamic _lastActeLegislatif = _acteLegislatifList.last;
       Map<String, dynamic> _acteLegislatif = _lastActeLegislatif;
       Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
       this.libelleActeLegislatif = _libelleActe['nomCanonique'];
     }
+    if (_tempVotes != []) {
+      print((this.uuid ?? "---") + " >> " + _tempVotes.toString());
+    }
+    this.votesRef = _tempVotes;
   }
 }
 
