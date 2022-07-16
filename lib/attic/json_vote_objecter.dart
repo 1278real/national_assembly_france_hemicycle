@@ -527,7 +527,7 @@ class ProjetLoiFromJson {
         } else if (_localUuid.substring(12, 14) == "BTC") {
           _toReturn += "Adopté Commission au fond " + _localUuid.substring(15);
         } else if (_localUuid.substring(12, 14) == "BTG") {
-          _toReturn += "Adopté en Congrès " + u_localUuiduid.substring(15);
+          _toReturn += "Adopté en Congrès " + _localUuid.substring(15);
         } else if (_localUuid.substring(12, 12) == "B") {
           _toReturn += "Non adopté " + _localUuid.substring(13);
         }
