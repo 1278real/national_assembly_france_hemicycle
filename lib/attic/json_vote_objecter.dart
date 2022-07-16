@@ -429,9 +429,7 @@ class ProjetLoiFromJson {
     this.legislature = json['legislature'];
 
     Map<String, dynamic> _titreDossier = json["titres"];
-    this.titre = _titreDossier['titrePrincipalCourt'] != null
-        ? _titreDossier['titrePrincipalCourt']
-        : _titreDossier['titrePrincipal'];
+    this.titre = _titreDossier['titrePrincipal'];
 
     this.dossierRef = json['dossierRef'];
   }
