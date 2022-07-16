@@ -245,6 +245,7 @@ class ScrutinFromJson {
   String? uuid;
   String? organeRef;
   String? numero;
+  String? seanceRef;
   DateTime? dateScrutin;
   String? codeVote;
   String? libelleVote;
@@ -263,6 +264,7 @@ class ScrutinFromJson {
       this.uuid,
       this.organeRef,
       this.numero,
+      this.seanceRef,
       this.dateScrutin,
       this.codeVote,
       this.libelleVote,
@@ -288,6 +290,7 @@ class ScrutinFromJson {
     this.uuid = json['uid'];
     this.organeRef = json['organeRef'];
     this.numero = json['numero'];
+    this.seanceRef = json['seanceRef'];
     this.dateScrutin = dateFormatter(json['dateScrutin'],
         dateSeparator: "-", format: "YMD", noHour: true);
 
