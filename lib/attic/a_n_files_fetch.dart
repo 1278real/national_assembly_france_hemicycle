@@ -380,6 +380,7 @@ Future<List<ProjetLoiFromJson>> getListOfProjetsLois(
         dynamic response = await _theFile.readAsString();
 
         if (response != null) {
+          print(file.path);
           Map<String, dynamic> _map = json.decode(response);
           ProjetLoiFromJson _toReturn =
               ProjetLoiFromJson.fromFrenchNationalAssemblyJson(_map);
