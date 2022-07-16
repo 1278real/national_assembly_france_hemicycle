@@ -470,9 +470,11 @@ class ProjetLoiFromJson {
   String? legislature;
   String? titre;
   String? dossierRef;
+  DateTime? dateDepot;
 
   /// [ProjetLoiFromJson] is the detail of the Law Project to display
-  ProjetLoiFromJson(this.uuid, this.legislature, this.titre, this.dossierRef);
+  ProjetLoiFromJson(
+      this.uuid, this.legislature, this.titre, this.dossierRef, this.dateDepot);
 
   /// Mapping from JSON
   ProjetLoiFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
@@ -485,6 +487,11 @@ class ProjetLoiFromJson {
     this.titre = _titreDossier['titrePrincipal'];
 
     this.dossierRef = json['dossierRef'];
+
+    Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
+    Map<String, dynamic> _chrono = _cycleDeVie["chrono"];
+    this.dateDepot =
+        dateFormatter(_chrono["dateDepot"], dateSeparator: "-", format: "YMD");
   }
 
   String get uuidTranslate {
