@@ -369,6 +369,6 @@ class OpenAssembleeVoteDisplayer {
 
   Widget drawVoteHemicycleFromAppSupport({required ScrutinFromJson vote}) {
     return drawVoteHemicycleFromPath(
-        downloaded: vote, useGroupSector: true, hiliteFronde: true);
+        downloaded: vote, useGroupSector: true, hiliteFronde: false);
   }
 }
