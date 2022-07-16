@@ -165,7 +165,7 @@ class OpenAssembleeVoteDisplayer {
                         DrawHemicycle(
                           nbOfMembersInvolved,
                           assemblyAngle: 195,
-                          assemblyWidth: downloaded != null ? 0.6 : 1,
+                          assemblyWidth: downloaded != null ? 0.5 : 1,
                           nbRows: (nbOfMembersInvolved / 48).round(),
                           individualVotes: votesAssemblyTest,
                           groupSectors: _localGroups,
@@ -199,7 +199,7 @@ class OpenAssembleeVoteDisplayer {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 24,
+                                    fontSize: downloaded != null ? 12 : 24,
                                     color: (scrutin?.resultatVote
                                                 .toString()
                                                 .firstInCaps ==
