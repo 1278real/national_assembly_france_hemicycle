@@ -431,26 +431,26 @@ class AmendementFromJson {
     if ((this.numeroLong ?? "").length > 2) {
       if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
         // affaires culturelles
-        return "Aff. Cult. " + (this.numeroLong ?? "");
+        return "Aff. Cult. #" + (this.numeroLong ?? "").substring(2);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "AS") {
         // affaires sociales
-        return "Aff. Soc. " + (this.numeroLong ?? "");
+        return "Aff. Soc. #" + (this.numeroLong ?? "").substring(2);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "CE") {
         // affaires écos
-        return "Aff. Éco. " + (this.numeroLong ?? "");
+        return "Aff. Éco. #" + (this.numeroLong ?? "").substring(2);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "CF") {
         // comm finances
-        return "Comm. Fin. " + (this.numeroLong ?? "");
+        return "Comm. Fin. #" + (this.numeroLong ?? "").substring(2);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "CL") {
         // comm lois
-        return "Comm. Lois " + (this.numeroLong ?? "");
+        return "Comm. Lois #" + (this.numeroLong ?? "").substring(2);
       }
     }
-    return this.numeroLong;
+    return "#" + (this.numeroLong ?? "");
   }
 }
 
