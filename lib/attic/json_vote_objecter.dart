@@ -359,7 +359,7 @@ class AmendementFromJson {
 
     Map<String, dynamic> _identification = json["identification"];
     this.numeroLong = _identification['numeroLong'];
-    // this.numeroOrdreDepot = _identification['numeroOrdreDepot'];
+    this.numeroOrdreDepot = _identification['numeroOrdreDepot'];
 
     this.texteLegislatifRef = json['texteLegislatifRef'];
 
