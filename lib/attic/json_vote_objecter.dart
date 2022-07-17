@@ -381,7 +381,9 @@ class AmendementFromJson {
       this.cycleDeVieSort = _cycleDeVie['sort'];
     }
 
-    this.seanceDiscussionRef = json['seanceDiscussionRef'];
+    if (json['seanceDiscussionRef'].toString().substring(0, 1) == "\"") {
+      this.seanceDiscussionRef = json['seanceDiscussionRef'];
+    }
   }
 }
 
