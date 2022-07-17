@@ -98,6 +98,9 @@ String cleanRawHtmlString(String dirtyHtmlString) {
       .replaceAll("&#220;", "Ü")
       .replaceAll("&#8217;", "\'")
       .replaceAll("&#160;", " ")
+      .replaceAll("&#171;", "«")
+      .replaceAll("&#187;", "»")
+      .replaceAll("&#187;", "°")
       .replaceAll("<p style=\"text-align: justify;\">", "\n")
       .replaceAll("<p>", "\n")
       .replaceAll("</p>", " ");
