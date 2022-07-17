@@ -338,6 +338,7 @@ class AmendementFromJson {
   String? libelleSignataires;
   String? cycleDeVieSort;
   String? exposeSommaire;
+  String? dispositif;
   String? seanceDiscussionRef;
 
   /// [AmendementFromJson] is the detail of the Amendment to display
@@ -349,6 +350,7 @@ class AmendementFromJson {
       this.libelleSignataires,
       this.cycleDeVieSort,
       this.exposeSommaire,
+      this.dispositif,
       this.seanceDiscussionRef);
 
   /// Mapping from JSON
@@ -370,8 +372,9 @@ class AmendementFromJson {
     Map<String, dynamic> _contenuAuteur = _corps["contenuAuteur"];
     if (_contenuAuteur['exposeSommaire'] != null) {
       this.exposeSommaire = _contenuAuteur['exposeSommaire'];
-    } else {
-      this.exposeSommaire = "-";
+    }
+    if (_contenuAuteur['dispositif'] != null) {
+      this.dispositif = _contenuAuteur['dispositif'];
     }
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
