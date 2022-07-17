@@ -100,6 +100,7 @@ String cleanRawHtmlString(String dirtyHtmlString) {
       .replaceAll("&#250;", "ú")
       .replaceAll("&#251;", "û")
       .replaceAll("&#252;", "ü")
+      .replaceAll("&#339;", "œ")
       .replaceAll("&#8209;", "-")
       .replaceAll("&#8211;", "—")
       .replaceAll("&#8217;", "\'")
