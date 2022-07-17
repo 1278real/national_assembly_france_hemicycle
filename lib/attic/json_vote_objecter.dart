@@ -371,15 +371,15 @@ class AmendementFromJson {
     this.libelleSignataires = _signataires['libelle'];
 
     Map<String, dynamic> _corps = json["corps"];
+    if (_corps['cartoucheInformatif'] != null) {
+      this.cartoucheInformatif = _corps['cartoucheInformatif'];
+    }
     Map<String, dynamic> _contenuAuteur = _corps["contenuAuteur"];
     if (_contenuAuteur['exposeSommaire'] != null) {
       this.exposeSommaire = _contenuAuteur['exposeSommaire'];
     }
     if (_contenuAuteur['dispositif'] != null) {
       this.dispositif = _contenuAuteur['dispositif'];
-    }
-    if (_contenuAuteur['cartoucheInformatif'] != null) {
-      this.cartoucheInformatif = _contenuAuteur['cartoucheInformatif'];
     }
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
