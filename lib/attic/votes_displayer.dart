@@ -84,6 +84,8 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [remotePath] is the path to a remote JSON file that needs to be displayed.
   ///
+  /// • [downloaded] receives a [ScrutinFromJson] that needs to be displayed.
+  ///
   /// • [amendementString] is an optional String to display the text of the Law Amendment instead of the Lax title : it needs the JSON file name.
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
@@ -367,6 +369,9 @@ class OpenAssembleeVoteDisplayer {
     );
   }
 
+  /// ### Creates a widget with French National Assembly view defined by these parameters :
+  ///
+  /// • [vote] receives a [ScrutinFromJson] that needs to be displayed.
   Widget drawVoteHemicycleFromAppSupport({required ScrutinFromJson vote}) {
     return drawVoteHemicycleFromPath(
         downloaded: vote, useGroupSector: true, hiliteFronde: false);

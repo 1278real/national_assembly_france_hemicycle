@@ -333,14 +333,23 @@ class ScrutinFromJson {
 class AmendementFromJson {
   String? uuid;
   String? numeroLong;
+  String? numeroOrdreDepot;
   String? texteLegislatifRef;
   String? libelleSignataires;
   String? cycleDeVieSort;
   String? exposeSommaire;
+  String? seanceDiscussionRef;
 
   /// [AmendementFromJson] is the detail of the Amendment to display
-  AmendementFromJson(this.uuid, this.numeroLong, this.texteLegislatifRef,
-      this.libelleSignataires, this.cycleDeVieSort, this.exposeSommaire);
+  AmendementFromJson(
+      this.uuid,
+      this.numeroLong,
+      this.numeroOrdreDepot,
+      this.texteLegislatifRef,
+      this.libelleSignataires,
+      this.cycleDeVieSort,
+      this.exposeSommaire,
+      this.seanceDiscussionRef);
 
   /// Mapping from JSON
   AmendementFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
@@ -350,6 +359,7 @@ class AmendementFromJson {
 
     Map<String, dynamic> _identification = json["identification"];
     this.numeroLong = _identification['numeroLong'];
+    this.numeroOrdreDepot = _identification['numeroOrdreDepot'];
 
     this.texteLegislatifRef = json['texteLegislatifRef'];
 
@@ -370,6 +380,8 @@ class AmendementFromJson {
     } else if (_cycleDeVie['sort'].toString().substring(0, 1) == "\"") {
       this.cycleDeVieSort = _cycleDeVie['sort'];
     }
+
+    this.seanceDiscussionRef = json['seanceDiscussionRef'];
   }
 }
 
@@ -696,9 +708,6 @@ class ActeLegislatifFromJson {
         }
         this.actesIntra = _temp;
       }
-    }
-    if (_tempVotes.length > 0) {
-      print((this.uuid ?? "---") + " >> " + _tempVotes.toString());
     }
     this.votesRef = _tempVotes;
   }
