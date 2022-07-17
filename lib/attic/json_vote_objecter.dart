@@ -395,6 +395,54 @@ class AmendementFromJson {
       this.seanceDiscussionRef = json['seanceDiscussionRef'];
     }
   }
+
+  int get ordreTri {
+    if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
+      // affaires culturelles
+      return 10000 + (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "AS") {
+      // affaires sociales
+      return 20000 + (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "CE") {
+      // affaires écos
+      return 30000 + (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "CF") {
+      // comm finances
+      return 40000 + (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "CL") {
+      // comm lois
+      return 40000 + (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+    }
+    return (int.tryParse(this.numeroLong ?? "") ?? 0);
+  }
+
+  String? get numeroLongTranslate {
+    if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
+      // affaires culturelles
+      return "Aff. Cult. " + (this.numeroLong ?? "");
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "AS") {
+      // affaires sociales
+      return "Aff. Soc. " + (this.numeroLong ?? "");
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "CE") {
+      // affaires écos
+      return "Aff. Éco. " + (this.numeroLong ?? "");
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "CF") {
+      // comm finances
+      return "Comm. Fin. " + (this.numeroLong ?? "");
+    }
+    if ((this.numeroLong ?? "").substring(0, 2) == "CL") {
+      // comm lois
+      return "Comm. Lois " + (this.numeroLong ?? "");
+    }
+    return this.numeroLong;
+  }
 }
 
 class DossierLegislatifFromJson {
