@@ -339,6 +339,7 @@ class AmendementFromJson {
   String? cycleDeVieSort;
   String? exposeSommaire;
   String? dispositif;
+  String? cartoucheInformatif;
   String? seanceDiscussionRef;
 
   /// [AmendementFromJson] is the detail of the Amendment to display
@@ -351,6 +352,7 @@ class AmendementFromJson {
       this.cycleDeVieSort,
       this.exposeSommaire,
       this.dispositif,
+      this.cartoucheInformatif,
       this.seanceDiscussionRef);
 
   /// Mapping from JSON
@@ -375,6 +377,9 @@ class AmendementFromJson {
     }
     if (_contenuAuteur['dispositif'] != null) {
       this.dispositif = _contenuAuteur['dispositif'];
+    }
+    if (_contenuAuteur['dispositif'] != null) {
+      this.cartoucheInformatif = _contenuAuteur['cartoucheInformatif'];
     }
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
