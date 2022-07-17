@@ -378,7 +378,7 @@ class AmendementFromJson {
     if (_contenuAuteur['dispositif'] != null) {
       this.dispositif = _contenuAuteur['dispositif'];
     }
-    if (_contenuAuteur['dispositif'] != null) {
+    if (_contenuAuteur['cartoucheInformatif'] != null) {
       this.cartoucheInformatif = _contenuAuteur['cartoucheInformatif'];
     }
 
