@@ -415,9 +415,9 @@ class AmendementFromJson {
     }
     if ((this.numeroLong ?? "").substring(0, 2) == "CL") {
       // comm lois
-      return 40000 + (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+      return 50000 + (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
     }
-    return (int.tryParse(this.numeroLong ?? "") ?? 0);
+    return 100000 + (int.tryParse(this.numeroLong ?? "") ?? 0);
   }
 
   String? get numeroLongTranslate {
