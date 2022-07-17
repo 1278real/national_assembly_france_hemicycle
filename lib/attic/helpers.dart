@@ -107,7 +107,10 @@ String cleanRawHtmlString(String dirtyHtmlString) {
       .replaceAll("<p style=\"text-align: justify;\">", "\n")
       .replaceAll("<sup>er</sup>", "er")
       .replaceAll("<p>", "\n")
-      .replaceAll("</p>", " ");
+      .replaceAll("<br />", "\n")
+      .replaceAll("</p>", " ")
+      .replaceAll("<i>", "")
+      .replaceAll("</i>", "");
 }
 
 /// ### Convert a String [dateString] to DateTime
