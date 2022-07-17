@@ -372,7 +372,9 @@ class AmendementFromJson {
 
     Map<String, dynamic> _corps = json["corps"];
     if (_corps['cartoucheInformatif'] != null) {
-      this.cartoucheInformatif = _corps['cartoucheInformatif'];
+      if (_corps['cartoucheInformatif'].toString().substring(0, 1) == "\"") {
+        this.cartoucheInformatif = _corps['cartoucheInformatif'];
+      }
     }
     Map<String, dynamic> _contenuAuteur = _corps["contenuAuteur"];
     if (_contenuAuteur['exposeSommaire'] != null) {
