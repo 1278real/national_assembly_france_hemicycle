@@ -372,7 +372,7 @@ class AmendementFromJson {
 
     Map<String, dynamic> _corps = json["corps"];
     if (_corps['cartoucheInformatif'] != null) {
-      if (_corps['cartoucheInformatif'].toString().substring(0, 1) == "\"") {
+      if (_corps['cartoucheInformatif'].toString().substring(0, 1) != "{") {
         this.cartoucheInformatif = _corps['cartoucheInformatif'];
       }
     }
@@ -387,11 +387,11 @@ class AmendementFromJson {
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
     if (_cycleDeVie['sort'].toString().substring(0, 1) == "{") {
       this.cycleDeVieSort = "";
-    } else if (_cycleDeVie['sort'].toString().substring(0, 1) == "\"") {
+    } else if (_cycleDeVie['sort'].toString().substring(0, 1) != "{") {
       this.cycleDeVieSort = _cycleDeVie['sort'];
     }
 
-    if (json['seanceDiscussionRef'].toString().substring(0, 1) == "\"") {
+    if (json['seanceDiscussionRef'].toString().substring(0, 1) != "{") {
       this.seanceDiscussionRef = json['seanceDiscussionRef'];
     }
   }
