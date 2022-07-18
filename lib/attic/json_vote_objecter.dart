@@ -241,7 +241,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   }
 }
 
-class ScrutinFromJson {
+class ScrutinFromJson implements Comparable<ScrutinFromJson> {
   String? uuid;
   String? organeRef;
   String? numero;
@@ -328,9 +328,16 @@ class ScrutinFromJson {
     }
     this.groupVotesDetails = _toPass;
   }
+
+  /// Sorting rules
+  @override
+  int compareTo(ScrutinFromJson other) {
+    return (int.tryParse((this.numero ?? "")) ?? 0)
+        .compareTo((int.tryParse((other.numero ?? ""))) ?? 0);
+  }
 }
 
-class AmendementFromJson {
+class AmendementFromJson implements Comparable<AmendementFromJson> {
   String? uuid;
   String? numeroLong;
   String? numeroOrdreDepot;
@@ -396,6 +403,7 @@ class AmendementFromJson {
     }
   }
 
+  /// Get the sorting order : Commission job before Overall meeting
   int get ordreTri {
     if ((this.numeroLong ?? "").length > 2) {
       if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
@@ -427,6 +435,7 @@ class AmendementFromJson {
     return 100000 + (int.tryParse(this.numeroLong ?? "") ?? 0);
   }
 
+  /// Get the 'translation' of the Long number into an understandable String
   String? get numeroLongTranslate {
     if ((this.numeroLong ?? "").length > 2) {
       if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
@@ -452,9 +461,16 @@ class AmendementFromJson {
     }
     return "#" + (this.numeroLong ?? "");
   }
+
+  /// Sorting rules
+  @override
+  int compareTo(AmendementFromJson other) {
+    return this.ordreTri.compareTo(other.ordreTri);
+  }
 }
 
-class DossierLegislatifFromJson {
+class DossierLegislatifFromJson
+    implements Comparable<DossierLegislatifFromJson> {
   String? uuid;
   String? legislature;
   String? titre;
@@ -516,6 +532,7 @@ class DossierLegislatifFromJson {
     }
   }
 
+  // Get the list of Votes among [actesLegislatifs]
   List<String>? get votesRef {
     List<String> _tempVotes = [];
     if (this.actesLegislatifs != null) {
@@ -550,6 +567,7 @@ class DossierLegislatifFromJson {
     return _tempVotes;
   }
 
+  // Get the list of Reunions among [actesLegislatifs]
   List<String>? get reunionsRef {
     List<String> _tempReunions = [];
     if (this.actesLegislatifs != null) {
@@ -622,9 +640,20 @@ class DossierLegislatifFromJson {
 
     return _tempReunions;
   }
+
+  /// Sorting rules
+  @override
+  int compareTo(DossierLegislatifFromJson other) {
+    var comparisonResult =
+        (other.votesRef?.length ?? 0).compareTo((this.votesRef?.length ?? 0));
+    if (comparisonResult != 0) {
+      return comparisonResult;
+    }
+    return (other.uuid ?? "emptyA").compareTo((this.uuid ?? "emptyB"));
+  }
 }
 
-class ProjetLoiFromJson {
+class ProjetLoiFromJson implements Comparable<ProjetLoiFromJson> {
   String? uuid;
   String? legislature;
   String? titre;
@@ -655,6 +684,7 @@ class ProjetLoiFromJson {
         : DateTime.now();
   }
 
+  /// Get a boolean to know if the Law project is adopted or not
   bool get isAdopted {
     if ((this.uuid ?? "-").contains("BTA") ||
         (this.uuid ?? "-").contains("BTS") ||
@@ -665,15 +695,16 @@ class ProjetLoiFromJson {
     return false;
   }
 
-  String get uuidTranslate {
-    ///
-    /// from :
-    ///   PRJLANR5L16BTC0144 / PRJLSNR5S359B0561
-    /// to :
-    ///   Proj. Loi Ass. Nat. Ve Répub. Légis. 16 Adopté Commission au fond 0144
-    ///   Proj. Loi Sénat Ve Répub. Sess. 359 Non adopté 0561
-    ///
+  /// Get the 'translation' of the Uuid into an understandable String
+  ///
+  /// from :
+  ///   PRJLANR5L16BTC0144 / PRJLSNR5S359B0561
+  /// to :
+  ///   Proj. Loi Ass. Nat. Ve Répub. Légis. 16 Adopté Commission au fond 0144
+  ///   Proj. Loi Sénat Ve Répub. Sess. 359 Non adopté 0561
+  ///
 
+  String get uuidTranslate {
     String _toReturn = "";
     String _localUuid = this.uuid ?? "-";
 
@@ -722,6 +753,13 @@ class ProjetLoiFromJson {
     } else {
       return _toReturn;
     }
+  }
+
+  /// Sorting rules
+  @override
+  int compareTo(ProjetLoiFromJson other) {
+    return (this.dateDepot ?? DateTime.now())
+        .compareTo((other.dateDepot ?? DateTime.now()));
   }
 }
 
