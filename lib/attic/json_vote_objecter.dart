@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:national_assembly_france_hemicycle/attic/groupe_transcode.dart';
 
@@ -579,20 +577,20 @@ class DossierLegislatifFromJson
     List<String> _tempReunions = [];
     if (this.actesLegislatifs != null) {
       for (ActeLegislatifFromJson acte in this.actesLegislatifs!) {
-        if (acte.reunionRef != null && acte.reunionRef != []) {
+        if (acte.reunionRef != null && acte.reunionRef != "") {
           _tempReunions.add(acte.reunionRef!);
         }
         if (acte.actesIntra != null && acte.actesIntra != []) {
           for (ActeLegislatifFromJson subActe
               in acte.actesIntra as List<ActeLegislatifFromJson>) {
-            if (subActe.reunionRef != null && subActe.reunionRef != []) {
+            if (subActe.reunionRef != null && subActe.reunionRef != "") {
               _tempReunions.add(subActe.reunionRef!);
             }
             if (subActe.actesIntra != null && subActe.actesIntra != []) {
               for (ActeLegislatifFromJson subSubActe
                   in subActe.actesIntra as List<ActeLegislatifFromJson>) {
                 if (subSubActe.reunionRef != null &&
-                    subSubActe.reunionRef != []) {
+                    subSubActe.reunionRef != "") {
                   _tempReunions.add(subSubActe.reunionRef!);
                 }
                 if (subSubActe.actesIntra != null &&
@@ -609,7 +607,7 @@ class DossierLegislatifFromJson
                           in subSubSubActe.actesIntra
                               as List<ActeLegislatifFromJson>) {
                         if (subSubSubSubActe.reunionRef != null &&
-                            subSubSubSubActe.reunionRef != []) {
+                            subSubSubSubActe.reunionRef != "") {
                           _tempReunions.add(subSubSubSubActe.reunionRef!);
                         }
                         if (subSubSubSubActe.actesIntra != null &&
@@ -618,7 +616,7 @@ class DossierLegislatifFromJson
                               in subSubSubSubActe.actesIntra
                                   as List<ActeLegislatifFromJson>) {
                             if (subSubSubSubSubActe.reunionRef != null &&
-                                subSubSubSubSubActe.reunionRef != []) {
+                                subSubSubSubSubActe.reunionRef != "") {
                               _tempReunions
                                   .add(subSubSubSubSubActe.reunionRef!);
                             }

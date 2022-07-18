@@ -3,9 +3,7 @@ import 'dart:io';
 
 import 'package:archive/archive_io.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:national_assembly_france_hemicycle/attic/json_vote_objecter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'helpers.dart';
@@ -291,9 +289,6 @@ Future<List<AmendementFromJson>> getListOfAmendements(
   List<FileSystemEntity> _initialListOfFiles =
       await theDirectory.list(recursive: true).toList();
 
-  String _dossierLegisRef = "";
-  String _projetLoiRef = "";
-
   for (FileSystemEntity entityLevelOne in _initialListOfFiles) {
     if (entityLevelOne.path.split("/").last.substring(0, 1) != ".") {
       // to exclude any system file
@@ -308,8 +303,6 @@ Future<List<AmendementFromJson>> getListOfAmendements(
         List<FileSystemEntity> _listOfDossiers =
             await entityLevelOne.list(recursive: true).toList();
 
-        _dossierLegisRef = entityLevelOne.path.split("/").last;
-
         for (FileSystemEntity entityLevelTwo in _listOfDossiers) {
           if (entityLevelTwo.path.split("/").last.substring(0, 1) != ".") {
             // to exclude any system file
@@ -323,8 +316,6 @@ Future<List<AmendementFromJson>> getListOfAmendements(
             if (entityLevelTwo is Directory) {
               List<FileSystemEntity> _listOfProjets =
                   await entityLevelTwo.list(recursive: true).toList();
-
-              _projetLoiRef = entityLevelTwo.path.split("/").last;
 
               for (FileSystemEntity entityLevelThree in _listOfProjets) {
                 if (entityLevelThree.path.split("/").last.substring(0, 1) !=
