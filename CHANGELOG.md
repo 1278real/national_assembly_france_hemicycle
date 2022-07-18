@@ -9,6 +9,9 @@ getUpdatedDatasFromAssembly(
 ```
 In case the URL is changed for any reason, you can specify it...
 ```dart
+
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+
 getUpdatedDatasFromAssembly(
     pathToDossiers:
         "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/dossiers_legislatifs/Dossiers_Legislatifs.json.zip",
@@ -26,6 +29,38 @@ Directory? _appSupportDirectory = await getApplicationSupportDirectory();
 List<DossierLegislatifFromJson> _listProcessed = getListOfDossiersLegislatifs(
     mainDirectory: _appSupportDirectory);
 ```
+
+* Process ```ProjetLoiFromJson``` from downloaded files :
+```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+
+List<ProjetLoiFromJson> _listProcessed = getListOfProjetsLois(
+    mainDirectory: _appSupportDirectory);
+```
+
+* Process ```AmendementFromJson``` from downloaded files :
+```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+
+List<AmendementFromJson> _listProcessed = getListOfAmendements(
+    mainDirectory: _appSupportDirectory);
+```
+
+* Process ```ScrutinFromJson``` from downloaded files :
+```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+
+List<ScrutinFromJson> _listProcessed = getListOfVotes(
+    mainDirectory: _appSupportDirectory);
+```
+
+* Ability to display an Hemicycle directly from ```ScrutinFromJson``` :
+```dart
+List<ScrutinFromJson> allVotes = getListOfVotes(mainDirectory: _appSupportDirectory);
+for (ScrutinFromJson vote in allVotes)
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromAppSupport(vote: vote);
+```
+
 
 ## 0.6.0
 
