@@ -56,6 +56,7 @@ List<ScrutinFromJson> _listProcessed = getListOfVotes(
 
 * Ability to display an Hemicycle directly from ```ScrutinFromJson``` :
 ```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
 List<ScrutinFromJson> allVotes = getListOfVotes(mainDirectory: _appSupportDirectory);
 for (ScrutinFromJson vote in allVotes)
 OpenAssembleeVoteDisplayer().drawVoteHemicycleFromAppSupport(vote: vote);

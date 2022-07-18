@@ -278,7 +278,7 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
       this.didNotVote,
       this.groupVotesDetails);
 
-  /// calculate the numebr of actual voters
+  /// calculate the number of actual voters
   int get nbVoters {
     return (votedFor ?? 0) + (votedAgainst ?? 0) + (votedAbstention ?? 0);
   }
@@ -436,6 +436,13 @@ class AmendementFromJson implements Comparable<AmendementFromJson> {
   }
 
   /// Get the 'translation' of the Long number into an understandable String
+  ///
+  /// From :
+  ///   AC1
+  ///   CL13
+  /// To :
+  ///   Aff. Cult. #1
+  ///   Comm. Lois #13
   String? get numeroLongTranslate {
     if ((this.numeroLong ?? "").length > 2) {
       if ((this.numeroLong ?? "").substring(0, 2) == "AC") {

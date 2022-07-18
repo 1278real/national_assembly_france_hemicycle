@@ -19,11 +19,11 @@ The purpose of this Flutter package depends on hemicycle Flutter package but is 
 
 ## Features
 
-You can give a local Path from your app to the JSON raw from open data (soon : URL to online JSON)... No need to reformat the JSON from Assemblee National open data website. 
+You can give a local or remote Path from your app to the JSON raw from open data, or download the whole JSON package from open data and process it... No need to reformat the JSON from Assemblee National open data website. 
 
 ## Usage
 
-Just type ```OpenAssembleeVoteDisplayer().drawVoteHemicycle``` and submit local or remote JSON as a Path.
+Just type ```OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath``` and submit local or remote JSON as a Path.
 ```dart
 OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:"assets/example_json/VTANR5L15V4417.json");
 
@@ -39,6 +39,48 @@ OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:"theJson.json",
 OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:"theJson.json", useGroupSector: false);
 ```
 
+You can type ```OpenAssembleeVoteDisplayer().drawVoteHemicycleFromAppSupport``` and submit local [ScrutinFromJson].
+```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+List<ScrutinFromJson> allVotes = getListOfVotes(mainDirectory: _appSupportDirectory);
+for (ScrutinFromJson vote in allVotes)
+OpenAssembleeVoteDisplayer().drawVoteHemicycleFromAppSupport(vote: vote);
+```
+
+Download the whole JSON files from National Assembly Open Data to process :
+```dart
+Directory? _appSupportDirectory = await getApplicationSupportDirectory();
+
+getUpdatedDatasFromAssembly(
+    destinationDirectory: _appSupportDirectory);
+```
+In case the URL is changed for any reason, you can specify it...
+```dart
+getUpdatedDatasFromAssembly(
+    pathToDossiers:
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/dossiers_legislatifs/Dossiers_Legislatifs.json.zip",
+    pathToVotes:
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/scrutins/Scrutins.json.zip",
+    pathToAmendements:
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/amendements_div_legis/Amendements.json.zip",
+    destinationDirectory: _appSupportDirectory);
+```
+
+Then, process from downloaded files :
+```dart
+List<DossierLegislatifFromJson> _listProcessed = getListOfDossiersLegislatifs(
+    mainDirectory: _appSupportDirectory);
+
+List<ProjetLoiFromJson> _listProcessed = getListOfProjetsLois(
+    mainDirectory: _appSupportDirectory);
+
+`List<AmendementFromJson> _listProcessed = getListOfAmendements(
+    mainDirectory: _appSupportDirectory);
+
+List<ScrutinFromJson> _listProcessed = getListOfVotes(
+    mainDirectory: _appSupportDirectory);
+```
+
 
 ## NOTA BENE :
 
@@ -50,7 +92,3 @@ OpenAssembleeVoteDisplayer().drawVoteHemicycle("assets/example_json/VTANR5L15V44
 
 OpenAssembleeVoteDisplayer().drawVoteHemicycleFromPath(localPath:"assets/example_json/VTANR5L15V4417.json");
 ```
-
-## Additional information
-
-Further infos soon ;-)
