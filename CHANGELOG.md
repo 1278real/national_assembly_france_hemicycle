@@ -1,3 +1,7 @@
+## 0.7.1
+
+* Updated example.dart
+
 ## 0.7.0
 
 * Download the whole JSON files from National Assembly Open Data to process :
