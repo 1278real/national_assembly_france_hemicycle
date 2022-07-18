@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hemicycle/attic/colors.dart';
 import 'package:hemicycle/attic/helpers.dart';
 import 'package:hemicycle/hemicycle.dart';
+import 'package:national_assembly_france_hemicycle/attic/folders.dart';
 
 import '../national_assembly_france_hemicycle.dart';
 
@@ -16,6 +19,7 @@ class OpenAssembleeVoteDisplayer {
   Future<bool> getVotes(
       {String? localPath,
       String? remotePath,
+      ScrutinFromJson? downloaded,
       bool? hiliteFronde,
       String? amendementString}) async {
     if (localPath != null || remotePath != null) {
@@ -30,6 +34,8 @@ class OpenAssembleeVoteDisplayer {
           amendement = _return.amendement;
         }
       }
+    } else if (downloaded != null) {
+      scrutin = downloaded;
     }
 
     if (scrutin != null) {
@@ -78,6 +84,8 @@ class OpenAssembleeVoteDisplayer {
   ///
   /// • [remotePath] is the path to a remote JSON file that needs to be displayed.
   ///
+  /// • [downloaded] receives a [ScrutinFromJson] that needs to be displayed.
+  ///
   /// • [amendementString] is an optional String to display the text of the Law Amendment instead of the Lax title : it needs the JSON file name.
   ///
   /// • [useGroupSector] is an optional boolean to display the surrounding arc of group colors.
@@ -92,6 +100,7 @@ class OpenAssembleeVoteDisplayer {
       {String? initialComment,
       String? localPath,
       String? remotePath,
+      ScrutinFromJson? downloaded,
       String? amendementString,
       bool useGroupSector = false,
       bool withDividerBefore = false,
@@ -102,6 +111,7 @@ class OpenAssembleeVoteDisplayer {
       future: getVotes(
           localPath: localPath,
           remotePath: remotePath,
+          downloaded: downloaded,
           hiliteFronde: hiliteFronde,
           amendementString: amendementString),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -157,6 +167,7 @@ class OpenAssembleeVoteDisplayer {
                         DrawHemicycle(
                           nbOfMembersInvolved,
                           assemblyAngle: 195,
+                          assemblyWidth: downloaded != null ? 0.6 : 1,
                           nbRows: (nbOfMembersInvolved / 48).round(),
                           individualVotes: votesAssemblyTest,
                           groupSectors: _localGroups,
@@ -190,7 +201,7 @@ class OpenAssembleeVoteDisplayer {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 24,
+                                    fontSize: downloaded != null ? 12 : 24,
                                     color: (scrutin?.resultatVote
                                                 .toString()
                                                 .firstInCaps ==
@@ -356,5 +367,13 @@ class OpenAssembleeVoteDisplayer {
         }
       },
     );
+  }
+
+  /// ### Creates a widget with French National Assembly view defined by these parameters :
+  ///
+  /// • [vote] receives a [ScrutinFromJson] that needs to be displayed.
+  Widget drawVoteHemicycleFromAppSupport({required ScrutinFromJson vote}) {
+    return drawVoteHemicycleFromPath(
+        downloaded: vote, useGroupSector: true, hiliteFronde: false);
   }
 }

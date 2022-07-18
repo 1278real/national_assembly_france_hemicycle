@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:national_assembly_france_hemicycle/attic/groupe_transcode.dart';
 
@@ -239,10 +241,11 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   }
 }
 
-class ScrutinFromJson {
+class ScrutinFromJson implements Comparable<ScrutinFromJson> {
   String? uuid;
   String? organeRef;
   String? numero;
+  String? seanceRef;
   DateTime? dateScrutin;
   String? codeVote;
   String? libelleVote;
@@ -261,6 +264,7 @@ class ScrutinFromJson {
       this.uuid,
       this.organeRef,
       this.numero,
+      this.seanceRef,
       this.dateScrutin,
       this.codeVote,
       this.libelleVote,
@@ -280,10 +284,13 @@ class ScrutinFromJson {
   }
 
   /// Mapping from JSON
-  ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+  ScrutinFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
+    Map<String, dynamic> json = _map["scrutin"];
+
     this.uuid = json['uid'];
     this.organeRef = json['organeRef'];
     this.numero = json['numero'];
+    this.seanceRef = json['seanceRef'];
     this.dateScrutin = dateFormatter(json['dateScrutin'],
         dateSeparator: "-", format: "YMD", noHour: true);
 
@@ -321,26 +328,49 @@ class ScrutinFromJson {
     }
     this.groupVotesDetails = _toPass;
   }
+
+  /// Sorting rules
+  @override
+  int compareTo(ScrutinFromJson other) {
+    return (int.tryParse((this.numero ?? "")) ?? 0)
+        .compareTo((int.tryParse((other.numero ?? ""))) ?? 0);
+  }
 }
 
-class AmendementFromJson {
+class AmendementFromJson implements Comparable<AmendementFromJson> {
   String? uuid;
   String? numeroLong;
+  String? numeroOrdreDepot;
   String? texteLegislatifRef;
   String? libelleSignataires;
   String? cycleDeVieSort;
   String? exposeSommaire;
+  String? dispositif;
+  String? cartoucheInformatif;
+  String? seanceDiscussionRef;
 
-  /// [AmendementFromJson] is the detail of the Amendement to display
-  AmendementFromJson(this.uuid, this.numeroLong, this.texteLegislatifRef,
-      this.libelleSignataires, this.cycleDeVieSort, this.exposeSommaire);
+  /// [AmendementFromJson] is the detail of the Amendment to display
+  AmendementFromJson(
+      this.uuid,
+      this.numeroLong,
+      this.numeroOrdreDepot,
+      this.texteLegislatifRef,
+      this.libelleSignataires,
+      this.cycleDeVieSort,
+      this.exposeSommaire,
+      this.dispositif,
+      this.cartoucheInformatif,
+      this.seanceDiscussionRef);
 
   /// Mapping from JSON
-  AmendementFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+  AmendementFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
+    Map<String, dynamic> json = _map["amendement"];
+
     this.uuid = json['uid'];
 
     Map<String, dynamic> _identification = json["identification"];
     this.numeroLong = _identification['numeroLong'];
+    this.numeroOrdreDepot = _identification['numeroOrdreDepot'];
 
     this.texteLegislatifRef = json['texteLegislatifRef'];
 
@@ -348,11 +378,445 @@ class AmendementFromJson {
     this.libelleSignataires = _signataires['libelle'];
 
     Map<String, dynamic> _corps = json["corps"];
+    if (_corps['cartoucheInformatif'] != null) {
+      if (_corps['cartoucheInformatif'].toString().substring(0, 1) != "{") {
+        this.cartoucheInformatif = _corps['cartoucheInformatif'];
+      }
+    }
     Map<String, dynamic> _contenuAuteur = _corps["contenuAuteur"];
-    this.exposeSommaire = _contenuAuteur['exposeSommaire'];
+    if (_contenuAuteur['exposeSommaire'] != null) {
+      this.exposeSommaire = _contenuAuteur['exposeSommaire'];
+    }
+    if (_contenuAuteur['dispositif'] != null) {
+      this.dispositif = _contenuAuteur['dispositif'];
+    }
 
     Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
-    this.cycleDeVieSort = _cycleDeVie['sort'];
+    if (_cycleDeVie['sort'].toString().substring(0, 1) == "{") {
+      this.cycleDeVieSort = "";
+    } else if (_cycleDeVie['sort'].toString().substring(0, 1) != "{") {
+      this.cycleDeVieSort = _cycleDeVie['sort'];
+    }
+
+    if (json['seanceDiscussionRef'].toString().substring(0, 1) != "{") {
+      this.seanceDiscussionRef = json['seanceDiscussionRef'];
+    }
+  }
+
+  /// Get the sorting order : Commission job before Overall meeting
+  int get ordreTri {
+    if ((this.numeroLong ?? "").length > 2) {
+      if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
+        // affaires culturelles
+        return 10000 +
+            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "AS") {
+        // affaires sociales
+        return 20000 +
+            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "CE") {
+        // affaires écos
+        return 30000 +
+            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "CF") {
+        // comm finances
+        return 40000 +
+            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "CL") {
+        // comm lois
+        return 50000 +
+            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+      }
+    }
+    return 100000 + (int.tryParse(this.numeroLong ?? "") ?? 0);
+  }
+
+  /// Get the 'translation' of the Long number into an understandable String
+  String? get numeroLongTranslate {
+    if ((this.numeroLong ?? "").length > 2) {
+      if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
+        // affaires culturelles
+        return "Aff. Cult. #" + (this.numeroLong ?? "").substring(2);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "AS") {
+        // affaires sociales
+        return "Aff. Soc. #" + (this.numeroLong ?? "").substring(2);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "CE") {
+        // affaires écos
+        return "Aff. Éco. #" + (this.numeroLong ?? "").substring(2);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "CF") {
+        // comm finances
+        return "Comm. Fin. #" + (this.numeroLong ?? "").substring(2);
+      }
+      if ((this.numeroLong ?? "").substring(0, 2) == "CL") {
+        // comm lois
+        return "Comm. Lois #" + (this.numeroLong ?? "").substring(2);
+      }
+    }
+    return "#" + (this.numeroLong ?? "");
+  }
+
+  /// Sorting rules
+  @override
+  int compareTo(AmendementFromJson other) {
+    return this.ordreTri.compareTo(other.ordreTri);
+  }
+}
+
+class DossierLegislatifFromJson
+    implements Comparable<DossierLegislatifFromJson> {
+  String? uuid;
+  String? legislature;
+  String? titre;
+  String? libelleProcedureParlementaire;
+  String? lastLibelleActeLegislatif;
+  List<ActeLegislatifFromJson>? actesLegislatifs;
+
+  /// [DossierLegislatifFromJson] is the detail of the Legislative File to display
+  DossierLegislatifFromJson(
+      this.uuid,
+      this.legislature,
+      this.titre,
+      this.libelleProcedureParlementaire,
+      this.lastLibelleActeLegislatif,
+      this.actesLegislatifs);
+
+  /// Mapping from JSON
+  DossierLegislatifFromJson.fromFrenchNationalAssemblyJson(
+      Map<String, dynamic> _map) {
+    Map<String, dynamic> json = _map["dossierParlementaire"];
+
+    this.uuid = json['uid'];
+    this.legislature = json['legislature'];
+
+    Map<String, dynamic> _titreDossier = json["titreDossier"];
+    this.titre = _titreDossier['titre'];
+
+    Map<String, dynamic> _procedureParlementaire =
+        json["procedureParlementaire"];
+    this.libelleProcedureParlementaire = _procedureParlementaire['libelle'];
+
+    Map<String, dynamic> _actesLegislatifs = json["actesLegislatifs"];
+
+    if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) == "{") {
+      this.actesLegislatifs = [
+        ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+            _actesLegislatifs["acteLegislatif"])
+      ];
+
+      this.lastLibelleActeLegislatif =
+          ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+                  _actesLegislatifs["acteLegislatif"])
+              .libelleActeLegislatif;
+    } else if (_actesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
+        "[") {
+      List<ActeLegislatifFromJson> _temp = [];
+      List<dynamic> _acteLegislatifList =
+          _actesLegislatifs["acteLegislatif"] as List;
+      for (dynamic instance in _acteLegislatifList) {
+        Map<String, dynamic> _acteLegislatif = instance;
+        _temp.add(ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+            _acteLegislatif));
+      }
+      this.actesLegislatifs = _temp;
+      Map<String, dynamic> _acteLegislatif = _acteLegislatifList.last;
+      this.lastLibelleActeLegislatif =
+          ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(_acteLegislatif)
+              .libelleActeLegislatif;
+    }
+  }
+
+  // Get the list of Votes among [actesLegislatifs]
+  List<String>? get votesRef {
+    List<String> _tempVotes = [];
+    if (this.actesLegislatifs != null) {
+      for (ActeLegislatifFromJson acte in this.actesLegislatifs!) {
+        if (acte.votesRef != null && acte.votesRef != []) {
+          for (String vote in acte.votesRef!) {
+            _tempVotes.add(vote);
+          }
+        }
+        if (acte.actesIntra != null && acte.actesIntra != []) {
+          for (ActeLegislatifFromJson subActe
+              in acte.actesIntra as List<ActeLegislatifFromJson>) {
+            if (subActe.votesRef != null && subActe.votesRef != []) {
+              for (String vote in subActe.votesRef!) {
+                _tempVotes.add(vote);
+              }
+            }
+            if (subActe.actesIntra != null && subActe.actesIntra != []) {
+              for (ActeLegislatifFromJson subSubActe
+                  in subActe.actesIntra as List<ActeLegislatifFromJson>) {
+                if (subSubActe.votesRef != null && subSubActe.votesRef != []) {
+                  for (String vote in subSubActe.votesRef!) {
+                    _tempVotes.add(vote);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return _tempVotes;
+  }
+
+  // Get the list of Reunions among [actesLegislatifs]
+  List<String>? get reunionsRef {
+    List<String> _tempReunions = [];
+    if (this.actesLegislatifs != null) {
+      for (ActeLegislatifFromJson acte in this.actesLegislatifs!) {
+        if (acte.reunionRef != null && acte.reunionRef != []) {
+          _tempReunions.add(acte.reunionRef!);
+        }
+        if (acte.actesIntra != null && acte.actesIntra != []) {
+          for (ActeLegislatifFromJson subActe
+              in acte.actesIntra as List<ActeLegislatifFromJson>) {
+            if (subActe.reunionRef != null && subActe.reunionRef != []) {
+              _tempReunions.add(subActe.reunionRef!);
+            }
+            if (subActe.actesIntra != null && subActe.actesIntra != []) {
+              for (ActeLegislatifFromJson subSubActe
+                  in subActe.actesIntra as List<ActeLegislatifFromJson>) {
+                if (subSubActe.reunionRef != null &&
+                    subSubActe.reunionRef != []) {
+                  _tempReunions.add(subSubActe.reunionRef!);
+                }
+                if (subSubActe.actesIntra != null &&
+                    subSubActe.actesIntra != []) {
+                  for (ActeLegislatifFromJson subSubSubActe in subSubActe
+                      .actesIntra as List<ActeLegislatifFromJson>) {
+                    if (subSubSubActe.reunionRef != null &&
+                        subSubSubActe.reunionRef != []) {
+                      _tempReunions.add(subSubSubActe.reunionRef!);
+                    }
+                    if (subSubSubActe.actesIntra != null &&
+                        subSubSubActe.actesIntra != []) {
+                      for (ActeLegislatifFromJson subSubSubSubActe
+                          in subSubSubActe.actesIntra
+                              as List<ActeLegislatifFromJson>) {
+                        if (subSubSubSubActe.reunionRef != null &&
+                            subSubSubSubActe.reunionRef != []) {
+                          _tempReunions.add(subSubSubSubActe.reunionRef!);
+                        }
+                        if (subSubSubSubActe.actesIntra != null &&
+                            subSubSubSubActe.actesIntra != []) {
+                          for (ActeLegislatifFromJson subSubSubSubSubActe
+                              in subSubSubSubActe.actesIntra
+                                  as List<ActeLegislatifFromJson>) {
+                            if (subSubSubSubSubActe.reunionRef != null &&
+                                subSubSubSubSubActe.reunionRef != []) {
+                              _tempReunions
+                                  .add(subSubSubSubSubActe.reunionRef!);
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    _tempReunions.sort();
+
+    for (int i = 0; i < _tempReunions.length; i++) {
+      for (int j = i + 1; j < _tempReunions.length; j++) {
+        if (_tempReunions[i] == _tempReunions[j]) {
+          _tempReunions.removeAt(j);
+        }
+      }
+    }
+
+    return _tempReunions;
+  }
+
+  /// Sorting rules
+  @override
+  int compareTo(DossierLegislatifFromJson other) {
+    var comparisonResult =
+        (other.votesRef?.length ?? 0).compareTo((this.votesRef?.length ?? 0));
+    if (comparisonResult != 0) {
+      return comparisonResult;
+    }
+    return (other.uuid ?? "emptyA").compareTo((this.uuid ?? "emptyB"));
+  }
+}
+
+class ProjetLoiFromJson implements Comparable<ProjetLoiFromJson> {
+  String? uuid;
+  String? legislature;
+  String? titre;
+  String? dossierRef;
+  DateTime? dateDepot;
+
+  /// [ProjetLoiFromJson] is the detail of the Law Project to display
+  ProjetLoiFromJson(
+      this.uuid, this.legislature, this.titre, this.dossierRef, this.dateDepot);
+
+  /// Mapping from JSON
+  ProjetLoiFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> _map) {
+    Map<String, dynamic> json = _map["document"];
+
+    this.uuid = json['uid'];
+    this.legislature = json['legislature'];
+
+    Map<String, dynamic> _titreDossier = json["titres"];
+    this.titre = _titreDossier['titrePrincipal'];
+
+    this.dossierRef = json['dossierRef'];
+
+    Map<String, dynamic> _cycleDeVie = json["cycleDeVie"];
+    Map<String, dynamic> _chrono = _cycleDeVie["chrono"];
+    this.dateDepot = _chrono["dateDepot"].toString().length > 9
+        ? dateFormatter(_chrono["dateDepot"].toString().split("T")[0],
+            dateSeparator: "-", noHour: true, format: "YMD")
+        : DateTime.now();
+  }
+
+  /// Get a boolean to know if the Law project is adopted or not
+  bool get isAdopted {
+    if ((this.uuid ?? "-").contains("BTA") ||
+        (this.uuid ?? "-").contains("BTS") ||
+        (this.uuid ?? "-").contains("BTC") ||
+        (this.uuid ?? "-").contains("BTG")) {
+      return true;
+    }
+    return false;
+  }
+
+  /// Get the 'translation' of the Uuid into an understandable String
+  ///
+  /// from :
+  ///   PRJLANR5L16BTC0144 / PRJLSNR5S359B0561
+  /// to :
+  ///   Proj. Loi Ass. Nat. Ve Répub. Légis. 16 Adopté Commission au fond 0144
+  ///   Proj. Loi Sénat Ve Répub. Sess. 359 Non adopté 0561
+  ///
+
+  String get uuidTranslate {
+    String _toReturn = "";
+    String _localUuid = this.uuid ?? "-";
+
+    if (_localUuid.substring(0, 4) == "PRJL") {
+      _toReturn += "Proj.Loi ";
+      if (_localUuid.substring(4, 6) == "AN") {
+        _toReturn += "(Ass.Nat. - ";
+      } else if (_localUuid.substring(4, 6) == "SN") {
+        _toReturn += "(Sénat - ";
+      }
+      if (_localUuid.substring(6, 8) == "R5") {
+        _toReturn += "Ve Rép. ";
+      } else if (_localUuid.substring(6, 8) == "R6") {
+        _toReturn += "VIe Rép. ";
+      }
+      if (_localUuid.substring(8, 9) == "L") {
+        _toReturn += "Légis." + _localUuid.substring(9, 11) + ") • ";
+        if (_localUuid.substring(11, 14) == "BTA") {
+          _toReturn += "ADOPTÉ " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 14) == "BTS") {
+          _toReturn += "ADOPTÉ Séance " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 14) == "BTC") {
+          _toReturn += "ADOPTÉ Commission au fond " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 14) == "BTG") {
+          _toReturn += "ADOPTÉ en Congrès " + _localUuid.substring(14);
+        } else if (_localUuid.substring(11, 12) == "B") {
+          _toReturn += "-NON- ADOPTÉ " + _localUuid.substring(12);
+        }
+      } else if (_localUuid.substring(8, 9) == "S") {
+        _toReturn += "Sess." + _localUuid.substring(9, 12) + ") • ";
+        if (_localUuid.substring(12, 15) == "BTA") {
+          _toReturn += "ADOPTÉ " + _localUuid.substring(15);
+        } else if (_localUuid.substring(12, 15) == "BTS") {
+          _toReturn += "ADOPTÉ Séance " + _localUuid.substring(15);
+        } else if (_localUuid.substring(12, 15) == "BTC") {
+          _toReturn += "ADOPTÉ Commission au fond " + _localUuid.substring(15);
+        } else if (_localUuid.substring(12, 15) == "BTG") {
+          _toReturn += "ADOPTÉ en Congrès " + _localUuid.substring(15);
+        } else if (_localUuid.substring(12, 13) == "B") {
+          _toReturn += "-NON- ADOPTÉ " + _localUuid.substring(13);
+        }
+      }
+    }
+    if (_toReturn == "") {
+      return _localUuid;
+    } else {
+      return _toReturn;
+    }
+  }
+
+  /// Sorting rules
+  @override
+  int compareTo(ProjetLoiFromJson other) {
+    return (this.dateDepot ?? DateTime.now())
+        .compareTo((other.dateDepot ?? DateTime.now()));
+  }
+}
+
+class ActeLegislatifFromJson {
+  String? uuid;
+  String? libelleActeLegislatif;
+  List<String>? votesRef;
+  String? reunionRef;
+  dynamic actesIntra;
+
+  ActeLegislatifFromJson(
+      this.uuid, this.libelleActeLegislatif, this.actesIntra);
+
+  /// Mapping from JSON
+  ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+      Map<String, dynamic> _acteLegislatif) {
+    this.uuid = _acteLegislatif["uid"];
+    this.reunionRef = _acteLegislatif["reunionRef"];
+
+    List<String> _tempVotes = [];
+    if (_acteLegislatif["voteRefs"] != null) {
+      Map<String, dynamic> _voteRefs = _acteLegislatif["voteRefs"];
+      _tempVotes
+          .add(_voteRefs['voteRef'] + "_" + _acteLegislatif["reunionRef"]);
+    }
+
+    Map<String, dynamic> _libelleActe = _acteLegislatif["libelleActe"];
+    this.libelleActeLegislatif = _libelleActe['nomCanonique'];
+
+    if (_acteLegislatif["actesLegislatifs"] != null) {
+      // this.actesIntra = _acteLegislatif["actesLegislatifs"];
+
+      Map<String, dynamic> _subActesLegislatifs =
+          _acteLegislatif["actesLegislatifs"];
+
+      if (_subActesLegislatifs["acteLegislatif"].toString().substring(0, 1) ==
+          "{") {
+        this.actesIntra = [
+          ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+              _subActesLegislatifs["acteLegislatif"])
+        ];
+      } else if (_subActesLegislatifs["acteLegislatif"]
+              .toString()
+              .substring(0, 1) ==
+          "[") {
+        List<ActeLegislatifFromJson> _temp = [];
+        List<dynamic> _acteLegislatifList =
+            _subActesLegislatifs["acteLegislatif"] as List;
+        for (dynamic instance in _acteLegislatifList) {
+          Map<String, dynamic> _acteLegislatif = instance;
+          _temp.add(ActeLegislatifFromJson.fromFrenchNationalAssemblyJson(
+              _acteLegislatif));
+        }
+        this.actesIntra = _temp;
+      }
+    }
+    this.votesRef = _tempVotes;
   }
 }
 
