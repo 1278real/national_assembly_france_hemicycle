@@ -1,4 +1,4 @@
-## 0.8.0
+## 0.8.1
 
 * Graphic enhancements for Individual Votes : second arc for SuperGroup.
 

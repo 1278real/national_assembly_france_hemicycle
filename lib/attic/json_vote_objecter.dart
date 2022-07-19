@@ -155,11 +155,11 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   }
 
   /// Political Color to display for Intergroup
-  Color get intergroupColor {
+  Color? get intergroupColor {
     if (_intergroupTranscoded != null) {
       return _intergroupTranscoded!.intergroupeColor;
     }
-    return Color.fromARGB(255, 200, 200, 200);
+    return null;
   }
 
   /// Name to display for Intergroup
