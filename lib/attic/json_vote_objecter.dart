@@ -401,7 +401,7 @@ class AmendementFromJson implements Comparable<AmendementFromJson> {
     }
   }
 
-  /// Get the sorting order : Commission job before Overall meeting
+  /// Get the sorting order : Commission job after Overall meeting
   int get ordreTri {
     if ((this.numeroLong ?? "").length > 2) {
       if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
@@ -430,7 +430,7 @@ class AmendementFromJson implements Comparable<AmendementFromJson> {
             (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
       }
     }
-    return 100000 + (int.tryParse(this.numeroLong ?? "") ?? 0);
+    return (int.tryParse(this.numeroLong ?? "") ?? 0);
   }
 
   /// Get the 'translation' of the Long number into an understandable String

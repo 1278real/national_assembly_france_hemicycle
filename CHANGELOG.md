@@ -2,6 +2,8 @@
 
 * Updated example.dart
 
+* Changed sort order for Amendments : Assembly first, then Commissions
+
 ## 0.7.0
 
 * Download the whole JSON files from National Assembly Open Data to process :
