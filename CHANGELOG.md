@@ -1,3 +1,7 @@
+## 0.7.2
+
+* Changed sort order for Amendments : ```(Rect)``` (rectified amendments) is no longer an issue when sorting.
+
 ## 0.7.1
 
 * Updated example.dart

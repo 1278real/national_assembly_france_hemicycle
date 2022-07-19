@@ -407,30 +407,36 @@ class AmendementFromJson implements Comparable<AmendementFromJson> {
       if ((this.numeroLong ?? "").substring(0, 2) == "AC") {
         // affaires culturelles
         return 10000 +
-            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+            (int.tryParse((this.numeroLong ?? "").replaceAll(" (Rect)", "")) ??
+                0);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "AS") {
         // affaires sociales
         return 20000 +
-            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+            (int.tryParse((this.numeroLong ?? "").replaceAll(" (Rect)", "")) ??
+                0);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "CE") {
         // affaires écos
         return 30000 +
-            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+            (int.tryParse((this.numeroLong ?? "").replaceAll(" (Rect)", "")) ??
+                0);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "CF") {
         // comm finances
         return 40000 +
-            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+            (int.tryParse((this.numeroLong ?? "").replaceAll(" (Rect)", "")) ??
+                0);
       }
       if ((this.numeroLong ?? "").substring(0, 2) == "CL") {
         // comm lois
         return 50000 +
-            (int.tryParse((this.numeroLong ?? "").substring(2)) ?? 0);
+            (int.tryParse((this.numeroLong ?? "").replaceAll(" (Rect)", "")) ??
+                0);
       }
     }
-    return (int.tryParse(this.numeroLong ?? "") ?? 0);
+    return (int.tryParse((this.numeroLong ?? "").replaceAll(" (Rect)", "")) ??
+        0);
   }
 
   /// Get the 'translation' of the Long number into an understandable String
