@@ -9,6 +9,7 @@ class OpenAssembleeVoteDisplayer {
   List<IndividualVotes> votesAssemblyTest = [];
   ScrutinFromJson? scrutin;
   List<GroupSectors> _localGroups = [];
+  List<GroupSectors> _localInterGroups = [];
   int nbOfMembersInvolved = 0;
   AmendementFromJson? amendement;
 
@@ -43,14 +44,9 @@ class OpenAssembleeVoteDisplayer {
           nbOfMembersInvolved += group.nbMembers ?? 0;
           _localGroups.add(GroupSectors(group.nbMembers ?? 0, group.groupColor,
               description: group.groupName));
-/*
-          print("-----" +
-              group.groupName +
-              " / " +
-              group.nbMembers.toString() +
-              " = " +
-              nbOfMembersInvolved.toString());
-*/
+          _localInterGroups.add(GroupSectors(
+              group.nbMembers ?? 0, group.intergroupColor,
+              description: group.intergroupName));
         }
       }
       votesAssemblyTest = await OpenAssembleeJsonTranscoder()
@@ -168,6 +164,7 @@ class OpenAssembleeVoteDisplayer {
                           nbRows: (nbOfMembersInvolved / 48).round(),
                           individualVotes: votesAssemblyTest,
                           groupSectors: _localGroups,
+                          superGroupSectors: _localInterGroups,
                           useGroupSector: useGroupSector,
                           backgroundColor: backgroundColor ??
                               Theme.of(context).scaffoldBackgroundColor,

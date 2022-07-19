@@ -116,7 +116,21 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     return null;
   }
 
-  /// Used ofr left-to-right display
+  /// Transcode the Group organeRef to a Political known intergroup
+  ///
+  /// uses the [IntergroupTranscode] class
+  IntergroupTranscode? get _intergroupTranscoded {
+    for (var i = 0; i < intergroupsLegis16.length; i++) {
+      if (intergroupsLegis16[i]
+          .groupeIndexes
+          .contains(_groupTranscoded?.index ?? 999)) {
+        return intergroupsLegis16[i];
+      }
+    }
+    return null;
+  }
+
+  /// Used for left-to-right display
   int get groupIndex {
     if (_groupTranscoded != null) {
       return _groupTranscoded!.index;
@@ -124,7 +138,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     return 0;
   }
 
-  /// Political Color to display
+  /// Political Color to display for Group
   Color get groupColor {
     if (_groupTranscoded != null) {
       return _groupTranscoded!.groupeColor;
@@ -132,10 +146,26 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     return Color.fromARGB(255, 200, 200, 200);
   }
 
-  /// Name to display
+  /// Name to display for Group
   String get groupName {
     if (_groupTranscoded != null) {
       return _groupTranscoded!.name;
+    }
+    return "-";
+  }
+
+  /// Political Color to display for Intergroup
+  Color get intergroupColor {
+    if (_intergroupTranscoded != null) {
+      return _intergroupTranscoded!.intergroupeColor;
+    }
+    return Color.fromARGB(255, 200, 200, 200);
+  }
+
+  /// Name to display for Intergroup
+  String get intergroupName {
+    if (_intergroupTranscoded != null) {
+      return _intergroupTranscoded!.name;
     }
     return "-";
   }
@@ -256,6 +286,7 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
   int? votedAbstention;
   int? didNotVote;
   List<GroupVotesFromJson>? groupVotesDetails;
+  List<GroupVotesFromJson>? intergroupVotesDetails;
 
   /// [ScrutinFromJson] is the vote in the whole assembly
   ScrutinFromJson(
@@ -274,7 +305,8 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
       this.votedAgainst,
       this.votedAbstention,
       this.didNotVote,
-      this.groupVotesDetails);
+      this.groupVotesDetails,
+      this.intergroupVotesDetails);
 
   /// calculate the number of actual voters
   int get nbVoters {

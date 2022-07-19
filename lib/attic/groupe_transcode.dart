@@ -38,3 +38,19 @@ List<GroupTranscode> groupsLegis16 = [
   GroupTranscode(10, "PO800520", "RN", rnBleu),
   GroupTranscode(99, "PO793087", "NI", nonInscritGris),
 ];
+
+class IntergroupTranscode {
+  int index;
+  List<int> groupeIndexes;
+  String name;
+  Color intergroupeColor;
+
+  IntergroupTranscode(
+      this.index, this.groupeIndexes, this.name, this.intergroupeColor);
+}
+
+/// Legislature XVI : 2022-...
+List<IntergroupTranscode> intergroupsLegis16 = [
+  IntergroupTranscode(1, [1, 2, 3, 4], "NUPES", nupesRouge),
+  IntergroupTranscode(2, [6, 7, 8], "Enemble", renaissanceOrange),
+];
