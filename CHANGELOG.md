@@ -1,3 +1,7 @@
+## 0.8.0
+
+* Graphic enhancements for Individual Votes : second arc for SuperGroup.
+
 ## 0.7.2
 
 * Changed sort order for Amendments : ```(Rect)``` (rectified amendments) is no longer an issue when sorting.
