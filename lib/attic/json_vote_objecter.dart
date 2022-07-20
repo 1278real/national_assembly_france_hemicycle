@@ -582,7 +582,9 @@ class DossierLegislatifFromJson
       for (ActeLegislatifFromJson acte in this.actesLegislatifs!) {
         if (acte.votesRef != null && acte.votesRef != []) {
           for (String vote in acte.votesRef!) {
-            _tempVotes.add(vote);
+            if (vote.contains("L16")) {
+              _tempVotes.add(vote);
+            }
           }
         }
         if (acte.actesIntra != null && acte.actesIntra != []) {
@@ -590,7 +592,9 @@ class DossierLegislatifFromJson
               in acte.actesIntra as List<ActeLegislatifFromJson>) {
             if (subActe.votesRef != null && subActe.votesRef != []) {
               for (String vote in subActe.votesRef!) {
-                _tempVotes.add(vote);
+                if (vote.contains("L16")) {
+                  _tempVotes.add(vote);
+                }
               }
             }
             if (subActe.actesIntra != null && subActe.actesIntra != []) {
@@ -598,7 +602,9 @@ class DossierLegislatifFromJson
                   in subActe.actesIntra as List<ActeLegislatifFromJson>) {
                 if (subSubActe.votesRef != null && subSubActe.votesRef != []) {
                   for (String vote in subSubActe.votesRef!) {
-                    _tempVotes.add(vote);
+                    if (vote.contains("L16")) {
+                      _tempVotes.add(vote);
+                    }
                   }
                 }
               }
