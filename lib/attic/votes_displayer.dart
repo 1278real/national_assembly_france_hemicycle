@@ -206,17 +206,10 @@ class OpenAssembleeVoteDisplayer {
                                                             in downloaded
                                                                 .groupVotesDetails!)
                                                           scrutinDetailListViewElement(
-                                                                  group: group,
-                                                                  allDeputes:
-                                                                      allDeputes ??
-                                                                          []) ??
-                                                              Text(
-                                                                group.groupName +
-                                                                    " n'a pas de vote dissident",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        8),
-                                                              ),
+                                                              group: group,
+                                                              allDeputes:
+                                                                  allDeputes ??
+                                                                      [])
                                                     ])),
                                                 OutlinedButton(
                                                   child: Text(
@@ -432,7 +425,7 @@ class OpenAssembleeVoteDisplayer {
     );
   }
 
-  Widget? scrutinDetailListViewElement(
+  Column scrutinDetailListViewElement(
       {required GroupVotesFromJson group,
       required List<DeputesFromCsv> allDeputes}) {
     List<DeputesFromCsv> theyVotedFor = [];
@@ -472,31 +465,56 @@ class OpenAssembleeVoteDisplayer {
             children: [
               Text(
                 group.groupName,
-                style: TextStyle(fontWeight: FontWeight.w900),
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11),
               ),
               if (group.intergroupName != "-")
                 Text(
                   " — " + group.intergroupName,
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
                 ),
             ],
           ),
           if (theyVotedFor.length > 0)
-            Text("POUR", style: TextStyle(fontWeight: FontWeight.w600)),
+            Text("POUR",
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
           for (DeputesFromCsv deputes in theyVotedFor)
-            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
+            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11)),
           if (theyVotedFor.length > 0) Padding(padding: EdgeInsets.all(8)),
           if (theyVotedAgainst.length > 0)
-            Text("CONTRE", style: TextStyle(fontWeight: FontWeight.w600)),
+            Text("CONTRE",
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
           for (DeputesFromCsv deputes in theyVotedAgainst)
-            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
+            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11)),
           if (theyVotedAgainst.length > 0) Padding(padding: EdgeInsets.all(8)),
           if (theyVotedAbstention.length > 0)
-            Text("ABSTENTION", style: TextStyle(fontWeight: FontWeight.w600)),
+            Text("ABSTENTION",
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
           for (DeputesFromCsv deputes in theyVotedAbstention)
-            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
+            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11)),
           if (theyVotedAbstention.length > 0)
             Padding(padding: EdgeInsets.all(8)),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                group.groupName,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 9),
+              ),
+              Text(
+                " n'a pas de vote dissident",
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 9),
+              ),
+            ],
+          ),
+          Padding(padding: EdgeInsets.all(8)),
         ],
       );
     }
