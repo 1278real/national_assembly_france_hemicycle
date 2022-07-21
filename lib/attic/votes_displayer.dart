@@ -174,7 +174,9 @@ class OpenAssembleeVoteDisplayer {
                         Transform.rotate(
                           angle: (-10.0).degreesToRadians,
                           child: OutlinedButton(
-                            onPressed: null,
+                            onPressed: () {
+                              //
+                            },
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
                                     width: 1.5,
