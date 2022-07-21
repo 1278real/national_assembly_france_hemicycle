@@ -454,7 +454,7 @@ Future<bool> _updateListOfDeputes(
 /// • [mainDirectory] is the required Directory to download and extract files. You can use App Support directory for instance.
 ///
 /// • [forceRefresh] is a boolean to force the refresh of Open Data files.
-Future<List<DeputesFromCsv>?> getListOfDeputes(
+Future<List<DeputesFromCsv>> getListOfDeputes(
     {String pathToDeputes =
         "https://data.assemblee-nationale.fr/static/openData/repository/16/amo/deputes_actifs_csv_opendata/liste_deputes_excel.csv",
     required Directory mainDirectory,
