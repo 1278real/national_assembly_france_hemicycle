@@ -478,14 +478,14 @@ class OpenAssembleeVoteDisplayer {
                       fontSize: 11,
                       decoration: TextDecoration.underline),
                 ),
-              if (group.positionMajoritaire != "")
-                Text(
-                  " — position majoritaire : " +
-                      group.positionMajoritaire!.allInCaps,
-                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 9),
-                ),
             ],
           ),
+          if (group.positionMajoritaire != "")
+            Text(
+              "position majoritaire : " + group.positionMajoritaire!.allInCaps,
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 9),
+            ),
+          Padding(padding: EdgeInsets.all(8)),
           if (theyVotedFor.length > 0)
             Text("POUR",
                 style: TextStyle(
