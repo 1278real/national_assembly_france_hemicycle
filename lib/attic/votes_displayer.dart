@@ -166,8 +166,8 @@ class OpenAssembleeVoteDisplayer {
                           groupSectors: _localGroups,
                           superGroupSectors: _localInterGroups,
                           useGroupSector: useGroupSector,
-                          backgroundColor: backgroundColor ??
-                              Theme.of(context).scaffoldBackgroundColor,
+                          backgroundColor:
+                              backgroundColor ?? Theme.of(context).canvasColor,
                           backgroundOpacity: 0.05,
                           hiliteFronde: hiliteFronde,
                         ),
