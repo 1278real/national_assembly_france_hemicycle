@@ -433,13 +433,14 @@ class OpenAssembleeVoteDisplayer {
     List<DeputesFromCsv> theyDidNotVote = [];
     List<DeputesFromCsv> theyVotedAbstention = [];
 
+    print("----");
+    print("- " + (group.deputesRefToHilite ?? []).length.toString());
+    print("-- " + allDeputes.length.toString());
+
     List<DeputesFromCsv> voterDeputes =
         getListOfHighlightedDeputes(allDeputes, group);
 
-    print("----");
-    print((group.deputesRefToHilite ?? []).length);
-    print(allDeputes.length);
-    print(voterDeputes.length);
+    print("- " + voterDeputes.length.toString());
     print("----");
 
     for (DeputesFromCsv deputesHighlighted in voterDeputes) {
@@ -512,6 +513,7 @@ class OpenAssembleeVoteDisplayer {
     List<DeputesFromCsv> _toReturn = [];
     if ((groupInScrutin.deputesRefToHilite ?? []).length > 0) {
       for (IndividualVoteFromJson voter in groupInScrutin.deputesRefToHilite!) {
+        print(voter.acteurRef);
         for (DeputesFromCsv depute in allDeputes) {
           if (depute.deputeRef == voter.acteurRef) {
             _toReturn.add(DeputesFromCsv.fromVote(depute, voter));
