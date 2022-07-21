@@ -456,7 +456,7 @@ class OpenAssembleeVoteDisplayer {
             ),
             if (group.intergroupName != "")
               Text(
-                group.intergroupName,
+                " — " + group.intergroupName,
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
           ],

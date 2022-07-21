@@ -52,5 +52,5 @@ class IntergroupTranscode {
 /// Legislature XVI : 2022-...
 List<IntergroupTranscode> intergroupsLegis16 = [
   IntergroupTranscode(1, [1, 2, 3, 4], "NUPES", nupesRouge),
-  IntergroupTranscode(2, [6, 7, 8], "Enemble", renaissanceOrange),
+  IntergroupTranscode(2, [6, 7, 8], "Ensemble", renaissanceOrange),
 ];
