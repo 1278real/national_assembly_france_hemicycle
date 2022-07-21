@@ -433,8 +433,16 @@ class OpenAssembleeVoteDisplayer {
     List<DeputesFromCsv> theyDidNotVote = [];
     List<DeputesFromCsv> theyVotedAbstention = [];
 
-    for (DeputesFromCsv deputesHighlighted
-        in getListOfHighlightedDeputes(allDeputes, group)) {
+    List<DeputesFromCsv> voterDeputes =
+        getListOfHighlightedDeputes(allDeputes, group);
+
+    print("----");
+    print((group.deputesRefToHilite ?? []).length);
+    print(allDeputes.length);
+    print(voterDeputes.length);
+    print("----");
+
+    for (DeputesFromCsv deputesHighlighted in voterDeputes) {
       if (deputesHighlighted.votedFor ?? false) {
         theyVotedFor.add(deputesHighlighted);
       } else if (deputesHighlighted.votedAgainst ?? false) {
@@ -454,7 +462,7 @@ class OpenAssembleeVoteDisplayer {
               group.groupName,
               style: TextStyle(fontWeight: FontWeight.w900),
             ),
-            if (group.intergroupName != "")
+            if (group.intergroupName != "-")
               Text(
                 " — " + group.intergroupName,
                 style: TextStyle(fontWeight: FontWeight.w600),
