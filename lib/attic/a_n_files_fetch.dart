@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
@@ -472,9 +473,9 @@ Future<List<DeputesFromCsv>> getListOfDeputes(
   File? dossiersFile = File(dossiersFilePath);
 
   String dossiersString = await dossiersFile.readAsString(encoding: latin1);
-  print(dossiersString);
   _listData = CsvToListConverter()
       .convert(dossiersString, fieldDelimiter: ";", eol: "\n");
+  inspect(_listData);
 
   List<DeputesFromCsv> _tempDeputes = [];
   for (var i = 1; i < _listData.length; i++) {
