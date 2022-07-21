@@ -473,9 +473,9 @@ Future<List<DeputesFromCsv>> getListOfDeputes(
   File? dossiersFile = File(dossiersFilePath);
 
   String dossiersString = await dossiersFile.readAsString(encoding: latin1);
-  _listData = CsvToListConverter()
-      .convert(dossiersString, fieldDelimiter: ";", eol: "\n");
+  _listData = CsvToListConverter().convert(dossiersString);
   inspect(_listData);
+  print(_listData.length.toString());
 
   List<DeputesFromCsv> _tempDeputes = [];
   for (var i = 1; i < _listData.length; i++) {
