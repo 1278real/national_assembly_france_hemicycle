@@ -236,6 +236,14 @@ class OpenAssembleeVoteDisplayer {
                           ),
                         ),
                       ]),
+                  Text(
+                    "Tap dans le rectangle résultat pour détails ⤴️",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9,
+                        color: Colors.red),
+                  ),
                   Padding(padding: EdgeInsets.all(6)),
                   Text(
                     (scrutin?.libelleVote ?? "-").firstInCaps,
