@@ -83,6 +83,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   int? didNotVote;
   List<IndividualVoteFromJson>? individualVotesDetails;
   String? majoriteVote;
+  String? positionMajoritaire;
 
   /// [GroupVotesFromJson] is the group of persons
   GroupVotesFromJson(
@@ -181,13 +182,14 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
       List<IndividualVoteFromJson> _inGroupActeurRefsList = [];
       print(majoriteVote);
       for (IndividualVoteFromJson voter in individualVotesDetails!) {
-        if ((voter.votedFor ?? false) && (majoriteVote ?? "") != "pour") {
+        if ((voter.votedFor ?? false) &&
+            (positionMajoritaire ?? "") != "pour") {
           _inGroupActeurRefsList.add(voter);
         } else if ((voter.votedAgainst ?? false) &&
-            (majoriteVote ?? "") != "contre") {
+            (positionMajoritaire ?? "") != "contre") {
           _inGroupActeurRefsList.add(voter);
         } else if ((voter.votedAbstention ?? false) &&
-            (majoriteVote ?? "") != "abstention") {
+            (positionMajoritaire ?? "") != "abstention") {
           _inGroupActeurRefsList.add(voter);
         }
       }
@@ -206,6 +208,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     this.nbMembers = int.tryParse(json['nombreMembresGroupe']) ?? 0;
 
     Map<String, dynamic> _vote = json["vote"];
+    positionMajoritaire = _vote["positionMajoritaire"];
     Map<String, dynamic> _decompteVoix = _vote["decompteVoix"];
 
     this.votedFor = int.tryParse(_decompteVoix['pour']) ?? 0;
