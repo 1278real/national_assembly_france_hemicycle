@@ -370,4 +370,21 @@ class OpenAssembleeVoteDisplayer {
     return drawVoteHemicycleFromPath(
         downloaded: vote, useGroupSector: true, hiliteFronde: false);
   }
+
+  /// used by [drawVoteHemicycleFromPath] FutureBuilder
+  /// returns a List of [DeputesFromCsv] from a [scrutin.GroupVotesFromJson] and the list of All Deputies to provide.
+  List<DeputesFromCsv> getListOfHighlightedDeputes(
+      List<DeputesFromCsv> allDeputes, GroupVotesFromJson groupInScrutin) {
+    List<DeputesFromCsv> _toReturn = [];
+    if ((groupInScrutin.deputesRefToHilite ?? []).length > 0) {
+      for (IndividualVoteFromJson voter in groupInScrutin.deputesRefToHilite!) {
+        for (DeputesFromCsv depute in allDeputes) {
+          if (depute.deputeRef == voter.acteurRef) {
+            _toReturn.add(DeputesFromCsv.fromVote(depute, voter));
+          }
+        }
+      }
+    }
+    return [];
+  }
 }

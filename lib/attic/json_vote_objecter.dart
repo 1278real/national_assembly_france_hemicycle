@@ -82,6 +82,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   int? votedAbstention;
   int? didNotVote;
   List<IndividualVoteFromJson>? individualVotesDetails;
+  String? majoriteVote;
 
   /// [GroupVotesFromJson] is the group of persons
   GroupVotesFromJson(
@@ -91,7 +92,8 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
       this.votedAgainst,
       this.votedAbstention,
       this.didNotVote,
-      this.individualVotesDetails);
+      this.individualVotesDetails,
+      this.majoriteVote);
 
   /// Calculate the numebr of group members that were not even present for vote
   int get didNotAttend {
@@ -173,8 +175,32 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     return "-";
   }
 
+  /// return the [DeputesFromCsv] to highlight when NOT voting as their Group's majority
+  List<IndividualVoteFromJson>? get deputesRefToHilite {
+    if (individualVotesDetails != null) {
+      List<IndividualVoteFromJson> _inGroupActeurRefsList = [];
+      for (IndividualVoteFromJson voter in individualVotesDetails!) {
+        if ((voter.votedFor ?? false) && (majoriteVote ?? "") != "pour") {
+          _inGroupActeurRefsList.add(voter);
+        } else if ((voter.votedAgainst ?? false) &&
+            (majoriteVote ?? "") != "contre") {
+          _inGroupActeurRefsList.add(voter);
+        } else if ((voter.votedAbstention ?? false) &&
+            (majoriteVote ?? "") != "abstention") {
+          _inGroupActeurRefsList.add(voter);
+        }
+      }
+      return _inGroupActeurRefsList;
+    } else {
+      return null;
+    }
+  }
+
   /// Mapping from JSON
-  GroupVotesFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json) {
+  GroupVotesFromJson.fromFrenchNationalAssemblyJson(Map<String, dynamic> json,
+      {required String majoriteVoteFromScrutin}) {
+    this.majoriteVote = majoriteVoteFromScrutin;
+
     this.organeRef = json['organeRef'];
     this.nbMembers = int.tryParse(json['nombreMembresGroupe']) ?? 0;
 
@@ -356,8 +382,8 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
     List<GroupVotesFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
       Map<String, dynamic> _toConvert = _roughJson[i];
-      _toPass
-          .add(GroupVotesFromJson.fromFrenchNationalAssemblyJson(_toConvert));
+      _toPass.add(GroupVotesFromJson.fromFrenchNationalAssemblyJson(_toConvert,
+          majoriteVoteFromScrutin: _typeVote['typeMajorite']));
     }
     this.groupVotesDetails = _toPass;
   }
@@ -1106,6 +1132,10 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
   String profession;
   String groupeLong;
   String groupShort;
+  bool? votedFor;
+  bool? votedAgainst;
+  bool? didNotVote;
+  bool? votedAbstention;
 
   // CONSTRUCTOR
 
@@ -1118,7 +1148,11 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
       this.circoShort,
       this.profession,
       this.groupShort,
-      this.groupeLong);
+      this.groupeLong,
+      this.votedFor,
+      this.votedAgainst,
+      this.didNotVote,
+      this.votedAbstention);
 
   // GETTERS
 
@@ -1194,6 +1228,21 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
   String get deputeRef {
     return "PA" + identifiant;
   }
+
+  DeputesFromCsv.fromVote(DeputesFromCsv depute, IndividualVoteFromJson voter)
+      : identifiant = depute.identifiant,
+        prenom = depute.prenom,
+        nom = depute.nom,
+        region = depute.nom,
+        departement = depute.departement,
+        circoShort = depute.circoShort,
+        profession = depute.profession,
+        groupeLong = depute.groupeLong,
+        groupShort = depute.groupShort,
+        votedFor = voter.votedFor,
+        votedAgainst = voter.votedAgainst,
+        didNotVote = voter.didNotVote,
+        votedAbstention = voter.votedAbstention;
 
   DeputesFromCsv.fromFrenchNationalAssemblyCsv(List<dynamic> csv)
       : identifiant = csv[0].toString(),
