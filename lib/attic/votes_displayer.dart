@@ -512,9 +512,25 @@ class OpenAssembleeVoteDisplayer {
                     color: hemicyleVoteAgainst,
                     fontWeight: FontWeight.w600,
                     fontSize: 11)),
-          for (DeputesFromCsv deputes in theyVotedAgainst)
-            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+          for (var i = 0; i < (theyVotedAgainst.length / 2).ceil(); i++)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                    theyVotedAgainst[i * 2].prenom.firstInCaps +
+                        " " +
+                        theyVotedAgainst[i * 2].nom.allInCaps,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+                if (i * 2 + 1 < theyVotedAgainst.length)
+                  Text(
+                      theyVotedAgainst[i * 2 + 1].prenom.firstInCaps +
+                          " " +
+                          theyVotedAgainst[i * 2 + 1].nom.allInCaps,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+              ],
+            ),
           if (theyVotedAgainst.length > 0) Padding(padding: EdgeInsets.all(8)),
           if (theyVotedAbstention.length > 0)
             Text("ABSTENTION",
@@ -522,9 +538,25 @@ class OpenAssembleeVoteDisplayer {
                     color: hemicyleVoteAbstention,
                     fontWeight: FontWeight.w600,
                     fontSize: 11)),
-          for (DeputesFromCsv deputes in theyVotedAbstention)
-            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+          for (var i = 0; i < (theyVotedAbstention.length / 2).ceil(); i++)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                    theyVotedAbstention[i * 2].prenom.firstInCaps +
+                        " " +
+                        theyVotedAbstention[i * 2].nom.allInCaps,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+                if (i * 2 + 1 < theyVotedAbstention.length)
+                  Text(
+                      theyVotedAbstention[i * 2 + 1].prenom.firstInCaps +
+                          " " +
+                          theyVotedAbstention[i * 2 + 1].nom.allInCaps,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+              ],
+            ),
           if (theyVotedAbstention.length > 0)
             Padding(padding: EdgeInsets.all(8)),
         ],
