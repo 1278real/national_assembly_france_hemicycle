@@ -184,7 +184,17 @@ class OpenAssembleeVoteDisplayer {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.stretch,
                                             children: <Widget>[
-                                          Text("..."),
+                                          Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  3,
+                                              child: ListView(children: [
+                                                Text("..."),
+                                                Text("..."),
+                                                Text("..."),
+                                                Text("...")
+                                              ])),
                                           OutlinedButton(
                                             child: Text(
                                               "OK",
@@ -236,6 +246,7 @@ class OpenAssembleeVoteDisplayer {
                           ),
                         ),
                       ]),
+                  Padding(padding: EdgeInsets.all(6)),
                   Text(
                     "Tap dans le rectangle résultat pour détails ⤴️",
                     textAlign: TextAlign.center,
