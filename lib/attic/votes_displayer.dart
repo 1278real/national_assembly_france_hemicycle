@@ -166,8 +166,8 @@ class OpenAssembleeVoteDisplayer {
                           groupSectors: _localGroups,
                           superGroupSectors: _localInterGroups,
                           useGroupSector: useGroupSector,
-                          backgroundColor:
-                              backgroundColor ?? Theme.of(context).canvasColor,
+                          backgroundColor: backgroundColor ??
+                              Theme.of(context).scaffoldBackgroundColor,
                           backgroundOpacity: 0.05,
                           hiliteFronde: hiliteFronde,
                         ),
@@ -369,9 +369,13 @@ class OpenAssembleeVoteDisplayer {
   /// ### Creates a widget with French National Assembly view defined by these parameters :
   ///
   /// • [vote] receives a [ScrutinFromJson] that needs to be displayed.
-  Widget drawVoteHemicycleFromAppSupport({required ScrutinFromJson vote}) {
+  Widget drawVoteHemicycleFromAppSupport(
+      {required ScrutinFromJson vote, Color? backgroundColor}) {
     return drawVoteHemicycleFromPath(
-        downloaded: vote, useGroupSector: true, hiliteFronde: false);
+        downloaded: vote,
+        useGroupSector: true,
+        hiliteFronde: false,
+        backgroundColor: backgroundColor);
   }
 
   /// used by [drawVoteHemicycleFromPath] FutureBuilder
