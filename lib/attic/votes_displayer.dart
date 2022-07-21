@@ -196,8 +196,10 @@ class OpenAssembleeVoteDisplayer {
                                                             3,
                                                     width:
                                                         MediaQuery.of(context)
-                                                            .size
-                                                            .width,
+                                                                .size
+                                                                .width /
+                                                            5 *
+                                                            4,
                                                     child: ListView(children: [
                                                       if (downloaded
                                                               .groupVotesDetails !=
