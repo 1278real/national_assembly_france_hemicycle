@@ -460,7 +460,6 @@ class OpenAssembleeVoteDisplayer {
         (theyVotedAbstention.length > 0)) {
       return Column(
         children: [
-          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
