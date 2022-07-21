@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:national_assembly_france_hemicycle/attic/colors.dart';
 import 'package:national_assembly_france_hemicycle/attic/groupe_transcode.dart';
 
 import 'helpers.dart';
@@ -874,4 +877,324 @@ class ReturnFromJson {
   AmendementFromJson? amendement;
 
   ReturnFromJson(this.scrutin, {this.amendement});
+}
+
+enum partisEnum {
+  LO,
+  NPA,
+  EXG,
+  LFI,
+  NUPES_LFI,
+  NUPES_PCF,
+  PCF,
+  NUPES_ECOLO,
+  EELV,
+  NUPES_ALL,
+  DVE,
+  NUPES_PS,
+  PS,
+  DVG,
+  LREM,
+  DVC,
+  LR,
+  UDI,
+  DVD,
+  DLF,
+  EXD,
+  RN,
+  DIV,
+  SE,
+  blancs_ou_nul,
+  abstention
+}
+
+class Partis implements Comparable<Partis> {
+  partisEnum code;
+
+  // CONSTRUCTOR
+
+  Partis(this.code);
+
+  // GETTERS
+
+  String get name {
+    if (code.name.startsWith("NUPES")) {
+      return "NUPES";
+    } else {
+      return code.name;
+    }
+  }
+
+  bool get isNupes {
+    bool _prefFeedback = false;
+
+    if (code == partisEnum.LFI ||
+        code == partisEnum.PCF ||
+        code == partisEnum.EELV ||
+        code == partisEnum.PS ||
+        code == partisEnum.NUPES_ALL ||
+        code == partisEnum.NUPES_ECOLO ||
+        code == partisEnum.NUPES_LFI ||
+        code == partisEnum.NUPES_PCF ||
+        code == partisEnum.NUPES_PS) {
+      _prefFeedback = true;
+    }
+
+    return _prefFeedback;
+  }
+
+  Color get partiColor {
+    Color _theColor = Colors.white;
+
+    if (code == partisEnum.EXG) {
+      _theColor = Color.fromARGB(255, 94, 0, 0);
+    } else if (code == partisEnum.LO) {
+      _theColor = Color.fromARGB(255, 154, 0, 0);
+    } else if (code == partisEnum.NPA) {
+      _theColor = Color.fromARGB(255, 204, 0, 0);
+    } else if (code == partisEnum.LFI ||
+        code == partisEnum.NUPES_LFI ||
+        code == partisEnum.NUPES_ALL) {
+      _theColor = nupesViolet;
+    } else if (code == partisEnum.PCF || code == partisEnum.NUPES_PCF) {
+      _theColor = nupesRouge;
+    } else if (code == partisEnum.EELV || code == partisEnum.NUPES_ECOLO) {
+      _theColor = nupesVert;
+    } else if (code == partisEnum.DVE) {
+      _theColor = nupesJaune;
+    } else if (code == partisEnum.PS || code == partisEnum.NUPES_PS) {
+      _theColor = nupesRose;
+    } else if (code == partisEnum.DVG) {
+      _theColor = liotRose;
+    } else if (code == partisEnum.LREM) {
+      _theColor = renaissanceOrange;
+    } else if (code == partisEnum.DVC) {
+      _theColor = modemJaune;
+    } else if (code == partisEnum.LR) {
+      _theColor = republicainsBleu;
+    } else if (code == partisEnum.DVD || code == partisEnum.UDI) {
+      _theColor = udiBleu;
+    } else if (code == partisEnum.DLF) {
+      _theColor = Color.fromARGB(255, 12, 0, 93);
+    } else if (code == partisEnum.EXD) {
+      _theColor = Color.fromARGB(255, 0, 0, 0);
+    } else if (code == partisEnum.RN) {
+      _theColor = rnBleu;
+    } else if (code == partisEnum.DIV) {
+      _theColor = Color.fromARGB(255, 200, 200, 200);
+    } else if (code == partisEnum.SE) {
+      _theColor = nonInscritGris;
+    } else if (code == partisEnum.blancs_ou_nul) {
+      _theColor = Color.fromARGB(255, 190, 190, 190);
+    } else if (code == partisEnum.abstention) {
+      _theColor = Color.fromARGB(255, 220, 220, 220);
+    }
+
+    return _theColor;
+  }
+
+  Color get alterPartiColor {
+    int _red = partiColor.red;
+    int _green = partiColor.green;
+    int _blue = partiColor.blue;
+
+    double multiplier = (_red + _green + _blue) / 1.5;
+
+    int _newRed = min((_red + multiplier).round(), 255);
+    int _newGreen = min((_green + multiplier).round(), 255);
+    int _newBlue = min((_blue + multiplier).round(), 255);
+
+    return Color.fromARGB(255, _newRed, _newGreen, _newBlue);
+  }
+
+  Color get textPartiColor {
+    int _red = partiColor.red;
+    int _green = partiColor.green;
+    int _blue = partiColor.blue;
+
+    double multiplier = (_red + _green + _blue) / 3;
+
+    int _newRed = (_red > multiplier ? 0 : 255);
+    int _newGreen = (_green > multiplier ? 0 : 255);
+    int _newBlue = (_blue > multiplier ? 0 : 255);
+
+    return Color.fromARGB(255, _newRed, _newGreen, _newBlue);
+  }
+
+  @override
+  int compareTo(Partis other) {
+    return this.code.index.compareTo(other
+        .code.index); // this.compareTo.other = ordre GAUCHE > CENTRE > DROITE
+  }
+}
+
+List<List<dynamic>> groupesSubstitute = [
+  [
+    "GDR - NUPES",
+    "Gauche Démocrate et Républicaine - NUPES",
+    [Partis(partisEnum.NUPES_PCF)]
+  ],
+  [
+    "LFI – NUPES",
+    "La France Insoumise - NUPES",
+    [Partis(partisEnum.NUPES_LFI)]
+  ],
+  [
+    "SOC",
+    "Socialistes - NUPES",
+    [Partis(partisEnum.NUPES_PS)]
+  ],
+  [
+    "Ecolo - NUPES",
+    "Ecologistes - NUPES",
+    [Partis(partisEnum.NUPES_ECOLO)]
+  ],
+  [
+    "RN",
+    "Rassemblement National",
+    [Partis(partisEnum.RN)]
+  ],
+  [
+    "RE",
+    "Renaissance",
+    [Partis(partisEnum.LREM)]
+  ],
+  [
+    "Dem",
+    "Démocrates",
+    [Partis(partisEnum.LREM), Partis(partisEnum.DVC)]
+  ],
+  [
+    "HOR",
+    "Horizons",
+    [Partis(partisEnum.LREM), Partis(partisEnum.DVD)]
+  ],
+  [
+    "LR",
+    "Les Républicains",
+    [Partis(partisEnum.LR)]
+  ],
+  [
+    "LIOT",
+    "Libertés, Indépendants, Outre-mer et Territoires",
+    [Partis(partisEnum.DIV)]
+  ],
+  [
+    "NI",
+    "Non Inscrits",
+    [Partis(partisEnum.SE)]
+  ],
+];
+
+class DeputesFromCsv implements Comparable<DeputesFromCsv> {
+  String identifiant;
+  String prenom;
+  String nom;
+  String region;
+  String departement;
+  String circoShort;
+  String profession;
+  String groupeLong;
+  String groupShort;
+  String deputeRefString;
+
+  // CONSTRUCTOR
+
+  DeputesFromCsv(
+      this.identifiant,
+      this.prenom,
+      this.nom,
+      this.region,
+      this.departement,
+      this.circoShort,
+      this.profession,
+      this.groupShort,
+      this.groupeLong,
+      this.deputeRefString);
+
+  // GETTERS
+
+  Partis get groupe {
+    List<Partis> _toReturn = [Partis(partisEnum.SE)];
+    // print("groupShort=" + groupShort + "-");
+    for (var i = 0; i < groupesSubstitute.length; i++) {
+      // print("groupesSubstitute=" + groupesSubstitute[i][0] + "-");
+      if (groupShort == groupesSubstitute[i][0]) {
+        // print("groupesSubstitute");
+        _toReturn = groupesSubstitute[i][2];
+      }
+    }
+    // print("_toReturn");
+    return _toReturn[0];
+  }
+
+  LinearGradient get groupeGradient {
+    List<Color> _colors = [
+      Partis(partisEnum.SE).partiColor.withOpacity(0.65),
+      Partis(partisEnum.SE).partiColor.withOpacity(0.15),
+      Partis(partisEnum.SE).partiColor.withOpacity(0.15),
+      Partis(partisEnum.SE).partiColor.withOpacity(0.65)
+    ];
+    List<double> _stops = [0, 0.4, 0.6, 1];
+    for (var i = 0; i < groupesSubstitute.length; i++) {
+      if (groupShort.replaceAll(".", ",") == groupesSubstitute[i][0]) {
+        if (groupesSubstitute[i][2].length == 1) {
+          _colors = [
+            groupesSubstitute[i][2][0].partiColor.withOpacity(0.65),
+            groupesSubstitute[i][2][0].partiColor.withOpacity(0.1),
+            groupesSubstitute[i][2][0].partiColor.withOpacity(0.1),
+            groupesSubstitute[i][2][0].partiColor.withOpacity(0.65)
+          ];
+          _stops = [0, 0.3, 0.7, 1];
+        } else if (groupesSubstitute[i][2].length == 2) {
+          _colors = [];
+          _stops = [];
+          _colors.add(groupesSubstitute[i][2][0].partiColor.withOpacity(0.65));
+          _stops.add(0.1);
+          _colors.add(groupesSubstitute[i][2][0].partiColor.withOpacity(0.1));
+          _stops.add(0.3);
+          _colors.add(groupesSubstitute[i][2][1].partiColor.withOpacity(0.1));
+          _stops.add(0.7);
+          _colors.add(groupesSubstitute[i][2][1].partiColor.withOpacity(0.65));
+          _stops.add(0.9);
+        } else {
+          _colors = [];
+          _stops = [];
+          for (int j = 0; j < groupesSubstitute[i][2].length; j++) {
+            _colors
+                .add(groupesSubstitute[i][2][j].partiColor.withOpacity(0.75));
+            _stops.add(0.1 + (j / (groupesSubstitute[i][2].length - 1)) * 0.8);
+          }
+        }
+      }
+    }
+    return LinearGradient(
+      colors: _colors,
+      stops: _stops,
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+  }
+
+  String get deputeRef {
+    return "PA" + deputeRefString.split("_")[1];
+  }
+
+  DeputesFromCsv.fromFrenchNationalAssemblyCsv(List<dynamic> csv)
+      : identifiant = csv[0].toString(),
+        prenom = csv[1],
+        nom = csv[2],
+        region = csv[3],
+        departement = csv[4],
+        circoShort = csv[5].toString(),
+        profession = csv[6],
+        groupeLong = csv[7],
+        groupShort = csv[8].toString().trimRight(),
+        deputeRefString = csv[9].toString();
+
+  @override
+  int compareTo(DeputesFromCsv other) {
+    return (this.identifiant).compareTo(
+        (other.identifiant)); // this.compareTo.other = ordre CHRONO debut
+  }
 }

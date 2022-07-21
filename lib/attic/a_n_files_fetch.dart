@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
+import 'package:csv/csv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:national_assembly_france_hemicycle/attic/json_vote_objecter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'helpers.dart';
-import 'folders.dart';
+import 'files_and_folders.dart';
+
+int timingInHoursBeforeRefresh = 3;
 
 Future<bool> checkPrefs() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -16,8 +19,8 @@ Future<bool> checkPrefs() async {
 
   if (_lastFetched != "") {
     DateTime _lastFetchedTime = dateFormatter(_lastFetched);
-    if (_lastFetchedTime
-        .isBefore(DateTime.now().subtract(Duration(hours: 6)))) {
+    if (_lastFetchedTime.isBefore(
+        DateTime.now().subtract(Duration(hours: timingInHoursBeforeRefresh)))) {
       shouldUpdate = true;
     } else if (_lastFetchedTime.day < DateTime.now().day ||
         (_lastFetchedTime.day == DateTime.now().day &&
@@ -52,6 +55,8 @@ void updatePrefs() async {
 /// • [pathToAmendements] is the path to AN Amendments. If not provided, uses the default Path.
 ///
 /// • [destinationDirectory] is the required Directory to download and extract files. You can use App Support directory for instance.
+///
+/// • cforceRefresh] is a boolean to force the refresh of Open Data files before the [timingInHoursBeforeRefresh] is elapsed.
 Future<bool> getUpdatedDatasFromAssembly(
     {String pathToDossiers =
         "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/dossiers_legislatifs/Dossiers_Legislatifs.json.zip",
@@ -59,10 +64,11 @@ Future<bool> getUpdatedDatasFromAssembly(
         "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/scrutins/Scrutins.json.zip",
     String pathToAmendements =
         "https://data.assemblee-nationale.fr/static/openData/repository/16/loi/amendements_div_legis/Amendements.json.zip",
-    required Directory destinationDirectory}) async {
+    required Directory destinationDirectory,
+    bool forceRefresh = false}) async {
   bool needsUpdate = await checkPrefs();
 
-  if (needsUpdate) {
+  if (needsUpdate || forceRefresh) {
     print("Updating A.N. OPEN DATA !");
 
     HttpClient httpClient = new HttpClient();
@@ -107,7 +113,8 @@ Future<bool> getUpdatedDatasFromAssembly(
       var response = await request.close();
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
-        dossiersFilePath = destinationDirectory.path + "/dossiers.zip";
+        dossiersFilePath =
+            destinationDirectory.path + dossierParlementaireZipFile;
         dossiersFile = File(dossiersFilePath);
         await dossiersFile.writeAsBytes(bytes);
       } else {
@@ -149,7 +156,7 @@ Future<bool> getUpdatedDatasFromAssembly(
       var response = await request.close();
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
-        votesFilePath = destinationDirectory.path + "/votes.zip";
+        votesFilePath = destinationDirectory.path + votesZipFile;
         votesFile = File(votesFilePath);
         await votesFile.writeAsBytes(bytes);
       } else {
@@ -191,7 +198,7 @@ Future<bool> getUpdatedDatasFromAssembly(
       var response = await request.close();
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
-        amendementsFilePath = destinationDirectory.path + "/amendements.zip";
+        amendementsFilePath = destinationDirectory.path + amendementsZipFile;
         amendementsFile = File(amendementsFilePath);
         await amendementsFile.writeAsBytes(bytes);
       } else {
@@ -255,6 +262,9 @@ Future<bool> getUpdatedDatasFromAssembly(
   return false;
 }
 
+/// ### *Get the Dossiers Legislatifs JSON files* in designated directory and *convert* to [DossierLegislatifFromJson]:
+///
+/// • [mainDirectory] is the required Directory where Open Data ZIP was extracted. You can use App Support directory for instance.
 Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
     {required Directory mainDirectory}) async {
   List<DossierLegislatifFromJson> _listToReturn = [];
@@ -281,6 +291,9 @@ Future<List<DossierLegislatifFromJson>> getListOfDossiersLegislatifs(
   return _listToReturn;
 }
 
+/// ### *Get the Amendements JSON files* in designated directory and *convert* to [AmendementFromJson]:
+///
+/// • [mainDirectory] is the required Directory where Open Data ZIP was extracted. You can use App Support directory for instance.
 Future<List<AmendementFromJson>> getListOfAmendements(
     {required Directory mainDirectory}) async {
   List<AmendementFromJson> _listToReturn = [];
@@ -348,6 +361,9 @@ Future<List<AmendementFromJson>> getListOfAmendements(
   return _listToReturn;
 }
 
+/// ### *Get the Projets Lois JSON files* in designated directory and *convert* to [ProjetLoiFromJson]:
+///
+/// • [mainDirectory] is the required Directory where Open Data ZIP was extracted. You can use App Support directory for instance.
 Future<List<ProjetLoiFromJson>> getListOfProjetsLois(
     {required Directory mainDirectory}) async {
   List<ProjetLoiFromJson> _listToReturn = [];
@@ -376,6 +392,9 @@ Future<List<ProjetLoiFromJson>> getListOfProjetsLois(
   return _listToReturn;
 }
 
+/// ### *Get the Scrutin JSON files* in designated directory and *convert* to [ScrutinFromJson]:
+///
+/// • [mainDirectory] is the required Directory where Open Data ZIP was extracted. You can use App Support directory for instance.
 Future<List<ScrutinFromJson>> getListOfVotes(
     {required Directory mainDirectory}) async {
   List<ScrutinFromJson> _listToReturn = [];
@@ -399,4 +418,69 @@ Future<List<ScrutinFromJson>> getListOfVotes(
     }
   }
   return _listToReturn;
+}
+
+/// Used if needed or forced from [getListOfDeputes] :
+Future<bool> _updateListOfDeputes(
+    {required String pathToDeputes,
+    required Directory destinationDirectory}) async {
+  HttpClient httpClient = new HttpClient();
+
+  File dossiersFile;
+  String dossiersFilePath = '';
+
+  try {
+    var request = await httpClient.getUrl(Uri.parse(pathToDeputes));
+    var response = await request.close();
+    if (response.statusCode == 200) {
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      dossiersFilePath = destinationDirectory.path + deputesCsvFile;
+      dossiersFile = File(dossiersFilePath);
+      await dossiersFile.writeAsBytes(bytes);
+      return true;
+    } else {
+      dossiersFilePath = 'Error code: ' + response.statusCode.toString();
+    }
+  } catch (ex) {
+    dossiersFilePath = 'Can not fetch url';
+  }
+  return false;
+}
+
+/// ### If needed, *download the CSV Excel-format* from National Assembly open data. In any case, *convert* downloaded data :
+///
+/// • [pathToDeputes] is the path to AN Deputees. If not provided, uses the default Path.
+///
+/// • [mainDirectory] is the required Directory to download and extract files. You can use App Support directory for instance.
+///
+/// • [forceRefresh] is a boolean to force the refresh of Open Data files.
+Future<List<DeputesFromCsv>?> getListOfDeputes(
+    {String pathToDeputes =
+        "https://data.assemblee-nationale.fr/static/openData/repository/16/amo/deputes_actifs_csv_opendata/liste_deputes_excel.csv",
+    required Directory mainDirectory,
+    bool forceRefresh = false}) async {
+  List<List<dynamic>> _listData = [];
+  HttpClient httpClient = new HttpClient();
+
+  String dossiersFilePath = mainDirectory.path + deputesCsvFile;
+
+  if (!File(dossiersFilePath).existsSync() || forceRefresh) {
+    await _updateListOfDeputes(
+        pathToDeputes: pathToDeputes, destinationDirectory: mainDirectory);
+  }
+
+  File? dossiersFile = File(dossiersFilePath);
+
+  String dossiersString = await dossiersFile.readAsString(encoding: utf8);
+  _listData = CsvToListConverter()
+      .convert(dossiersString, fieldDelimiter: ";", eol: "\n");
+
+  List<DeputesFromCsv> _tempDeputes = [];
+  for (var i = 1; i < _listData.length; i++) {
+    DeputesFromCsv _tempTranscode =
+        DeputesFromCsv.fromFrenchNationalAssemblyCsv(_listData[i]);
+    _tempDeputes.add(_tempTranscode);
+  }
+
+  return _tempDeputes;
 }

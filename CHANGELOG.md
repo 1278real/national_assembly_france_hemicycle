@@ -1,3 +1,8 @@
+## 0.9.0
+
+* Possibility to force refresh of the AN Open data before 3-hour delay is elapsed.
+* 6-hour to 3-hour delay before AN Open data is refreshed.
+
 ## 0.8.1
 
 * Graphic enhancements for Individual Votes : second arc for SuperGroup.
