@@ -206,10 +206,17 @@ class OpenAssembleeVoteDisplayer {
                                                             in downloaded
                                                                 .groupVotesDetails!)
                                                           scrutinDetailListViewElement(
-                                                              group: group,
-                                                              allDeputes:
-                                                                  allDeputes ??
-                                                                      []),
+                                                                  group: group,
+                                                                  allDeputes:
+                                                                      allDeputes ??
+                                                                          []) ??
+                                                              Text(
+                                                                group.groupName +
+                                                                    " n'a pas de vote dissident",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        8),
+                                                              ),
                                                     ])),
                                                 OutlinedButton(
                                                   child: Text(
@@ -425,7 +432,7 @@ class OpenAssembleeVoteDisplayer {
     );
   }
 
-  Column scrutinDetailListViewElement(
+  Widget? scrutinDetailListViewElement(
       {required GroupVotesFromJson group,
       required List<DeputesFromCsv> allDeputes}) {
     List<DeputesFromCsv> theyVotedFor = [];
@@ -454,39 +461,45 @@ class OpenAssembleeVoteDisplayer {
         theyVotedAbstention.add(deputesHighlighted);
       }
     }
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              group.groupName,
-              style: TextStyle(fontWeight: FontWeight.w900),
-            ),
-            if (group.intergroupName != "-")
+    if ((theyVotedFor.length > 0) ||
+        (theyVotedAgainst.length > 0) ||
+        (theyDidNotVote.length > 0) ||
+        (theyVotedAbstention.length > 0)) {
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Text(
-                " — " + group.intergroupName,
-                style: TextStyle(fontWeight: FontWeight.w600),
+                group.groupName,
+                style: TextStyle(fontWeight: FontWeight.w900),
               ),
-          ],
-        ),
-        if (theyVotedFor.length > 0)
-          Text("POUR", style: TextStyle(fontWeight: FontWeight.w600)),
-        for (DeputesFromCsv deputes in theyVotedFor)
-          Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
-        if (theyVotedFor.length > 0) Padding(padding: EdgeInsets.all(8)),
-        if (theyVotedAgainst.length > 0)
-          Text("CONTRE", style: TextStyle(fontWeight: FontWeight.w600)),
-        for (DeputesFromCsv deputes in theyVotedAgainst)
-          Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
-        if (theyVotedAgainst.length > 0) Padding(padding: EdgeInsets.all(8)),
-        if (theyVotedAbstention.length > 0)
-          Text("ABSTENTION", style: TextStyle(fontWeight: FontWeight.w600)),
-        for (DeputesFromCsv deputes in theyVotedAbstention)
-          Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
-        if (theyVotedAbstention.length > 0) Padding(padding: EdgeInsets.all(8)),
-      ],
-    );
+              if (group.intergroupName != "-")
+                Text(
+                  " — " + group.intergroupName,
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+            ],
+          ),
+          if (theyVotedFor.length > 0)
+            Text("POUR", style: TextStyle(fontWeight: FontWeight.w600)),
+          for (DeputesFromCsv deputes in theyVotedFor)
+            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
+          if (theyVotedFor.length > 0) Padding(padding: EdgeInsets.all(8)),
+          if (theyVotedAgainst.length > 0)
+            Text("CONTRE", style: TextStyle(fontWeight: FontWeight.w600)),
+          for (DeputesFromCsv deputes in theyVotedAgainst)
+            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
+          if (theyVotedAgainst.length > 0) Padding(padding: EdgeInsets.all(8)),
+          if (theyVotedAbstention.length > 0)
+            Text("ABSTENTION", style: TextStyle(fontWeight: FontWeight.w600)),
+          for (DeputesFromCsv deputes in theyVotedAbstention)
+            Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps),
+          if (theyVotedAbstention.length > 0)
+            Padding(padding: EdgeInsets.all(8)),
+        ],
+      );
+    }
   }
 
   /// ### Creates a widget with French National Assembly view defined by these parameters :
