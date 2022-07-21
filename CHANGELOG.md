@@ -1,5 +1,7 @@
 ## 0.9.0
 
+* Tapping on the "Adopted"/"Rejected" container displays the name of the voters that didn't follow their group's majority vote..
+
 * Possibility to force refresh of the AN Open data before 3-hour delay is elapsed.
 * 6-hour to 3-hour delay before AN Open data is refreshed.
 
