@@ -173,10 +173,11 @@ class OpenAssembleeVoteDisplayer {
                         ),
                         Transform.rotate(
                           angle: (-10.0).degreesToRadians,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
+                          child: OutlinedButton(
+                            onPressed: null,
+                            style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                                    width: 1.5,
                                     color: (scrutin?.resultatVote
                                                 .toString()
                                                 .firstInCaps ==
