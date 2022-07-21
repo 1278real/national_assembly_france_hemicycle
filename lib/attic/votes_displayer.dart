@@ -192,7 +192,7 @@ class OpenAssembleeVoteDisplayer {
                                                     height:
                                                         MediaQuery.of(context)
                                                                 .size
-                                                                .height *
+                                                                .height /
                                                             2,
                                                     width:
                                                         MediaQuery.of(context)
