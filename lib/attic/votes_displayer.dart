@@ -472,25 +472,40 @@ class OpenAssembleeVoteDisplayer {
                   " — " + group.intergroupName,
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
                 ),
+              if (group.positionMajoritaire != "")
+                Text(
+                  " — position majoritaire : " + group.positionMajoritaire!,
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 9),
+                ),
             ],
           ),
+          Divider(),
           if (theyVotedFor.length > 0)
             Text("POUR",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
+                style: TextStyle(
+                    color: hemicyleVoteFor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11)),
           for (DeputesFromCsv deputes in theyVotedFor)
             Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11)),
           if (theyVotedFor.length > 0) Padding(padding: EdgeInsets.all(8)),
           if (theyVotedAgainst.length > 0)
             Text("CONTRE",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
+                style: TextStyle(
+                    color: hemicyleVoteAgainst,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11)),
           for (DeputesFromCsv deputes in theyVotedAgainst)
             Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11)),
           if (theyVotedAgainst.length > 0) Padding(padding: EdgeInsets.all(8)),
           if (theyVotedAbstention.length > 0)
             Text("ABSTENTION",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
+                style: TextStyle(
+                    color: hemicyleVoteAbstention,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11)),
           for (DeputesFromCsv deputes in theyVotedAbstention)
             Text(deputes.prenom.firstInCaps + " " + deputes.nom.allInCaps,
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11)),
