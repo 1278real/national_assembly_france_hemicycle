@@ -879,41 +879,41 @@ class ReturnFromJson {
   ReturnFromJson(this.scrutin, {this.amendement});
 }
 
-enum partisEnum {
-  LO,
-  NPA,
+enum politicalPartiesEnum {
+  DIV,
+  DLF,
+  DVC,
+  DVD,
+  DVE,
+  DVG,
+  EELV,
+  EXD,
   EXG,
   LFI,
+  LO,
+  LR,
+  LREM,
+  NUPES_ALL,
+  NUPES_ECOLO,
   NUPES_LFI,
   NUPES_PCF,
-  PCF,
-  NUPES_ECOLO,
-  EELV,
-  NUPES_ALL,
-  DVE,
   NUPES_PS,
+  NPA,
+  PCF,
   PS,
-  DVG,
-  LREM,
-  DVC,
-  LR,
-  UDI,
-  DVD,
-  DLF,
-  EXD,
   RN,
-  DIV,
+  UDI,
   SE,
   blancs_ou_nul,
   abstention
 }
 
-class Partis implements Comparable<Partis> {
-  partisEnum code;
+class PoliticalParties implements Comparable<PoliticalParties> {
+  politicalPartiesEnum code;
 
   // CONSTRUCTOR
 
-  Partis(this.code);
+  PoliticalParties(this.code);
 
   // GETTERS
 
@@ -928,15 +928,15 @@ class Partis implements Comparable<Partis> {
   bool get isNupes {
     bool _prefFeedback = false;
 
-    if (code == partisEnum.LFI ||
-        code == partisEnum.PCF ||
-        code == partisEnum.EELV ||
-        code == partisEnum.PS ||
-        code == partisEnum.NUPES_ALL ||
-        code == partisEnum.NUPES_ECOLO ||
-        code == partisEnum.NUPES_LFI ||
-        code == partisEnum.NUPES_PCF ||
-        code == partisEnum.NUPES_PS) {
+    if (code == politicalPartiesEnum.LFI ||
+        code == politicalPartiesEnum.PCF ||
+        code == politicalPartiesEnum.EELV ||
+        code == politicalPartiesEnum.PS ||
+        code == politicalPartiesEnum.NUPES_ALL ||
+        code == politicalPartiesEnum.NUPES_ECOLO ||
+        code == politicalPartiesEnum.NUPES_LFI ||
+        code == politicalPartiesEnum.NUPES_PCF ||
+        code == politicalPartiesEnum.NUPES_PS) {
       _prefFeedback = true;
     }
 
@@ -946,47 +946,51 @@ class Partis implements Comparable<Partis> {
   Color get partiColor {
     Color _theColor = Colors.white;
 
-    if (code == partisEnum.EXG) {
+    if (code == politicalPartiesEnum.EXG) {
       _theColor = Color.fromARGB(255, 94, 0, 0);
-    } else if (code == partisEnum.LO) {
+    } else if (code == politicalPartiesEnum.LO) {
       _theColor = Color.fromARGB(255, 154, 0, 0);
-    } else if (code == partisEnum.NPA) {
+    } else if (code == politicalPartiesEnum.NPA) {
       _theColor = Color.fromARGB(255, 204, 0, 0);
-    } else if (code == partisEnum.LFI ||
-        code == partisEnum.NUPES_LFI ||
-        code == partisEnum.NUPES_ALL) {
+    } else if (code == politicalPartiesEnum.LFI ||
+        code == politicalPartiesEnum.NUPES_LFI ||
+        code == politicalPartiesEnum.NUPES_ALL) {
       _theColor = nupesViolet;
-    } else if (code == partisEnum.PCF || code == partisEnum.NUPES_PCF) {
+    } else if (code == politicalPartiesEnum.PCF ||
+        code == politicalPartiesEnum.NUPES_PCF) {
       _theColor = nupesRouge;
-    } else if (code == partisEnum.EELV || code == partisEnum.NUPES_ECOLO) {
+    } else if (code == politicalPartiesEnum.EELV ||
+        code == politicalPartiesEnum.NUPES_ECOLO) {
       _theColor = nupesVert;
-    } else if (code == partisEnum.DVE) {
+    } else if (code == politicalPartiesEnum.DVE) {
       _theColor = nupesJaune;
-    } else if (code == partisEnum.PS || code == partisEnum.NUPES_PS) {
+    } else if (code == politicalPartiesEnum.PS ||
+        code == politicalPartiesEnum.NUPES_PS) {
       _theColor = nupesRose;
-    } else if (code == partisEnum.DVG) {
+    } else if (code == politicalPartiesEnum.DVG) {
       _theColor = liotRose;
-    } else if (code == partisEnum.LREM) {
+    } else if (code == politicalPartiesEnum.LREM) {
       _theColor = renaissanceOrange;
-    } else if (code == partisEnum.DVC) {
+    } else if (code == politicalPartiesEnum.DVC) {
       _theColor = modemJaune;
-    } else if (code == partisEnum.LR) {
+    } else if (code == politicalPartiesEnum.LR) {
       _theColor = republicainsBleu;
-    } else if (code == partisEnum.DVD || code == partisEnum.UDI) {
+    } else if (code == politicalPartiesEnum.DVD ||
+        code == politicalPartiesEnum.UDI) {
       _theColor = udiBleu;
-    } else if (code == partisEnum.DLF) {
+    } else if (code == politicalPartiesEnum.DLF) {
       _theColor = Color.fromARGB(255, 12, 0, 93);
-    } else if (code == partisEnum.EXD) {
+    } else if (code == politicalPartiesEnum.EXD) {
       _theColor = Color.fromARGB(255, 0, 0, 0);
-    } else if (code == partisEnum.RN) {
+    } else if (code == politicalPartiesEnum.RN) {
       _theColor = rnBleu;
-    } else if (code == partisEnum.DIV) {
+    } else if (code == politicalPartiesEnum.DIV) {
       _theColor = Color.fromARGB(255, 200, 200, 200);
-    } else if (code == partisEnum.SE) {
+    } else if (code == politicalPartiesEnum.SE) {
       _theColor = nonInscritGris;
-    } else if (code == partisEnum.blancs_ou_nul) {
+    } else if (code == politicalPartiesEnum.blancs_ou_nul) {
       _theColor = Color.fromARGB(255, 190, 190, 190);
-    } else if (code == partisEnum.abstention) {
+    } else if (code == politicalPartiesEnum.abstention) {
       _theColor = Color.fromARGB(255, 220, 220, 220);
     }
 
@@ -1022,67 +1026,73 @@ class Partis implements Comparable<Partis> {
   }
 
   @override
-  int compareTo(Partis other) {
+  int compareTo(PoliticalParties other) {
     return this.code.index.compareTo(other
         .code.index); // this.compareTo.other = ordre GAUCHE > CENTRE > DROITE
   }
 }
 
-List<List<dynamic>> groupesSubstitute = [
+List<List<dynamic>> legisGroupsSubstitute = [
   [
     "GDR - NUPES",
     "Gauche Démocrate et Républicaine - NUPES",
-    [Partis(partisEnum.NUPES_PCF)]
+    [PoliticalParties(politicalPartiesEnum.NUPES_PCF)]
   ],
   [
     "LFI – NUPES",
     "La France Insoumise - NUPES",
-    [Partis(partisEnum.NUPES_LFI)]
+    [PoliticalParties(politicalPartiesEnum.NUPES_LFI)]
   ],
   [
     "SOC",
     "Socialistes - NUPES",
-    [Partis(partisEnum.NUPES_PS)]
+    [PoliticalParties(politicalPartiesEnum.NUPES_PS)]
   ],
   [
     "Ecolo - NUPES",
     "Ecologistes - NUPES",
-    [Partis(partisEnum.NUPES_ECOLO)]
+    [PoliticalParties(politicalPartiesEnum.NUPES_ECOLO)]
   ],
   [
     "RN",
     "Rassemblement National",
-    [Partis(partisEnum.RN)]
+    [PoliticalParties(politicalPartiesEnum.RN)]
   ],
   [
     "RE",
     "Renaissance",
-    [Partis(partisEnum.LREM)]
+    [PoliticalParties(politicalPartiesEnum.LREM)]
   ],
   [
     "Dem",
     "Démocrates",
-    [Partis(partisEnum.LREM), Partis(partisEnum.DVC)]
+    [
+      PoliticalParties(politicalPartiesEnum.LREM),
+      PoliticalParties(politicalPartiesEnum.DVC)
+    ]
   ],
   [
     "HOR",
     "Horizons",
-    [Partis(partisEnum.LREM), Partis(partisEnum.DVD)]
+    [
+      PoliticalParties(politicalPartiesEnum.LREM),
+      PoliticalParties(politicalPartiesEnum.DVD)
+    ]
   ],
   [
     "LR",
     "Les Républicains",
-    [Partis(partisEnum.LR)]
+    [PoliticalParties(politicalPartiesEnum.LR)]
   ],
   [
     "LIOT",
     "Libertés, Indépendants, Outre-mer et Territoires",
-    [Partis(partisEnum.DIV)]
+    [PoliticalParties(politicalPartiesEnum.DIV)]
   ],
   [
     "NI",
     "Non Inscrits",
-    [Partis(partisEnum.SE)]
+    [PoliticalParties(politicalPartiesEnum.SE)]
   ],
 ];
 
@@ -1114,14 +1124,16 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
 
   // GETTERS
 
-  Partis get groupe {
-    List<Partis> _toReturn = [Partis(partisEnum.SE)];
+  PoliticalParties get groupe {
+    List<PoliticalParties> _toReturn = [
+      PoliticalParties(politicalPartiesEnum.SE)
+    ];
     // print("groupShort=" + groupShort + "-");
-    for (var i = 0; i < groupesSubstitute.length; i++) {
+    for (var i = 0; i < legisGroupsSubstitute.length; i++) {
       // print("groupesSubstitute=" + groupesSubstitute[i][0] + "-");
-      if (groupShort == groupesSubstitute[i][0]) {
+      if (groupShort == legisGroupsSubstitute[i][0]) {
         // print("groupesSubstitute");
-        _toReturn = groupesSubstitute[i][2];
+        _toReturn = legisGroupsSubstitute[i][2];
       }
     }
     // print("_toReturn");
@@ -1130,40 +1142,45 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
 
   LinearGradient get groupeGradient {
     List<Color> _colors = [
-      Partis(partisEnum.SE).partiColor.withOpacity(0.65),
-      Partis(partisEnum.SE).partiColor.withOpacity(0.15),
-      Partis(partisEnum.SE).partiColor.withOpacity(0.15),
-      Partis(partisEnum.SE).partiColor.withOpacity(0.65)
+      PoliticalParties(politicalPartiesEnum.SE).partiColor.withOpacity(0.65),
+      PoliticalParties(politicalPartiesEnum.SE).partiColor.withOpacity(0.15),
+      PoliticalParties(politicalPartiesEnum.SE).partiColor.withOpacity(0.15),
+      PoliticalParties(politicalPartiesEnum.SE).partiColor.withOpacity(0.65)
     ];
     List<double> _stops = [0, 0.4, 0.6, 1];
-    for (var i = 0; i < groupesSubstitute.length; i++) {
-      if (groupShort.replaceAll(".", ",") == groupesSubstitute[i][0]) {
-        if (groupesSubstitute[i][2].length == 1) {
+    for (var i = 0; i < legisGroupsSubstitute.length; i++) {
+      if (groupShort.replaceAll(".", ",") == legisGroupsSubstitute[i][0]) {
+        if (legisGroupsSubstitute[i][2].length == 1) {
           _colors = [
-            groupesSubstitute[i][2][0].partiColor.withOpacity(0.65),
-            groupesSubstitute[i][2][0].partiColor.withOpacity(0.1),
-            groupesSubstitute[i][2][0].partiColor.withOpacity(0.1),
-            groupesSubstitute[i][2][0].partiColor.withOpacity(0.65)
+            legisGroupsSubstitute[i][2][0].partiColor.withOpacity(0.65),
+            legisGroupsSubstitute[i][2][0].partiColor.withOpacity(0.1),
+            legisGroupsSubstitute[i][2][0].partiColor.withOpacity(0.1),
+            legisGroupsSubstitute[i][2][0].partiColor.withOpacity(0.65)
           ];
           _stops = [0, 0.3, 0.7, 1];
-        } else if (groupesSubstitute[i][2].length == 2) {
+        } else if (legisGroupsSubstitute[i][2].length == 2) {
           _colors = [];
           _stops = [];
-          _colors.add(groupesSubstitute[i][2][0].partiColor.withOpacity(0.65));
+          _colors
+              .add(legisGroupsSubstitute[i][2][0].partiColor.withOpacity(0.65));
           _stops.add(0.1);
-          _colors.add(groupesSubstitute[i][2][0].partiColor.withOpacity(0.1));
+          _colors
+              .add(legisGroupsSubstitute[i][2][0].partiColor.withOpacity(0.1));
           _stops.add(0.3);
-          _colors.add(groupesSubstitute[i][2][1].partiColor.withOpacity(0.1));
+          _colors
+              .add(legisGroupsSubstitute[i][2][1].partiColor.withOpacity(0.1));
           _stops.add(0.7);
-          _colors.add(groupesSubstitute[i][2][1].partiColor.withOpacity(0.65));
+          _colors
+              .add(legisGroupsSubstitute[i][2][1].partiColor.withOpacity(0.65));
           _stops.add(0.9);
         } else {
           _colors = [];
           _stops = [];
-          for (int j = 0; j < groupesSubstitute[i][2].length; j++) {
-            _colors
-                .add(groupesSubstitute[i][2][j].partiColor.withOpacity(0.75));
-            _stops.add(0.1 + (j / (groupesSubstitute[i][2].length - 1)) * 0.8);
+          for (int j = 0; j < legisGroupsSubstitute[i][2].length; j++) {
+            _colors.add(
+                legisGroupsSubstitute[i][2][j].partiColor.withOpacity(0.75));
+            _stops.add(
+                0.1 + (j / (legisGroupsSubstitute[i][2].length - 1)) * 0.8);
           }
         }
       }
