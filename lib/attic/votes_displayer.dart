@@ -175,7 +175,28 @@ class OpenAssembleeVoteDisplayer {
                           angle: (-10.0).degreesToRadians,
                           child: OutlinedButton(
                             onPressed: () {
-                              //
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                        content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: <Widget>[
+                                          Text("..."),
+                                          OutlinedButton(
+                                            child: Text(
+                                              "OK",
+                                            ),
+                                            style: OutlinedButton.styleFrom(
+                                                primary: Colors.red),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ]));
+                                  });
                             },
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
@@ -369,6 +390,8 @@ class OpenAssembleeVoteDisplayer {
   /// ### Creates a widget with French National Assembly view defined by these parameters :
   ///
   /// • [vote] receives a [ScrutinFromJson] that needs to be displayed.
+  ///
+  /// • [backgroundColor] is used to fill the Drawing area with a plain background color
   Widget drawVoteHemicycleFromAppSupport(
       {required ScrutinFromJson vote, Color? backgroundColor}) {
     return drawVoteHemicycleFromPath(
