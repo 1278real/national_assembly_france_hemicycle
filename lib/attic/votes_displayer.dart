@@ -460,26 +460,33 @@ class OpenAssembleeVoteDisplayer {
         (theyVotedAbstention.length > 0)) {
       return Column(
         children: [
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 group.groupName,
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 11,
+                    decoration: TextDecoration.underline),
               ),
               if (group.intergroupName != "-")
                 Text(
                   " — " + group.intergroupName,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11,
+                      decoration: TextDecoration.underline),
                 ),
               if (group.positionMajoritaire != "")
                 Text(
-                  " — position majoritaire : " + group.positionMajoritaire!,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 9),
+                  " — position majoritaire : " +
+                      group.positionMajoritaire!.allInCaps,
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 9),
                 ),
             ],
           ),
-          Divider(),
           if (theyVotedFor.length > 0)
             Text("POUR",
                 style: TextStyle(
