@@ -513,9 +513,9 @@ class OpenAssembleeVoteDisplayer {
     List<DeputesFromCsv> _toReturn = [];
     if ((groupInScrutin.deputesRefToHilite ?? []).length > 0) {
       for (IndividualVoteFromJson voter in groupInScrutin.deputesRefToHilite!) {
-        print("** " + (voter.acteurRef ?? "-") + " **");
+        // print("** " + (voter.acteurRef ?? "-") + " **");
         for (DeputesFromCsv depute in allDeputes) {
-          if (depute.deputeRef == voter.acteurRef) {
+          if (depute.deputeRef == (voter.acteurRef ?? "")) {
             _toReturn.add(DeputesFromCsv.fromVote(depute, voter));
           }
         }
