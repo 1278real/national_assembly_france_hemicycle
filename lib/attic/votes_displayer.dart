@@ -189,6 +189,9 @@ class OpenAssembleeVoteDisplayer {
                                                       .size
                                                       .height /
                                                   3,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
                                               child: ListView(children: [
                                                 Text("..."),
                                                 Text("..."),
