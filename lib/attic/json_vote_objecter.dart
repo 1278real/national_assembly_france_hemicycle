@@ -1106,7 +1106,6 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
   String profession;
   String groupeLong;
   String groupShort;
-  String deputeRefString;
 
   // CONSTRUCTOR
 
@@ -1119,8 +1118,7 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
       this.circoShort,
       this.profession,
       this.groupShort,
-      this.groupeLong,
-      this.deputeRefString);
+      this.groupeLong);
 
   // GETTERS
 
@@ -1194,7 +1192,7 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
   }
 
   String get deputeRef {
-    return "PA" + deputeRefString.split("_")[1];
+    return "PA" + identifiant;
   }
 
   DeputesFromCsv.fromFrenchNationalAssemblyCsv(List<dynamic> csv)
@@ -1206,8 +1204,7 @@ class DeputesFromCsv implements Comparable<DeputesFromCsv> {
         circoShort = csv[5].toString(),
         profession = csv[6],
         groupeLong = csv[7],
-        groupShort = csv[8].toString().trimRight(),
-        deputeRefString = csv[9].toString();
+        groupShort = csv[8].toString().trimRight();
 
   @override
   int compareTo(DeputesFromCsv other) {
