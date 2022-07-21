@@ -521,6 +521,6 @@ class OpenAssembleeVoteDisplayer {
         }
       }
     }
-    return [];
+    return _toReturn;
   }
 }
