@@ -180,7 +180,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   List<IndividualVoteFromJson>? get deputesRefToHilite {
     if (individualVotesDetails != null) {
       List<IndividualVoteFromJson> _inGroupActeurRefsList = [];
-      print(majoriteVote);
+      print(positionMajoritaire);
       for (IndividualVoteFromJson voter in individualVotesDetails!) {
         if ((voter.votedFor ?? false) &&
             (positionMajoritaire ?? "") != "pour") {
