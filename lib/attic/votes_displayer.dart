@@ -494,7 +494,7 @@ class OpenAssembleeVoteDisplayer {
                     fontSize: 11)),
           for (var i = 0; i < (theyVotedFor.length / 2).ceil(); i++)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                     theyVotedFor[i * 2].prenom.firstInCaps +
@@ -520,7 +520,7 @@ class OpenAssembleeVoteDisplayer {
                     fontSize: 11)),
           for (var i = 0; i < (theyVotedAgainst.length / 2).ceil(); i++)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                     theyVotedAgainst[i * 2].prenom.firstInCaps +
@@ -546,7 +546,7 @@ class OpenAssembleeVoteDisplayer {
                     fontSize: 11)),
           for (var i = 0; i < (theyVotedAbstention.length / 2).ceil(); i++)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                     theyVotedAbstention[i * 2].prenom.firstInCaps +
