@@ -174,43 +174,54 @@ class OpenAssembleeVoteDisplayer {
                         Transform.rotate(
                           angle: (-10.0).degreesToRadians,
                           child: OutlinedButton(
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                        content: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: <Widget>[
-                                          Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  3,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: ListView(children: [
-                                                Text("..."),
-                                                Text("..."),
-                                                Text("..."),
-                                                Text("...")
-                                              ])),
-                                          OutlinedButton(
-                                            child: Text(
-                                              "OK",
-                                            ),
-                                            style: OutlinedButton.styleFrom(
-                                                primary: Colors.red),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ]));
-                                  });
-                            },
+                            onPressed: downloaded != null
+                                ? () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                              content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .stretch,
+                                                  children: <Widget>[
+                                                Container(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            3,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    child: ListView(children: [
+                                                      if (downloaded
+                                                              .groupVotesDetails !=
+                                                          null)
+                                                        for (GroupVotesFromJson group
+                                                            in downloaded
+                                                                .groupVotesDetails!)
+                                                          scrutinDetailListViewElement(
+                                                              group),
+                                                    ])),
+                                                OutlinedButton(
+                                                  child: Text(
+                                                    "OK",
+                                                  ),
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                          primary: Colors.red),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ]));
+                                        });
+                                  }
+                                : null,
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
                                     width: 1.5,
@@ -249,15 +260,16 @@ class OpenAssembleeVoteDisplayer {
                           ),
                         ),
                       ]),
-                  Padding(padding: EdgeInsets.all(6)),
-                  Text(
-                    "Tap dans le rectangle résultat pour détails ⤴️",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 9,
-                        color: Colors.red),
-                  ),
+                  if (downloaded != null) Padding(padding: EdgeInsets.all(6)),
+                  if (downloaded != null)
+                    Text(
+                      "Tap dans le rectangle résultat pour détails ⤴️",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 9,
+                          color: Colors.red),
+                    ),
                   Padding(padding: EdgeInsets.all(6)),
                   Text(
                     (scrutin?.libelleVote ?? "-").firstInCaps,
@@ -406,6 +418,16 @@ class OpenAssembleeVoteDisplayer {
           return circularWait(randomColor());
         }
       },
+    );
+  }
+
+  Column scrutinDetailListViewElement(GroupVotesFromJson group) {
+    return Column(
+      children: [
+        Text(group.groupName),
+        if (group.intergroupName != "") Text(group.intergroupName),
+        Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 10))
+      ],
     );
   }
 
