@@ -245,7 +245,8 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
       // print("----- CONTRES not null");
       Map<String, dynamic> _voteResult = _decompteNominatif['contres'];
       print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7b");
-      if (this.votedAgainst != null && this.votedAgainst! > 1) {
+      if (this.votedAgainst != null &&
+          _voteResult['votant'].toString().substring(0, 1) == "[") {
         List<dynamic> _votants = _voteResult['votant'];
         print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7c");
 
