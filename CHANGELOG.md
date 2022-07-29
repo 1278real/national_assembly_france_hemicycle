@@ -1,3 +1,8 @@
+## 0.9.1
+
+* Update on JSON parsing when AN open data has errors :-/
+For instance, number of voters ≠ number of votes described.
+
 ## 0.9.0
 
 * Tapping on the "Adopted"/"Rejected" container displays the name of the voters that didn't follow their group's majority vote..
