@@ -221,7 +221,6 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     Map<String, dynamic> _decompteNominatif = _vote["decompteNominatif"];
     if (_decompteNominatif['pours'] != null) {
       // print("----- POURS not null");
-      print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6a");
       Map<String, dynamic> _voteResult = _decompteNominatif['pours'];
       print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6b");
       if (this.votedFor != null && this.votedFor! > 1) {
@@ -230,7 +229,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
 
         for (var i = 0; i < _votants.length; i++) {
           Map<String, dynamic> _votant = _votants[i];
-          print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6d");
+          // print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6d");
 
           _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
               _votant, "pours"));
@@ -244,7 +243,6 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     }
     if (_decompteNominatif['contres'] != null) {
       // print("----- CONTRES not null");
-      print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7a");
       Map<String, dynamic> _voteResult = _decompteNominatif['contres'];
       print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7b");
       if (this.votedAgainst != null && this.votedAgainst! > 1) {
@@ -253,7 +251,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
 
         for (var i = 0; i < _votants.length; i++) {
           Map<String, dynamic> _votant = _votants[i];
-          print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7d");
+          //  print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7d");
 
           _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
               _votant, "contres"));
