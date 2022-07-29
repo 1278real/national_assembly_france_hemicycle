@@ -207,18 +207,24 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     this.organeRef = json['organeRef'];
     this.nbMembers = int.tryParse(json['nombreMembresGroupe']) ?? 0;
 
+    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 1");
     Map<String, dynamic> _vote = json["vote"];
+    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 2");
     positionMajoritaire = _vote["positionMajoritaire"];
+    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 3");
     Map<String, dynamic> _decompteVoix = _vote["decompteVoix"];
+    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 4");
 
     this.votedFor = int.tryParse(_decompteVoix['pour']) ?? 0;
     this.votedAgainst = int.tryParse(_decompteVoix['contre']) ?? 0;
     this.votedAbstention = int.tryParse(_decompteVoix['abstentions']) ?? 0;
     this.didNotVote = int.tryParse(_decompteVoix['nonVotants']) ?? 0;
+    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 5");
 
     List<IndividualVoteFromJson> _toPass = [];
 
     Map<String, dynamic> _decompteNominatif = _vote["decompteNominatif"];
+    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6");
     if (_decompteNominatif['pours'] != null) {
       // print("----- POURS not null");
       Map<String, dynamic> _voteResult = _decompteNominatif['pours'];
@@ -351,8 +357,6 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
     Map<String, dynamic> json = _map["scrutin"];
 
     this.uuid = json['uid'];
-    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 1 @ " +
-        this.uuid.toString());
 
     this.organeRef = json['organeRef'];
     this.numero = json['numero'];
@@ -384,17 +388,14 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
     Map<String, dynamic> _ventilationVotes = json["ventilationVotes"];
     Map<String, dynamic> _organe = _ventilationVotes["organe"];
     Map<String, dynamic> _groupes = _organe["groupes"];
-    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 12");
 
     List<dynamic> _roughJson = _groupes['groupe'];
-    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 13");
     List<GroupVotesFromJson> _toPass = [];
-    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 14");
     for (var i = 0; i < _roughJson.length; i++) {
-      print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 15 - " +
-          i.toString());
       Map<String, dynamic> _toConvert = _roughJson[i];
-      print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 16 - " +
+      print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson - " +
+          this.uuid.toString() +
+          " - " +
           i.toString());
       _toPass.add(GroupVotesFromJson.fromFrenchNationalAssemblyJson(_toConvert,
           majoriteVoteFromScrutin: _typeVote['typeMajorite']));
