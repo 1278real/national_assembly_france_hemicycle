@@ -99,7 +99,8 @@ class OpenAssembleeVoteDisplayer {
       bool withDividerBefore = false,
       bool withDividerAfter = false,
       bool? hiliteFronde,
-      Color? backgroundColor}) {
+      Color? backgroundColor,
+      List<DeputesFromCsv>? allDeputes}) {
     return FutureBuilder(
       future: getVotes(
           localPath: localPath,
@@ -173,10 +174,61 @@ class OpenAssembleeVoteDisplayer {
                         ),
                         Transform.rotate(
                           angle: (-10.0).degreesToRadians,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
+                          child: OutlinedButton(
+                            onPressed: downloaded != null
+                                ? () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                              content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .stretch,
+                                                  children: <Widget>[
+                                                Container(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            2,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    child: ListView(children: [
+                                                      if (downloaded
+                                                              .groupVotesDetails !=
+                                                          null)
+                                                        for (GroupVotesFromJson group
+                                                            in downloaded
+                                                                .groupVotesDetails!)
+                                                          scrutinDetailListViewElement(
+                                                              group: group,
+                                                              allDeputes:
+                                                                  allDeputes ??
+                                                                      [])
+                                                    ])),
+                                                OutlinedButton(
+                                                  child: Text(
+                                                    "OK",
+                                                  ),
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                          primary: Colors.red),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ]));
+                                        });
+                                  }
+                                : null,
+                            style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                                    width: 1.5,
                                     color: (scrutin?.resultatVote
                                                 .toString()
                                                 .firstInCaps ==
@@ -212,6 +264,16 @@ class OpenAssembleeVoteDisplayer {
                           ),
                         ),
                       ]),
+                  if (downloaded != null) Padding(padding: EdgeInsets.all(6)),
+                  if (downloaded != null)
+                    Text(
+                      "Tap dans le rectangle résultat pour détails ⤴️",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 9,
+                          color: Colors.red),
+                    ),
                   Padding(padding: EdgeInsets.all(6)),
                   Text(
                     (scrutin?.libelleVote ?? "-").firstInCaps,
@@ -363,11 +425,202 @@ class OpenAssembleeVoteDisplayer {
     );
   }
 
+  Column scrutinDetailListViewElement(
+      {required GroupVotesFromJson group,
+      required List<DeputesFromCsv> allDeputes}) {
+    List<DeputesFromCsv> theyVotedFor = [];
+    List<DeputesFromCsv> theyVotedAgainst = [];
+    List<DeputesFromCsv> theyDidNotVote = [];
+    List<DeputesFromCsv> theyVotedAbstention = [];
+
+    print("----");
+    print("- " + (group.deputesRefToHilite ?? []).length.toString());
+    print("-- " + allDeputes.length.toString());
+
+    List<DeputesFromCsv> voterDeputes =
+        getListOfHighlightedDeputes(allDeputes, group);
+
+    print("- " + voterDeputes.length.toString());
+    print("----");
+
+    for (DeputesFromCsv deputesHighlighted in voterDeputes) {
+      if (deputesHighlighted.votedFor ?? false) {
+        theyVotedFor.add(deputesHighlighted);
+      } else if (deputesHighlighted.votedAgainst ?? false) {
+        theyVotedAgainst.add(deputesHighlighted);
+      } else if (deputesHighlighted.didNotVote ?? false) {
+        theyDidNotVote.add(deputesHighlighted);
+      } else if (deputesHighlighted.votedAbstention ?? false) {
+        theyVotedAbstention.add(deputesHighlighted);
+      }
+    }
+    if ((theyVotedFor.length > 0) ||
+        (theyVotedAgainst.length > 0) ||
+        (theyDidNotVote.length > 0) ||
+        (theyVotedAbstention.length > 0)) {
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                group.groupName,
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 11,
+                    decoration: TextDecoration.underline),
+              ),
+              if (group.intergroupName != "-")
+                Text(
+                  " — " + group.intergroupName,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11,
+                      decoration: TextDecoration.underline),
+                ),
+            ],
+          ),
+          if (group.positionMajoritaire != "")
+            Text(
+              "position majoritaire : " + group.positionMajoritaire!.allInCaps,
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 9),
+            ),
+          Padding(padding: EdgeInsets.all(8)),
+          if (theyVotedFor.length > 0)
+            Text("POUR",
+                style: TextStyle(
+                    color: hemicyleVoteFor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11)),
+          for (var i = 0; i < (theyVotedFor.length / 2).ceil(); i++)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                    theyVotedFor[i * 2].prenom.firstInCaps +
+                        " " +
+                        theyVotedFor[i * 2].nom.allInCaps,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+                if (i * 2 + 1 < theyVotedFor.length)
+                  Text(
+                      theyVotedFor[i * 2 + 1].prenom.firstInCaps +
+                          " " +
+                          theyVotedFor[i * 2 + 1].nom.allInCaps,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+              ],
+            ),
+          if (theyVotedFor.length > 0) Padding(padding: EdgeInsets.all(8)),
+          if (theyVotedAgainst.length > 0)
+            Text("CONTRE",
+                style: TextStyle(
+                    color: hemicyleVoteAgainst,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11)),
+          for (var i = 0; i < (theyVotedAgainst.length / 2).ceil(); i++)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                    theyVotedAgainst[i * 2].prenom.firstInCaps +
+                        " " +
+                        theyVotedAgainst[i * 2].nom.allInCaps,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+                if (i * 2 + 1 < theyVotedAgainst.length)
+                  Text(
+                      theyVotedAgainst[i * 2 + 1].prenom.firstInCaps +
+                          " " +
+                          theyVotedAgainst[i * 2 + 1].nom.allInCaps,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+              ],
+            ),
+          if (theyVotedAgainst.length > 0) Padding(padding: EdgeInsets.all(8)),
+          if (theyVotedAbstention.length > 0)
+            Text("ABSTENTION",
+                style: TextStyle(
+                    color: hemicyleVoteAbstention,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11)),
+          for (var i = 0; i < (theyVotedAbstention.length / 2).ceil(); i++)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                    theyVotedAbstention[i * 2].prenom.firstInCaps +
+                        " " +
+                        theyVotedAbstention[i * 2].nom.allInCaps,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+                if (i * 2 + 1 < theyVotedAbstention.length)
+                  Text(
+                      theyVotedAbstention[i * 2 + 1].prenom.firstInCaps +
+                          " " +
+                          theyVotedAbstention[i * 2 + 1].nom.allInCaps,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 10)),
+              ],
+            ),
+          if (theyVotedAbstention.length > 0)
+            Padding(padding: EdgeInsets.all(8)),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                group.groupName,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 9),
+              ),
+              Text(
+                " n'a pas de vote dissident",
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 9),
+              ),
+            ],
+          ),
+          Padding(padding: EdgeInsets.all(8)),
+        ],
+      );
+    }
+  }
+
   /// ### Creates a widget with French National Assembly view defined by these parameters :
   ///
   /// • [vote] receives a [ScrutinFromJson] that needs to be displayed.
-  Widget drawVoteHemicycleFromAppSupport({required ScrutinFromJson vote}) {
+  ///
+  /// • [backgroundColor] is used to fill the Drawing area with a plain background color
+  Widget drawVoteHemicycleFromAppSupport(
+      {required ScrutinFromJson vote,
+      Color? backgroundColor,
+      List<DeputesFromCsv>? allDeputes}) {
     return drawVoteHemicycleFromPath(
-        downloaded: vote, useGroupSector: true, hiliteFronde: false);
+        downloaded: vote,
+        useGroupSector: true,
+        hiliteFronde: false,
+        backgroundColor: backgroundColor,
+        allDeputes: allDeputes);
+  }
+
+  /// used by [drawVoteHemicycleFromPath] FutureBuilder
+  /// returns a List of [DeputesFromCsv] from a [scrutin.GroupVotesFromJson] and the list of All Deputies to provide.
+  List<DeputesFromCsv> getListOfHighlightedDeputes(
+      List<DeputesFromCsv> allDeputes, GroupVotesFromJson groupInScrutin) {
+    List<DeputesFromCsv> _toReturn = [];
+    if ((groupInScrutin.deputesRefToHilite ?? []).length > 0) {
+      for (IndividualVoteFromJson voter in groupInScrutin.deputesRefToHilite!) {
+        // print("** " + (voter.acteurRef ?? "-") + " **");
+        for (DeputesFromCsv depute in allDeputes) {
+          if (depute.deputeRef == (voter.acteurRef ?? "")) {
+            _toReturn.add(DeputesFromCsv.fromVote(depute, voter));
+          }
+        }
+      }
+    }
+    return _toReturn;
   }
 }
