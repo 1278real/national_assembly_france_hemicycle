@@ -180,7 +180,7 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
   List<IndividualVoteFromJson>? get deputesRefToHilite {
     if (individualVotesDetails != null) {
       List<IndividualVoteFromJson> _inGroupActeurRefsList = [];
-      print(positionMajoritaire);
+      // print(positionMajoritaire);
       for (IndividualVoteFromJson voter in individualVotesDetails!) {
         if ((voter.votedFor ?? false) &&
             (positionMajoritaire ?? "") != "pour") {
@@ -393,10 +393,12 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
     List<GroupVotesFromJson> _toPass = [];
     for (var i = 0; i < _roughJson.length; i++) {
       Map<String, dynamic> _toConvert = _roughJson[i];
+/*
       print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson - " +
           this.uuid.toString() +
           " - " +
           i.toString());
+*/
       _toPass.add(GroupVotesFromJson.fromFrenchNationalAssemblyJson(_toConvert,
           majoriteVoteFromScrutin: _typeVote['typeMajorite']));
     }
