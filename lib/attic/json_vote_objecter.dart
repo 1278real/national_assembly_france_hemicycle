@@ -351,36 +351,50 @@ class ScrutinFromJson implements Comparable<ScrutinFromJson> {
     Map<String, dynamic> json = _map["scrutin"];
 
     this.uuid = json['uid'];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 1 @ " +
+        this.uuid.toString());
+
     this.organeRef = json['organeRef'];
     this.numero = json['numero'];
     this.seanceRef = json['seanceRef'];
     this.dateScrutin = dateFormatter(json['dateScrutin'],
         dateSeparator: "-", format: "YMD", noHour: true);
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 2");
 
     Map<String, dynamic> _typeVote = json["typeVote"];
     this.codeVote = _typeVote['codeTypeVote'];
     this.libelleVote = _typeVote['libelleTypeVote'];
     this.majoriteVote = _typeVote['typeMajorite'];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 3");
 
     Map<String, dynamic> _sort = json["sort"];
     this.resultatVote = _sort['code'];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 4");
 
     this.titre = json['titre'];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 5");
 
     Map<String, dynamic> _demandeur = json["demandeur"];
     this.demandeur = _demandeur['texte'];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 6");
 
     Map<String, dynamic> _syntheseVote = json["syntheseVote"];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 7");
     Map<String, dynamic> _decompte = _syntheseVote["decompte"];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 8");
 
     this.votedFor = int.tryParse(_decompte['pour']) ?? 0;
     this.votedAgainst = int.tryParse(_decompte['contre']) ?? 0;
     this.votedAbstention = int.tryParse(_decompte['abstentions']) ?? 0;
     this.didNotVote = int.tryParse(_decompte['nonVotants']) ?? 0;
 
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 9");
     Map<String, dynamic> _ventilationVotes = json["ventilationVotes"];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 10");
     Map<String, dynamic> _organe = _ventilationVotes["organe"];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 11");
     Map<String, dynamic> _groupes = _organe["groupes"];
+    print("-- ScrutinFromJson.fromFrenchNationalAssemblyJson -- 12");
 
     List<dynamic> _roughJson = _groupes['groupe'];
     List<GroupVotesFromJson> _toPass = [];
