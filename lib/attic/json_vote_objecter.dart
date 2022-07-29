@@ -207,56 +207,60 @@ class GroupVotesFromJson implements Comparable<GroupVotesFromJson> {
     this.organeRef = json['organeRef'];
     this.nbMembers = int.tryParse(json['nombreMembresGroupe']) ?? 0;
 
-    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 1");
     Map<String, dynamic> _vote = json["vote"];
-    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 2");
     positionMajoritaire = _vote["positionMajoritaire"];
-    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 3");
     Map<String, dynamic> _decompteVoix = _vote["decompteVoix"];
-    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 4");
 
     this.votedFor = int.tryParse(_decompteVoix['pour']) ?? 0;
     this.votedAgainst = int.tryParse(_decompteVoix['contre']) ?? 0;
     this.votedAbstention = int.tryParse(_decompteVoix['abstentions']) ?? 0;
     this.didNotVote = int.tryParse(_decompteVoix['nonVotants']) ?? 0;
-    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 5");
 
     List<IndividualVoteFromJson> _toPass = [];
 
     Map<String, dynamic> _decompteNominatif = _vote["decompteNominatif"];
-    print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6");
     if (_decompteNominatif['pours'] != null) {
       // print("----- POURS not null");
+      print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6a");
       Map<String, dynamic> _voteResult = _decompteNominatif['pours'];
+      print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6b");
       if (this.votedFor != null && this.votedFor! > 1) {
         List<dynamic> _votants = _voteResult['votant'];
+        print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6c");
 
         for (var i = 0; i < _votants.length; i++) {
           Map<String, dynamic> _votant = _votants[i];
+          print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6d");
 
           _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
               _votant, "pours"));
         }
       } else if (this.votedFor != null) {
         Map<String, dynamic> _votant = _voteResult['votant'];
+        print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 6e");
         _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
             _votant, "pours"));
       }
     }
     if (_decompteNominatif['contres'] != null) {
       // print("----- CONTRES not null");
+      print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7a");
       Map<String, dynamic> _voteResult = _decompteNominatif['contres'];
+      print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7b");
       if (this.votedAgainst != null && this.votedAgainst! > 1) {
         List<dynamic> _votants = _voteResult['votant'];
+        print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7c");
 
         for (var i = 0; i < _votants.length; i++) {
           Map<String, dynamic> _votant = _votants[i];
+          print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7d");
 
           _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
               _votant, "contres"));
         }
       } else if (this.votedAgainst != null) {
         Map<String, dynamic> _votant = _voteResult['votant'];
+        print("---- GroupVotesFromJson.fromFrenchNationalAssemblyJson - 7e");
         _toPass.add(IndividualVoteFromJson.fromFrenchNationalAssemblyJson(
             _votant, "contres"));
       }
